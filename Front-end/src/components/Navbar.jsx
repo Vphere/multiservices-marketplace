@@ -1,9 +1,24 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './Navbar.css'
+import Login from '../auth/Login'
+import Signup from '../auth/Signup'
+import Logout from '../auth/Logout'
+import { AuthContext } from '../auth/AuthProvider'
 
 const Navbar = () => {
+  const auth = useContext(AuthContext)
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const handleLogout = () => {
+  const confirmLogout = window.confirm("Are you sure you want to log out?");
+
+  if (confirmLogout) {
+    auth.handleLogout();
+    navigate("/", { state: { message: "You have been logged out!" } });
+  }
+};
 
   return (
     <nav className="navbar">
@@ -32,8 +47,11 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-actions">
-          <button className="btn-login">Login</button>
-          <button className="btn-signup">Sign Up</button>
+          {localStorage.getItem("token")===null ? (<div>
+            <button className="btn-login" onClick={() => navigate("/login")}>Login</button>
+            <button className="btn-signup" onClick={() => navigate("/signup")}>Sign Up</button>
+          </div>):<button className="btn-signup" onClick={handleLogout}>Log out</button>
+          }   
         </div>
 
         <button 

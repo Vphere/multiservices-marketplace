@@ -69,3 +69,42 @@ button {
   padding: 0 20px;
 }
 
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #20c997, #339af0);
+}
+
+.login-overlay {
+  min-height: 100vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+.forgot-password-link {
+  cursor: pointer;
+  color: #339af0;
+  font-size: 14px;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
+
+.signup-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #20c997, #339af0);
+}
+
+.signup-overlay {
+  min-height: 100vh;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+}
