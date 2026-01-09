@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ServiceCategory from '../components/ServiceCategory'
-import SearchBar from '../components/SearchBar'
+import Hero from '../components/Hero'
 import PopularServiceCard from '../components/PopularServiceCard'
 import FeaturedProviderCard from '../components/FeaturedProviderCard'
 import TestimonialCard from '../components/TestimonialCard'
@@ -171,43 +171,7 @@ const Home = () => {
   return (
     <div className="home">
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Professional Services
-            <span className="highlight"> At Your Doorstep</span>
-          </h1>
-          <p className="hero-subtitle">
-            From home repairs to fitness training, from beauty services to arts & recreation - 
-            we connect you with verified professionals
-          </p>
-          <div className="hero-search">
-            <SearchBar />
-          </div>
-        </div>
-        <div className="hero-image">
-          <div className="hero-image-container">
-            <div className="hero-icons">
-              <div className="floating-icon icon-1">🏠</div>
-              <div className="floating-icon icon-2">💅</div>
-              <div className="floating-icon icon-3">💪</div>
-              <div className="floating-icon icon-4">🎨</div>
-              <div className="floating-icon icon-5">🔧</div>
-              <div className="floating-icon icon-6">🧘</div>
-              
-              {/* Connecting Lines */}
-              <svg className="connecting-lines" viewBox="0 0 400 300" preserveAspectRatio="none">
-                <line className="connection-line line-1" x1="80" y1="60" x2="320" y2="80" />
-                <line className="connection-line line-2" x1="320" y2="80" x2="40" y2="150" />
-                <line className="connection-line line-3" x1="40" y2="150" x2="360" y2="180" />
-                <line className="connection-line line-4" x1="360" y2="180" x2="120" y2="240" />
-                <line className="connection-line line-5" x1="120" y2="240" x2="280" y2="260" />
-                <line className="connection-line line-6" x1="280" y2="260" x2="80" y2="60" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* Service Categories */}
       <section className="categories-section">
