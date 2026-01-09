@@ -78,16 +78,14 @@ const Hero = () => {
             <div className={`${styles.floatingIcon} ${styles.icon3}`}>💪</div>
             <div className={`${styles.floatingIcon} ${styles.icon4}`}>🎨</div>
             <div className={`${styles.floatingIcon} ${styles.icon5}`}>🔧</div>
-            <div className={`${styles.floatingIcon} ${styles.icon6}`}>🧘</div>
             
             {/* Connecting Lines */}
             <svg className={styles.connectingLines} viewBox="0 0 400 300" preserveAspectRatio="none">
-              <line className={`${styles.connectionLine} ${styles.line1}`} x1="80" y1="60" x2="320" y2="80" />
-              <line className={`${styles.connectionLine} ${styles.line2}`} x1="320" y2="80" x2="40" y2="150" />
-              <line className={`${styles.connectionLine} ${styles.line3}`} x1="40" y2="150" x2="360" y2="180" />
-              <line className={`${styles.connectionLine} ${styles.line4}`} x1="360" y2="180" x2="120" y2="240" />
-              <line className={`${styles.connectionLine} ${styles.line5}`} x1="120" y2="240" x2="280" y2="260" />
-              <line className={`${styles.connectionLine} ${styles.line6}`} x1="280" y2="260" x2="80" y2="60" />
+              <line className={`${styles.connectionLine} ${styles.line1}`} x1="100" y1="60" x2="360" y2="80" />
+              <line className={`${styles.connectionLine} ${styles.line2}`} x1="360" y1="80" x2="400" y2="150" />
+              <line className={`${styles.connectionLine} ${styles.line3}`} x1="40" y1="110" x2="360" y2="130" />
+              <line className={`${styles.connectionLine} ${styles.line4}`} x1="300" y1="200" x2="140" y2="220" />
+              <line className={`${styles.connectionLine} ${styles.line5}`} x1="160" y1="240" x2="290" y2="260" />
             </svg>
           </div>
         </div>
