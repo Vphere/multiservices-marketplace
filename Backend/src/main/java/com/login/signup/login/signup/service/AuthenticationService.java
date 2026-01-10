@@ -35,7 +35,7 @@ public class AuthenticationService {
 
     public User authenticate(LoginUserDto input){
         User user = userRepository.findByEmail(input.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println(user);
         if(!user.isEnabled()){
             throw new RuntimeException("Account not verified! , Please verify your account");
         }
