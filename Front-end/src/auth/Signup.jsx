@@ -8,7 +8,8 @@ const Signup = () => {
   const [registration, setRegistration] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
+    roles: []
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -18,8 +19,25 @@ const Signup = () => {
     setRegistration({ ...registration, [e.target.name]: e.target.value });
   };
 
+  const handleRoleChange = (e) => {
+    const { value, checked } = e.target;
+
+    setRegistration((prev) => ({
+      ...prev,
+      roles: checked
+        ? [...prev.roles, value]
+        : prev.roles.filter((r) => r !== value)
+    }));
+  };
+
   const handleRegistration = async (e) => {
     e.preventDefault();
+
+    if (registration.roles.length === 0) {
+      setErrorMessage("Please select at least one role");
+      return;
+    }
+
     try {
       await registerUser(registration);
 
@@ -27,9 +45,14 @@ const Signup = () => {
         state: { email: registration.email }
       });
 
-      setErrorMessage("");
       setSuccessMessage("Registration successful!");
-      setRegistration({ username: "", email: "", password: "" });
+      setErrorMessage("");
+      setRegistration({
+        username: "",
+        email: "",
+        password: "",
+        roles: []
+      });
     } catch (error) {
       setSuccessMessage("");
       setErrorMessage(`Registration error: ${error.message}`);
@@ -52,6 +75,7 @@ const Signup = () => {
               {errorMessage}
             </div>
           )}
+
           {successMessage && (
             <div className="alert alert-success text-center">
               {successMessage}
@@ -59,6 +83,7 @@ const Signup = () => {
           )}
 
           <form onSubmit={handleRegistration}>
+            {/* Username */}
             <div className="mb-3">
               <label className="form-label">Username</label>
               <input
@@ -71,6 +96,7 @@ const Signup = () => {
               />
             </div>
 
+            {/* Email */}
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
@@ -83,6 +109,7 @@ const Signup = () => {
               />
             </div>
 
+            {/* Password */}
             <div className="mb-3">
               <label className="form-label">Password</label>
               <input
@@ -93,6 +120,33 @@ const Signup = () => {
                 onChange={handleInputChange}
                 required
               />
+            </div>
+
+            {/* Roles */}
+            <div className="mb-3">
+              <label className="form-label fw-bold">Select Role(s)</label>
+
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="ROLE_USER"
+                  checked={registration.roles.includes("ROLE_USER")}
+                  onChange={handleRoleChange}
+                />
+                <label className="form-check-label">User</label>
+              </div>
+
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value="ROLE_SERVICE"
+                  checked={registration.roles.includes("ROLE_SERVICE")}
+                  onChange={handleRoleChange}
+                />
+                <label className="form-check-label">Service Provider</label>
+              </div>
             </div>
 
             <button type="submit" className="btn btn-primary w-100 mb-3">

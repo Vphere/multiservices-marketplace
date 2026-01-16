@@ -4,8 +4,8 @@
 
 /* Categories Section */
 .categories-section {
-  padding: 5rem 20px;
-  background: linear-gradient(to bottom, var(--bg-white), var(--bg-light));
+  padding: 6rem 20px;
+  background: var(--bg-white);
   position: relative;
 }
 
@@ -20,14 +20,15 @@
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3.5rem;
   color: var(--text-dark);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   position: relative;
-  padding-bottom: 1rem;
+  padding-bottom: 1.25rem;
+  line-height: 1.2;
 }
 
 .section-title::after {
@@ -36,7 +37,7 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
+  width: 100px;
   height: 4px;
   background: var(--gradient-primary);
   border-radius: 2px;
@@ -45,7 +46,7 @@
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -143,14 +144,52 @@
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 2rem;
-    margin-bottom: 3rem;
+    font-size: 2.25rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .section-title::after {
+    width: 80px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-header .section-title {
+    margin-bottom: 0;
+  }
+
+  .see-all-button {
+    align-self: flex-end;
   }
 
   .categories-grid,
   .features-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .popular-services-grid,
+  .featured-providers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .popular-services-scroll,
+  .featured-providers-scroll {
+    margin: 0;
+    padding: 0;
+    overflow-x: visible;
+  }
+
+  .categories-section {
+    padding: 4rem 20px;
   }
 
   .categories-section,
@@ -169,12 +208,105 @@
   background: var(--bg-white);
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-header .section-title {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section-header .section-title::after {
+  display: none;
+}
+
+.see-all-button {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.625rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.see-all-button:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* Horizontal Scrolling Container */
+.popular-services-scroll,
+.featured-providers-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-light) transparent;
+  padding-bottom: 1rem;
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.popular-services-scroll::-webkit-scrollbar,
+.featured-providers-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.popular-services-scroll::-webkit-scrollbar-track,
+.featured-providers-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popular-services-scroll::-webkit-scrollbar-thumb,
+.featured-providers-scroll::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 3px;
+}
+
+.popular-services-scroll::-webkit-scrollbar-thumb:hover,
+.featured-providers-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
 .popular-services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  align-items: stretch;
+}
+
+/* Desktop: Horizontal Scroll Layout */
+@media (min-width: 769px) {
+  .popular-services-grid,
+  .featured-providers-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    max-width: none;
+    margin: 0;
+  }
+
+  .popular-services-grid > *,
+  .featured-providers-grid > * {
+    flex: 0 0 320px;
+    min-width: 320px;
+  }
 }
 
 /* Featured Providers Section */
