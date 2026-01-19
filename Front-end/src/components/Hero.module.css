@@ -1,13 +1,23 @@
-/* Hero Section with Teal Gradient Background */
+/* ========================= */
+/* HERO SECTION BACKGROUND */
+/* ========================= */
+
 .hero {
-  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 25%, #2dd4bf 50%, #06b6d4 75%, #0891b2 100%);
+  background: linear-gradient(
+    135deg,
+    #0d9488 0%,
+    #14b8a6 25%,
+    #2dd4bf 50%,
+    #06b6d4 75%,
+    #0891b2 100%
+  );
   color: white;
   padding: 4rem 20px 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
-  min-height: 600px;
+  min-height: 620px;
   position: relative;
   overflow: hidden;
   background-size: 200% 200%;
@@ -15,504 +25,187 @@
 }
 
 @keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .hero::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,0.12), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.12), transparent 50%);
   pointer-events: none;
 }
 
 .hero::after {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  top: -45%;
+  right: -15%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
   border-radius: 50%;
-  animation: float 20s ease-in-out infinite;
+  animation: floatBg 22s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(30px, -30px) rotate(120deg);
-  }
-  66% {
-    transform: translate(-20px, 20px) rotate(240deg);
-  }
+@keyframes floatBg {
+  0%,100% { transform: translate(0,0); }
+  50% { transform: translate(-25px,25px); }
 }
+
+/* ========================= */
+/* HERO CONTENT */
+/* ========================= */
 
 .heroContent {
   max-width: 1200px;
-  margin: 0 auto;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.75rem;
   position: relative;
   z-index: 1;
-  animation: fadeInUp 0.8s ease;
-  padding: 2rem 0;
+  animation: fadeInUp 0.9s ease;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .heroTitle {
   font-size: 3.75rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeInUp 0.8s ease 0.2s both;
-  margin-bottom: 0.5rem;
 }
 
 .highlight {
   display: block;
   background: linear-gradient(120deg, #ffffff, #e0f2fe, #bae6fd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: shimmer 3s ease-in-out infinite;
-  background-size: 200% auto;
 }
 
 @keyframes shimmer {
-  0%, 100% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
+  0%,100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 .heroSubtitle {
   font-size: 1.375rem;
+  max-width: 640px;
+  line-height: 1.7;
   opacity: 0.95;
-  max-width: 650px;
-  line-height: 1.75;
-  animation: fadeInUp 0.8s ease 0.4s both;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
 }
 
-/* Search Container with Location Selector */
-.searchContainer {
-  display: flex;
-  gap: 1rem;
-  max-width: 750px;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  animation: fadeInUp 0.8s ease 0.6s both;
-  align-items: stretch;
+/* ========================= */
+/* HERO SEARCH */
+/* ========================= */
+
+.heroSearch {
+  margin-top: 2rem;
+  max-width: 520px;
 }
 
-.locationSelector {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-  min-width: 150px;
-}
-
-.locationSelector:hover {
-  border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
-.locationIcon {
-  font-size: 1.25rem;
-  opacity: 0.8;
-  transition: transform 0.3s ease;
-}
-
-.locationSelector:hover .locationIcon {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.locationDropdown {
-  background: transparent;
-  border: none;
-  color: var(--text-dark);
+.heroSearch input {
   font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  padding: 0.5rem 0;
-  flex: 1;
 }
 
-.locationDropdown option {
-  background: white;
-  color: var(--text-dark);
-  padding: 0.5rem;
-}
+/* ========================= */
+/* HERO IMAGE – ORBIT (BENZENE) */
+/* ========================= */
 
-.searchBarWrapper {
-  flex: 1;
-}
-
-/* Popular Search Chips */
-.popularSearches {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-  animation: fadeInUp 0.8s ease 0.8s both;
-  flex-wrap: wrap;
-}
-
-.popularLabel {
-  font-size: 1rem;
-  opacity: 0.9;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-.searchChip {
-  padding: 0.5rem 1.25rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 25px;
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.searchChip:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.searchChip:active {
-  transform: translateY(0);
-}
-
-/* CTA Button */
-.ctaButton {
-  margin-top: 1rem;
-  padding: 1.125rem 3rem;
-  background: white;
-  color: #0d9488;
-  border: none;
-  border-radius: 16px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  max-width: fit-content;
-  position: relative;
-  overflow: hidden;
-  animation: fadeInUp 0.8s ease 1s both;
-  letter-spacing: 0.01em;
-}
-
-.ctaButton::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(13, 148, 136, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.ctaButton:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
-}
-
-.ctaButton:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.ctaButton:active {
-  transform: translateY(-2px) scale(1.02);
-}
-
-/* Hero Image Section */
 .heroImage {
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
+  align-items: center;
   z-index: 1;
-  min-height: 350px;
 }
 
-.heroImageContainer {
+.orbitWrapper {
+  width: 420px;
+  height: 420px;
   position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.heroIcons {
-  position: relative;
+.orbit {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Floating Icons with CSS Transitions */
-.floatingIcon {
-  position: absolute;
-  font-size: 3rem;
-  filter: drop-shadow(0 4px 15px rgba(255, 255, 255, 0.4));
-  animation: floatIcon 6s ease-in-out infinite;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 2px dashed rgba(255,255,255,0.45);
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+  position: relative;
+  animation: rotateOrbit 20s linear infinite;
+  transition: border-color 0.3s ease;
 }
 
-.floatingIcon:hover {
-  transform: scale(1.25) rotate(10deg);
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.6);
-  filter: drop-shadow(0 6px 20px rgba(255, 255, 255, 0.6));
+.orbit:hover {
+  animation-play-state: paused;
+  border-color: rgba(255,255,255,0.75);
 }
 
-.icon1 {
-  top: 5%;
-  left: 15%;
-  animation-delay: 0s;
-}
-
-.icon2 {
-  top: 10%;
-  right: 10%;
-  animation-delay: 1s;
-}
-
-.icon3 {
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  animation-delay: 2s;
-}
-
-.icon4 {
-  top: 60%;
-  right: 15%;
-  animation-delay: 1.5s;
-}
-
-.icon5 {
-  bottom: 10%;
-  left: 25%;
-  animation-delay: 0.5s;
-}
-
-.icon6 {
-  bottom: 15%;
-  right: 20%;
-  animation-delay: 2.5s;
-}
-
-.connectingLines {
+/* ORBIT IMAGES */
+.orbit img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.85);
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
+  background: white;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.connectionLine {
-  stroke: rgba(255, 255, 255, 0.3);
-  stroke-width: 2;
-  stroke-dasharray: 5, 5;
-  animation: dashMove 3s linear infinite;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+.orbit img:hover {
+  transform: scale(1.18);
+  box-shadow: 0 10px 30px rgba(255,255,255,0.45);
 }
 
-.line1 {
-  animation-delay: 0s;
+/* 6 BENZENE POSITIONS */
+.orbit img:nth-child(1) { top: -45px; left: 50%; transform: translateX(-50%); }
+.orbit img:nth-child(2) { top: 25%; right: -45px; }
+.orbit img:nth-child(3) { bottom: 25%; right: -45px; }
+.orbit img:nth-child(4) { bottom: -45px; left: 50%; transform: translateX(-50%); }
+.orbit img:nth-child(5) { bottom: 25%; left: -45px; }
+.orbit img:nth-child(6) { top: 25%; left: -45px; }
+
+@keyframes rotateOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.line2 {
-  animation-delay: 0.5s;
-}
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
 
-.line3 {
-  animation-delay: 1s;
-}
-
-.line4 {
-  animation-delay: 1.5s;
-}
-
-.line5 {
-  animation-delay: 2s;
-}
-
-.line6 {
-  animation-delay: 2.5s;
-}
-
-@keyframes dashMove {
-  0% {
-    stroke-dashoffset: 0;
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    stroke-dashoffset: 20;
-    opacity: 0.3;
-  }
-}
-
-@keyframes floatIcon {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg) scale(1);
-    opacity: 0.9;
-  }
-  25% {
-    transform: translateY(-15px) rotate(5deg) scale(1.05);
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(-8px) rotate(-5deg) scale(1);
-    opacity: 0.95;
-  }
-  75% {
-    transform: translateY(-18px) rotate(3deg) scale(1.05);
-    opacity: 1;
-  }
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
     text-align: center;
+    gap: 3rem;
     padding: 3rem 20px 4rem;
-    min-height: auto;
-    gap: 2.5rem;
-  }
-
-  .heroContent {
-    padding: 1rem 0;
-    gap: 1.5rem;
   }
 
   .heroTitle {
     font-size: 2.5rem;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
   }
 
   .heroSubtitle {
     font-size: 1.125rem;
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
   }
 
-  .searchContainer {
-    flex-direction: column;
-    width: 100%;
+  .orbitWrapper {
+    width: 300px;
+    height: 300px;
   }
 
-  .locationSelector {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .searchBarWrapper {
-    width: 100%;
-  }
-
-  .popularSearches {
-    justify-content: center;
-  }
-
-  .ctaButton {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .heroImage {
-    min-height: 250px;
-  }
-
-  .heroImageContainer {
-    max-width: 100%;
-    height: 250px;
-  }
-
-  .floatingIcon {
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
-  }
-
-  .connectingLines {
-    opacity: 0.5;
+  .orbit img {
+    width: 70px;
+    height: 70px;
   }
 }
-

@@ -1,40 +1,56 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './FeaturedProviderCard.css'
+import "./FeaturedProviderCard.css";
 
-const FeaturedProviderCard = ({ provider }) => {
+const providers = [
+  {
+    id: 1,
+    name: "Amit Sharma",
+    category: "Electrician",
+    rating: 4.8,
+    experience: "5+ yrs",
+    image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
+  },
+  {
+    id: 2,
+    name: "Priya Mehta",
+    category: "Yoga Instructor",
+    rating: 4.9,
+    experience: "6+ yrs",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+  },
+  {
+    id: 3,
+    name: "Rohit Verma",
+    category: "Plumber",
+    rating: 4.7,
+    experience: "4+ yrs",
+    image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
+  },
+];
+
+const FeaturedProviderCard = () => {
   return (
-    <Link to={`/services/${provider.category}`} className="featured-provider-card">
-      <div className="provider-badge">⭐ Featured</div>
-      <div className="provider-avatar-large">
-        <span>{provider.image}</span>
-      </div>
-      <div className="provider-details">
-        <h3 className="provider-name">{provider.name}</h3>
-        <p className="provider-service">{provider.service}</p>
-        <div className="provider-stats">
-          <div className="stat-item">
-            <span className="stat-value">{provider.rating}</span>
-            <span className="stat-label">Rating</span>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-value">{provider.reviews}+</span>
-            <span className="stat-label">Reviews</span>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-value">{provider.experience}</span>
-            <span className="stat-label">Experience</span>
+    <div className="featured-providers-grid">
+      {providers.map((provider) => (
+        <div key={provider.id} className="provider-card">
+          <img
+            src={provider.image}
+            alt={provider.name}
+            className="provider-image"
+          />
+
+          <div className="provider-info">
+            <h4 className="provider-name">{provider.name}</h4>
+            <p className="provider-category">{provider.category}</p>
+
+            <div className="provider-meta">
+              <span>⭐ {provider.rating}</span>
+              <span>{provider.experience}</span>
+            </div>
           </div>
         </div>
-        <div className="provider-price">
-          Starting at <span className="price-amount">{provider.price}</span>
-        </div>
-      </div>
-    </Link>
-  )
-}
+      ))}
+    </div>
+  );
+};
 
-export default FeaturedProviderCard
-
+export default FeaturedProviderCard;
