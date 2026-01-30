@@ -4,10 +4,11 @@ import './Navbar.css'
 import Login from '../auth/Login'
 import Signup from '../auth/Signup'
 import Logout from '../auth/Logout'
-import { AuthContext } from '../auth/AuthProvider'
+import { AuthContext, useAuth } from '../auth/AuthProvider'
 
 const Navbar = () => {
-  const auth = useContext(AuthContext)
+  const role = localStorage.getItem("userRole");
+  const auth = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -44,6 +45,17 @@ const Navbar = () => {
           <Link to="/services/arts-recreation" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
             Arts & Recreation
           </Link>
+          {
+            role && role.includes("ROLE_ADMIN") && <Link to="/admin/request" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+              Admin
+          </Link>
+          }
+          {
+            role && role.includes("ROLE_SERVICE") && <Link to="/services/editService" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
+              Service
+          </Link>
+          }
+
         </div>
 
         <div className="navbar-actions">
@@ -69,4 +81,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-

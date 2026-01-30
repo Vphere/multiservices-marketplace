@@ -11,8 +11,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const handleLogin = (token) => {
+    console.log("token");
     const decodedUser = jwtDecode(token);
-
+    console.log(decodedUser)
     localStorage.setItem("userId", decodedUser.sub);
     localStorage.setItem("userRole", JSON.stringify(decodedUser.roles));
     localStorage.setItem("token", token);
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
-    // localStorage.removeItem("userRole");
+    localStorage.removeItem("userRole");
     localStorage.removeItem("token");
     setUser(null);
   };

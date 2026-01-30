@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import BookingModal from './BookingModal'
-import './ServiceProviderCard.css'
+import React, { useState } from "react"
+import BookingModal from "./BookingModal"
+import "./ServiceProviderCard.css"
 
 const ServiceProviderCard = ({ provider }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -9,14 +9,16 @@ const ServiceProviderCard = ({ provider }) => {
     <div className="provider-card">
       <div className="provider-header">
         <div className="provider-avatar">
-          <span className="avatar-icon">{provider.image}</span>
+          <span className="avatar-icon">🔧</span>
         </div>
+
         <div className="provider-info">
           <h3 className="provider-name">{provider.name}</h3>
-          <p className="provider-service">{provider.service}</p>
+          <p className="provider-service">{provider.profession}</p>
+
           <div className="provider-rating">
-            <span className="rating-stars">⭐ {provider.rating}</span>
-            <span className="rating-reviews">({provider.reviews} reviews)</span>
+            <span className="rating-stars">⭐ 4.7</span>
+            <span className="rating-reviews">(423 reviews)</span>
           </div>
         </div>
       </div>
@@ -24,25 +26,29 @@ const ServiceProviderCard = ({ provider }) => {
       <div className="provider-details">
         <div className="detail-item">
           <span className="detail-label">Experience:</span>
-          <span className="detail-value">{provider.experience}</span>
+          <span className="detail-value">{provider.years} years</span>
         </div>
+
         <div className="detail-item">
           <span className="detail-label">Location:</span>
-          <span className="detail-value">{provider.location}</span>
+          <span className="detail-value">{provider.city}</span>
         </div>
+
         <div className="detail-item">
           <span className="detail-label">Price:</span>
-          <span className="detail-value price">{provider.price}</span>
+          <span className="detail-value price">₹500/service</span>
         </div>
       </div>
 
       <div className="provider-specialties">
-        {provider.specialties.map((specialty, idx) => (
-          <span key={idx} className="specialty-tag">{specialty}</span>
+        {provider.servicelist?.map((service, index) => (
+          <span key={index} className="specialty-tag">
+            {service}
+          </span>
         ))}
       </div>
 
-      <button 
+      <button
         className="book-btn"
         onClick={() => setIsModalOpen(true)}
       >
@@ -59,4 +65,3 @@ const ServiceProviderCard = ({ provider }) => {
 }
 
 export default ServiceProviderCard
-

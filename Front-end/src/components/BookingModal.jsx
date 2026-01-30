@@ -205,4 +205,3 @@ const BookingModal = ({ isOpen, onClose, provider }) => {
 }
 
 export default BookingModal
-

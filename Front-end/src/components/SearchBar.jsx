@@ -159,5 +159,4 @@ const SearchBar = ({ placeholder = "What service are you looking for?" }) => {
   )
 }
 
-export default SearchBar
-
+export default SearchBar;

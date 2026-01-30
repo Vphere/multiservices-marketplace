@@ -6,3 +6,8 @@ Backend/target/
 # Node
 node_modules/
 Front-end/node_modules/
+
+target/
+*.class
+
+application.properties

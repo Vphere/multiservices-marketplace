@@ -3,7 +3,9 @@ package com.login.signup.login.signup.service;
 import com.login.signup.login.signup.dto.LoginUserDto;
 import com.login.signup.login.signup.dto.RegisterUserDto;
 import com.login.signup.login.signup.dto.VerifyUserDto;
+import com.login.signup.login.signup.model.Role;
 import com.login.signup.login.signup.model.User;
+import com.login.signup.login.signup.repository.RoleRepository;
 import com.login.signup.login.signup.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +24,22 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
+    private final RoleRepository roleRepository;
 
     public User signup(RegisterUserDto input){
         User user = new User(input.getUsername(),input.getEmail(),passwordEncoder.encode(input.getPassword()));
+        Collection<Role> roles = new HashSet<>();
+        for(String name: input.getRoles()){
+            Role role = roleRepository.findByName(name);
+            System.out.println(name);
+            roles.add(role);
+        }
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiredAt(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
         sendVerificationEmail(user);
+        System.out.println(user);
+        user.setRoles(roles);
         return userRepository.save(user);
     }
 

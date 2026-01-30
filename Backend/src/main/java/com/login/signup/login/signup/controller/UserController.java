@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(value = "http://localhost:5173",allowCredentials = "true")
+@CrossOrigin(value = "http://localhost:3000",allowCredentials = "true")
 @RequestMapping("/users")
 @RestController
 public class UserController {
@@ -39,4 +39,5 @@ public class UserController {
         List<User> users = userService.AllUsers();
         return ResponseEntity.ok(users);
     }
+
 }

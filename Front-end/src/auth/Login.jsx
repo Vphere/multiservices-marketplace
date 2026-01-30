@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { loginUser } from "../utils/apiFunction";
+import { getEnabled, loginUser, userCheck } from "../utils/apiFunction";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import ServiceProviderForm from "../ServiceProvider/ServiceProviderForm";
 
 const Login = () => {
+  
   const [errorMessage, setErrorMessage] = useState("");
   const [login, setLogin] = useState({
     email: "",
@@ -22,8 +24,27 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const success = await loginUser(login);
-
-    if (success) {
+    const token = success.token;
+    console.log(token);
+    auth.handleLogin(token);
+    const role = localStorage.getItem("userRole");
+    console.log(role);
+    if(role.includes("ROLE_SERVICE")){
+      const data = await userCheck();
+      const isEnabled = await getEnabled();
+      if(isEnabled){
+        navigate("/services/editService");
+      }
+      else if(data){
+        navigate("/PendingRequest");
+        return;
+      }
+      else{
+        navigate("/serviceProviderForm");
+        return;
+      }
+    }
+    else if (success) {
       const token = success.token;
       console.log(token);
       auth.handleLogin(token);
