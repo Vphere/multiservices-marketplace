@@ -1,7 +1,7 @@
 {
-  "name": "decentralized-document-verification",
+  "name": "urban nexus services",
   "version": "1.0.0",
-  "description": "Decentralized Digital Document Verification System - Blockchain + IPFS",
+  "description": "Utility services for Home and lifestyle services are provided by our platform",
   "private": true,
   "dependencies": {
     "ethers": "^6.9.0",

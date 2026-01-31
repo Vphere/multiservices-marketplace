@@ -3,6 +3,7 @@ import { getEnabled, loginUser, userCheck } from "../utils/apiFunction";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 import ServiceProviderForm from "../ServiceProvider/ServiceProviderForm";
+import "./Login.css";
 
 const Login = () => {
   

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../utils/apiFunction";
 import { Link, useNavigate } from "react-router-dom";
+import "./Signup.css";
 
 const Signup = () => {
   const navigate = useNavigate();

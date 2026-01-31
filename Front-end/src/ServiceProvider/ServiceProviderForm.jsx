@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { serviceProviderform, userCheck } from "../utils/apiFunction";
 import { useNavigate } from "react-router-dom";
+import "./ServiceProviderForm.css";
 
 const ServiceProviderForm = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const ServiceProviderForm = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phonenumber: "",
     address: "",
     years: "",
@@ -142,22 +144,23 @@ const ServiceProviderForm = () => {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("userRole");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const role = localStorage.getItem("userRole");
 
-    if (!token || !role || !(role.includes("ROLE_SERVICE") || role.includes("ROLE_ADMIN"))) {
-      navigate("/login");
-    }
-    func();
-  }, [navigate]);
+  //   if (!token || !role || !(role.includes("ROLE_SERVICE") || role.includes("ROLE_ADMIN"))) {
+  //     navigate("/login");
+  //   }
+  //   func();
+  // }, [navigate]);
 
   return (
-    <div className="container py-5">
-      <div className="row justify-content-center">
-        <div className="col-lg-7">
-          <div className="card shadow-lg border-0 rounded-4">
-            <div className="card-body p-4">
+    <div className="service-provider-form-page">
+      <div className="container py-5">
+        <div className="row justify-content-center">
+          <div className="col-lg-9">
+            <div className="card shadow-lg border-0 rounded-4">
+              <div className="card-body p-4">
 
               <h3 className="fw-bold">Become a Service Partner</h3>
               <p className="text-muted">
@@ -181,6 +184,7 @@ const ServiceProviderForm = () => {
                 </div>
 
                 <input className="form-control mb-2" name="name" placeholder="Full Name" onChange={handleChange} required />
+                <input className="form-control mb-2" name="email" type="email" placeholder="Email Address" onChange={handleChange} required />
                 <input className="form-control mb-2" name="phonenumber" placeholder="Phone Number" onChange={handleChange} required />
                 <input className="form-control mb-2" name="address" placeholder="Address" onChange={handleChange} required />
 
@@ -258,6 +262,7 @@ const ServiceProviderForm = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

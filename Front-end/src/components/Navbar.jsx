@@ -5,6 +5,7 @@ import Login from '../auth/Login'
 import Signup from '../auth/Signup'
 import Logout from '../auth/Logout'
 import { AuthContext, useAuth } from '../auth/AuthProvider'
+import Logo from './Logo'
 
 const Navbar = () => {
   const role = localStorage.getItem("userRole");
@@ -25,8 +26,8 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <span className="logo-icon">🏠</span>
-          <span className="logo-text">UrbanServices</span>
+          <Logo />
+          <span className="logo-text">Urban Nexus Services</span>
         </Link>
         
         <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
