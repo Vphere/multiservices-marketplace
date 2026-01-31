@@ -124,10 +124,10 @@ export async function userCheck() {
         const email = localStorage.getItem("userId")
         console.log(email)
 		const response = await api.post(`/serviceProvider/emailcheck?email=${email}`,{
-            headers :  {
-                Authorization: `Bearer ${token}`,
-            }
-            // headers : getHeader()
+            // headers :  {
+            //     Authorization: `Bearer ${token}`,
+            // }
+            headers : getHeader()
         })
 		if (response.status >= 200 && response.status < 300) {
 			return response.data

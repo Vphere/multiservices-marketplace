@@ -40,7 +40,7 @@ const ServiceProvider = () => {
           className="sp-btn"
           onClick={() => navigate("/services/bookService")}
         >
-          ➕ Add / Manage Time Slots
+          ➕ Add Time Slots
         </button>
       </div>
     </div>
