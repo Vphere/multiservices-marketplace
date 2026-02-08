@@ -7,7 +7,6 @@ const providers = [
     category: "Electrician",
     rating: 4.8,
     experience: "5+ yrs",
-    image: "https://images.unsplash.com/photo-1607746882042-944635dfe10e",
   },
   {
     id: 2,
@@ -15,7 +14,6 @@ const providers = [
     category: "Yoga Instructor",
     rating: 4.9,
     experience: "6+ yrs",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
   },
   {
     id: 3,
@@ -23,7 +21,6 @@ const providers = [
     category: "Plumber",
     rating: 4.7,
     experience: "4+ yrs",
-    image: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
   },
 ];
 
@@ -32,11 +29,11 @@ const FeaturedProviderCard = () => {
     <div className="featured-providers-grid">
       {providers.map((provider) => (
         <div key={provider.id} className="provider-card">
-          <img
-            src={provider.image}
-            alt={provider.name}
-            className="provider-image"
-          />
+          <div className="provider-avatar">
+            <span className="provider-initial">
+              {provider.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+            </span>
+          </div>
 
           <div className="provider-info">
             <h4 className="provider-name">{provider.name}</h4>

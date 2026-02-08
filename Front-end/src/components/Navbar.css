@@ -1,3 +1,7 @@
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+
 .navbar {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
@@ -9,16 +13,23 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* ========================= */
+/* NAVBAR CONTAINER */
+/* ========================= */
+
 .navbar-container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
+/* ========================= */
+/* LOGO */
+/* ========================= */
 
 .navbar-logo {
   display: flex;
@@ -36,6 +47,7 @@
   transition: color 0.25s ease;
 }
 
+/* Brand color hover (Urban Nexus Services) */
 .navbar-logo:hover .logo-text {
   color: var(--primary-color);
 }
@@ -47,8 +59,12 @@
 .navbar-menu {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2.2rem;
 }
+
+/* ========================= */
+/* NAV LINKS */
+/* ========================= */
 
 .navbar-link {
   font-size: 15px;
@@ -57,13 +73,26 @@
   text-decoration: none;
   position: relative;
   white-space: nowrap;
-  transition: color 0.25s ease;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease,
+    font-weight 0.25s ease;
 }
 
+/* Hover — subtle lift + brand color */
 .navbar-link:hover {
-  color: var(--primary-color);
+  color: var(--primary-color); /* SAME as logo hover */
+  transform: translateY(-1px);
 }
 
+/* Active tab */
+.navbar-link.active {
+  color: var(--primary-color);
+  font-weight: 600;
+  transform: translateY(-2px);
+}
+
+/* Underline animation */
 .navbar-link::after {
   content: '';
   position: absolute;
@@ -75,9 +104,14 @@
   transition: width 0.25s ease;
 }
 
-.navbar-link:hover::after {
+.navbar-link:hover::after,
+.navbar-link.active::after {
   width: 100%;
 }
+
+/* ========================= */
+/* ACTION BUTTONS */
+/* ========================= */
 
 .navbar-actions {
   display: flex;
@@ -100,7 +134,7 @@
 }
 
 .btn-signup {
-  background: linear-gradient(135deg, #14b8a6, #06b6d4);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: #ffffff;
   border: none;
   padding: 0.55rem 1.25rem;
@@ -112,12 +146,19 @@
 }
 
 .btn-signup:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(20, 184, 166, 0.45);
 }
 
+/* ========================= */
+/* MOBILE */
+/* ========================= */
 
 @media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 20px;
+  }
+
   .navbar-menu {
     position: absolute;
     top: 100%;
@@ -125,12 +166,29 @@
     right: 0;
     background: var(--bg-white);
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.5rem 0;
+    gap: 1.25rem;
+    padding: 1.75rem 0;
     box-shadow: var(--shadow-lg);
+  }
+
+  .navbar-link {
+    font-size: 16px;
+  }
+
+  .navbar-link:hover,
+  .navbar-link.active {
+    transform: none; /* prevent jump on mobile */
   }
 
   .navbar-actions {
     display: none;
   }
+}
+
+.navbar-menu .navbar-link:hover {
+  color: #6f6adf; 
+}
+
+.navbar-menu .navbar-link.active {
+  color: #6f6adf;
 }
