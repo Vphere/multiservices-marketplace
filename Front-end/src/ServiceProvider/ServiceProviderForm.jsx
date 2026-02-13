@@ -1,9 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { serviceProviderform, userCheck } from "../utils/apiFunction";
 import { useNavigate } from "react-router-dom";
+import "./ServiceProviderForm.css";
 
 const ServiceProviderForm = () => {
   const navigate = useNavigate();
+
+  const CATEGORY_PROFESSIONS = {
+    "Home Services": [
+      "Electrician",
+      "Plumber",
+      "Carpenter",
+      "AC Repair & Service Technician",
+      "Refrigerator Repair Technician",
+      "Washing Machine Repair Technician",
+      "Microwave / Appliance Repair Technician",
+      "RO Water Purifier Technician",
+      "Geyser Repair Technician",
+      "CCTV Installation Technician",
+      "Inverter & UPS Technician",
+      "Home Deep Cleaning Specialist",
+      "Bathroom Cleaning Specialist",
+      "Kitchen Deep Cleaning Specialist",
+      "Water Tank Cleaning Specialist"
+    ],
+    Beauty: [
+      "Women Salon Professional",
+      "Men Salon Professional",
+      "Hair Style Artist",
+      "Makeup Artist",
+      "Bridal Makeup Artist",
+      "Facial & Skincare Specialist",
+      "Waxing Specialist",
+      "Nail Artist"
+    ],
+    Fitness: [
+      "Yoga Instructor",
+      "Personal Fitness Trainer",
+      "Gym Trainer",
+      "Zumba Instructor",
+      "Pilates Instructor",
+      "Meditation Coach",
+      "Weight Loss Coach"
+    ],
+    "Arts & Recreation": [
+      "Music Teacher",
+      "Dance Instructor",
+      "Art & Painting Teacher",
+      "Drawing / Sketching Instructor",
+      "Acting / Drama Coach",
+      "Photography Instructor"
+    ]
+  };
 
   const func = async () => {
     const data = await userCheck();
@@ -14,6 +62,7 @@ const ServiceProviderForm = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phonenumber: "",
     address: "",
     years: "",
@@ -22,6 +71,8 @@ const ServiceProviderForm = () => {
     profession: "",
     price: ""
   });
+
+  const [availableProfessions, setAvailableProfessions] = useState([]);
 
   const [servicelist, setServicelist] = useState([]);
   const [serviceInput, setServiceInput] = useState("");
@@ -44,6 +95,15 @@ const ServiceProviderForm = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    if (formData.categories) {
+      setAvailableProfessions(
+        CATEGORY_PROFESSIONS[formData.categories] || []
+      );
+      setFormData((prev) => ({ ...prev, profession: "" }));
+    }
+  }, [formData.categories]);
 
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
@@ -87,7 +147,7 @@ const ServiceProviderForm = () => {
         const data = await res.json();
 
         if (data[0].Status === "Success") {
-          setCity(data[0].PostOffice[0].District);
+          setCity(data[0].PostOffice[0].Block);
           setStateName(data[0].PostOffice[0].State);
         } else {
           setPinError("Invalid Pincode");
@@ -142,26 +202,27 @@ const ServiceProviderForm = () => {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("userRole");
+  // useEffect(() => {
+  //   const token = sessionStorage.getItem("token");
+  //   const role = sessionStorage.getItem("userRole");
 
-    if (!token || !role || !(role.includes("ROLE_SERVICE") || role.includes("ROLE_ADMIN"))) {
-      navigate("/login");
-    }
-    func();
-  }, [navigate]);
+  //   if (!token || !role || !(role.includes("ROLE_SERVICE") || role.includes("ROLE_ADMIN"))) {
+  //     navigate("/login");
+  //   }
+  //   func();
+  // }, [navigate]);
 
   return (
-    <div className="container py-5">
-      <div className="row justify-content-center">
-        <div className="col-lg-7">
-          <div className="card shadow-lg border-0 rounded-4">
-            <div className="card-body p-4">
+    <div className="service-provider-form-page">
+      <div className="container py-5">
+        <div className="row justify-content-center">
+          <div className="col-lg-9">
+            <div className="card shadow-lg border-0 rounded-4">
+              <div className="card-body p-4">
 
               <h3 className="fw-bold">Become a Service Partner</h3>
               <p className="text-muted">
-                Email: <b>{localStorage.getItem("userId")}</b>
+                Email: <b>{sessionStorage.getItem("userId")}</b>
               </p>
 
               <form onSubmit={handleSubmit}>
@@ -181,6 +242,7 @@ const ServiceProviderForm = () => {
                 </div>
 
                 <input className="form-control mb-2" name="name" placeholder="Full Name" onChange={handleChange} required />
+                {/* <input className="form-control mb-2" name="email" type="email" placeholder="Email Address" onChange={handleChange} required /> */}
                 <input className="form-control mb-2" name="phonenumber" placeholder="Phone Number" onChange={handleChange} required />
                 <input className="form-control mb-2" name="address" placeholder="Address" onChange={handleChange} required />
 
@@ -217,7 +279,26 @@ const ServiceProviderForm = () => {
                 </select>
 
                 <input className="form-control mb-2" name="companyName" placeholder="Company Name" onChange={handleChange} />
-                <input className="form-control mb-3" name="profession" placeholder="Profession" onChange={handleChange} />
+                {/* <input className="form-control mb-3" name="profession" placeholder="Profession" onChange={handleChange} /> */}
+
+                {/* ✅ REPLACED ONLY THIS FIELD */}
+                  <select
+                    className="form-select mb-3"
+                    name="profession"
+                    value={formData.profession}
+                    onChange={handleChange}
+                    required
+                    disabled={!formData.categories}
+                  >
+                    <option value="">
+                      {formData.categories
+                        ? "Select Profession"
+                        : "Select Category First"}
+                    </option>
+                    {availableProfessions.map((p, i) => (
+                      <option key={i} value={p}>{p}</option>
+                    ))}
+                  </select>
 
                 <div className="mb-3">
                   <label className="fw-semibold">Service Availability</label>
@@ -258,6 +339,7 @@ const ServiceProviderForm = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

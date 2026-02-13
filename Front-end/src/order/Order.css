@@ -1,0 +1,385 @@
+.order-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.order-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.order-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.order-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.no-orders {
+  text-align: center;
+  color: #666;
+}
+
+
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.order-row:hover {
+  background: #ececec;
+}
+
+.sub-text {
+  font-size: 13px;
+  color: #666;
+}
+
+.slot-preview {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-card h3 {
+  margin-bottom: 10px;
+}
+
+.modal-card hr {
+  margin: 12px 0;
+}
+
+.close-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.order-wrapper {
+  margin-bottom: 12px;
+}
+
+/* SINGLE ROW */
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f8f8f8;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.order-row:hover {
+  background: #ececec;
+}
+
+.sub-text {
+  font-size: 13px;
+  color: #666;
+}
+
+.slot-preview {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* EXPANDED DETAILS */
+.order-details {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  padding: 14px;
+  border-radius: 0 0 8px 8px;
+  font-size: 14px;
+}
+
+.order-details p {
+  margin: 6px 0;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab.active {
+  background: #222;
+  color: white;
+}
+
+.order-card {
+  padding: 14px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.order-card.history {
+  opacity: 0.75;
+}
+
+.no-orders {
+  text-align: center;
+  color: #666;
+}
+
+.improved-card {
+  padding: 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+/* Header */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.order-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.price {
+  font-weight: bold;
+  color: #0a7cff;
+}
+
+/* Sections */
+.order-section {
+  margin-top: 14px;
+}
+
+.order-section h4 {
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* Provider info grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+
+/* Slot highlight */
+.slot-box {
+  display: flex;
+  justify-content: space-between;
+  background: #f5f9ff;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.slot-box .label {
+  display: block;
+  font-size: 12px;
+  color: #777;
+}
+
+.slot-box .value {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* History visual tone */
+.history-card {
+  opacity: 0.95;
+}
+
+/* Muted price */
+.price.muted {
+  color: #888;
+}
+
+/* Header variation */
+.history-header {
+  border-bottom: 1px dashed #ddd;
+}
+
+/* History slot box */
+.history-box {
+  background: #f3f3f3;
+}
+
+/* Completed badge feel */
+.history-slot h4 {
+  color: #666;
+}
+
+
+/* =======================
+   PAGE BACKGROUND
+======================= */
+body {
+  background: #f4f7fb;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* =======================
+   MAIN CONTAINER
+======================= */
+.order-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* =======================
+   TITLE
+======================= */
+.order-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1f2937;
+}
+
+/* =======================
+   TAB BAR
+======================= */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 30px;
+  padding: 6px;
+  background: #f1f5f9;
+  border-radius: 999px;
+}
+
+/* =======================
+   TAB BUTTONS
+======================= */
+.tab {
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #475569;
+  background: transparent;
+  transition: all 0.25s ease;
+}
+
+.tab:hover {
+  background: #e2e8f0;
+}
+
+/* =======================
+   ACTIVE TAB
+======================= */
+.tab.active {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+}
+
+/* =======================
+   CONTENT FADE EFFECT
+======================= */
+.tab-content {
+  animation: fadeIn 0.35s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =======================
+   LOADING STATE
+======================= */
+.loading-text {
+  text-align: center;
+  font-size: 16px;
+  color: #64748b;
+  padding: 20px;
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 768px) {
+  .order-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .order-title {
+    font-size: 24px;
+  }
+
+  .tab {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}

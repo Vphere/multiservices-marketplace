@@ -2,10 +2,14 @@ package com.login.signup.login.signup.service;
 
 import com.login.signup.login.signup.dto.ProviderSlotDto;
 import com.login.signup.login.signup.dto.ServiceProviderDto;
+import com.login.signup.login.signup.dto.UserBookingDto;
 import com.login.signup.login.signup.model.ProviderSlot;
 import com.login.signup.login.signup.model.ServiceProvider;
+import com.login.signup.login.signup.model.User;
+import com.login.signup.login.signup.model.UserBooking;
 import com.login.signup.login.signup.repository.ProviderSlotRepository;
 import com.login.signup.login.signup.repository.ServiceProviderRepository;
+import com.login.signup.login.signup.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatus;
@@ -18,14 +22,19 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ServiceProviderServicesImpl implements ServiceProviderServices{
     private final ServiceProviderRepository serviceProviderRepository;
     private final ProviderSlotRepository providerSlotRepository;
+    private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
     @Override
     public String fetchdetails(MultipartFile profilePic, MultipartFile documentPic,ServiceProviderDto serviceProviderDto) throws IOException, SQLException {
@@ -141,4 +150,94 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
         return times;
     }
 
+    @Override
+    public List<ServiceProvider> getFitness() {
+        List<ServiceProvider> serviceProvider = serviceProviderRepository.findFitness();
+        System.out.println(serviceProvider);
+        return serviceProvider;
+    }
+
+    @Override
+    public List<ServiceProvider> getArtsAndRecreation() {
+        List<ServiceProvider> serviceProvider = serviceProviderRepository.findArtsAndRecreation();
+        System.out.println(serviceProvider);
+        return serviceProvider;
+    }
+
+    @Override
+    public List<UserBookingDto> getBooking(String email) {
+        ServiceProvider serviceProvider = findByEmail(email);
+        List<UserBookingDto> list = new ArrayList<>();
+        for(UserBooking u : serviceProvider.getUserBookings()){
+            UserBookingDto userBookingDto = converter(u);
+            list.add(userBookingDto);
+        }
+        return list;
+    }
+
+    @Override
+    public String deleteBooking(String email, List<ProviderSlotDto> providerSlotDtos) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(email);
+        List<ProviderSlot> list = serviceProvider.getProviderSlot();
+        if(serviceProvider==null)throw new RuntimeException("ServiceProvider Not Found!!!");
+        for(ProviderSlotDto p : providerSlotDtos){
+            LocalDateTime time = p.getStart();
+            for(ProviderSlot providerSlot : list){
+                if(providerSlot.getSlotStart().equals(time) && providerSlot.getProvider().equals(serviceProvider)){
+                    list.remove(providerSlot);
+                    providerSlotRepository.deleteById(providerSlot.getId());
+                    break;
+                }
+            }
+//            providerSlotRepository.deleteByProviderServiceIdAndDate(serviceProvider.getServiceId(),epochSeconds);
+        }
+        return "slots deleted successfully";
+    }
+
+    @Override
+    public String sendEmailForCancelletion(String reason,LocalDateTime time, String email,String providerEmail) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(providerEmail);
+        List<UserBooking> userBookings = serviceProvider.getUserBookings();
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            authenticationService.sendBookingCancellationEmail(user.get(),time,reason);
+            for(UserBooking userBooking : userBookings){
+                if(userBooking.getBookedTime().equals(time)){
+                    userBookings.remove(userBooking);
+                    break;
+                }
+            }
+            serviceProviderRepository.save(serviceProvider);
+            return "email sent successfully";
+        }
+        throw new RuntimeException("something wrong!!!");
+    }
+
+    @Override
+    public String setOrderCompleted(LocalDateTime bookedTime, String email) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(email);
+        for(UserBooking userBooking : serviceProvider.getUserBookings()){
+            if(userBooking.getBookedTime().equals(bookedTime)){
+                userBooking.setCompleted(true);
+                userBooking.setEnabled(false);
+                serviceProviderRepository.save(serviceProvider);
+                return "order Completed successfully";
+            }
+        }
+        throw new RuntimeException("BookedDate not found!!!");
+    }
+
+    private UserBookingDto converter(UserBooking userBooking){
+        UserBookingDto userBookingDto = new UserBookingDto();
+        userBookingDto.setBookedTime(userBooking.getBookedTime());
+        userBookingDto.setAddress(userBooking.getAddress());
+        userBookingDto.setCity(userBooking.getCity());
+        userBookingDto.setState(userBooking.getState());
+        userBookingDto.setMobileNo(userBooking.getMobileNo());
+        userBookingDto.setReason(userBooking.getReason());
+        userBookingDto.setEnabled(userBooking.isEnabled());
+        userBookingDto.setEmail(userBooking.getUser().getEmail());
+        userBookingDto.setCompleted(userBooking.isCompleted());
+        return userBookingDto;
+    }
 }

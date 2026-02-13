@@ -4,12 +4,15 @@ import com.login.signup.login.signup.dto.LoginUserDto;
 import com.login.signup.login.signup.dto.RegisterUserDto;
 import com.login.signup.login.signup.dto.VerifyUserDto;
 import com.login.signup.login.signup.model.User;
+import com.login.signup.login.signup.repository.UserRepository;
 import com.login.signup.login.signup.responses.LoginResponse;
 import com.login.signup.login.signup.service.AuthenticationService;
 import com.login.signup.login.signup.service.jwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequestMapping("/auth")
 @RestController
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     private final jwtService service;
     private final AuthenticationService authenticationService;
+    private final UserRepository userRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto){

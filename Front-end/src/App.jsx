@@ -17,6 +17,12 @@ import BookService from "./ServiceProvider/BookService";
 import ServiceProvider from "./ServiceProvider/ServiceProvider";
 import LoginError from "./errorpages/loginerror";
 import ServiceError from "./errorpages/ServiceError";
+import ServiceListingFitness from "./pages/ServiceListingFitness";
+import ServiceListingArtAndRecreation from "./pages/ServiceListingArtAndRecreation";
+import BookingModal from "./components/BookingModal";
+import EditBooking from "./ServiceProvider/EditBooking";
+import RemoveBooking from "./ServiceProvider/RemoveBooking";
+import Order from "./order/order";
 
 function App() {
   return (
@@ -41,6 +47,12 @@ function App() {
               <Route path="/services/editService" element={<ServiceProvider />} />
               <Route path="/loginerror" element={<LoginError />} />
               <Route path="/serviceerror" element={<ServiceError />} />
+              <Route path="/services/fitness" element={<ServiceListingFitness/>} />
+              <Route path="/services/arts-recreation" element={<ServiceListingArtAndRecreation/>} />
+              <Route path="/book-slot" element={<BookingModal/>} />
+              <Route path="/services/editbooking" element={<EditBooking/>} />
+              <Route path="/services/removebooking" element={<RemoveBooking/>} />
+              <Route path="/user/order" element={<Order/>} />
             </Routes>
           </main>
         </div>

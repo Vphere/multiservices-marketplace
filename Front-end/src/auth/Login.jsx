@@ -3,6 +3,7 @@ import { getEnabled, loginUser, userCheck } from "../utils/apiFunction";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 import ServiceProviderForm from "../ServiceProvider/ServiceProviderForm";
+import "./Login.css";
 
 const Login = () => {
   
@@ -27,7 +28,7 @@ const Login = () => {
     const token = success.token;
     console.log(token);
     auth.handleLogin(token);
-    const role = localStorage.getItem("userRole");
+    const role = sessionStorage.getItem("userRole");
     console.log(role);
     if(role.includes("ROLE_SERVICE")){
       const data = await userCheck();

@@ -14,17 +14,17 @@ export const AuthProvider = ({ children }) => {
     console.log("token");
     const decodedUser = jwtDecode(token);
     console.log(decodedUser)
-    localStorage.setItem("userId", decodedUser.sub);
-    localStorage.setItem("userRole", JSON.stringify(decodedUser.roles));
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("userId", decodedUser.sub);
+    sessionStorage.setItem("userRole", JSON.stringify(decodedUser.roles));
+    sessionStorage.setItem("token", token);
 
     setUser(decodedUser);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("userRole");
+    sessionStorage.removeItem("token");
     setUser(null);
   };
 

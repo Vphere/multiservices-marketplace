@@ -43,6 +43,17 @@ public class User implements UserDetails {
     @JoinTable(name = "RoleUser",joinColumns= @JoinColumn(name = "user_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "roleId"))
     private Collection<Role> roles = new HashSet<>();
 
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    private List<UserBooking> userBooking;
+
+    private String mobileNo;
+
+    private String address;
+
+    private String city;
+
+    private String state;
+
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;

@@ -5,9 +5,10 @@ import Login from '../auth/Login'
 import Signup from '../auth/Signup'
 import Logout from '../auth/Logout'
 import { AuthContext, useAuth } from '../auth/AuthProvider'
+import Logo from './Logo'
 
 const Navbar = () => {
-  const role = localStorage.getItem("userRole");
+  const role = sessionStorage.getItem("userRole");
   const auth = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,9 +25,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
+        <Logo />
         <Link to="/" className="navbar-logo">
-          <span className="logo-icon">🏠</span>
-          <span className="logo-text">UrbanServices</span>
+          <span className="logo-text">Urban Nexus Services</span>
         </Link>
         
         <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
@@ -45,6 +46,9 @@ const Navbar = () => {
           <Link to="/services/arts-recreation" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
             Arts & Recreation
           </Link>
+          <Link to="/user/order" className="navbar-link" onClick={() => setIsMenuOpen(false)}>     
+            🛒Order
+          </Link>
           {
             role && role.includes("ROLE_ADMIN") && <Link to="/admin/request" className="navbar-link" onClick={() => setIsMenuOpen(false)}>
               Admin
@@ -59,7 +63,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-actions">
-          {localStorage.getItem("token")===null ? (<div>
+          {sessionStorage.getItem("token")===null ? (<div>
             <button className="btn-login" onClick={() => navigate("/login")}>Login</button>
             <button className="btn-signup" onClick={() => navigate("/signup")}>Sign Up</button>
           </div>):<button className="btn-signup" onClick={handleLogout}>Log out</button>

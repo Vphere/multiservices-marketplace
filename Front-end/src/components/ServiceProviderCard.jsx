@@ -1,12 +1,26 @@
-import React, { useState } from "react"
-import BookingModal from "./BookingModal"
+import React from "react"
+import { useNavigate } from "react-router-dom"
 import "./ServiceProviderCard.css"
 
+// const list = [];
+
 const ServiceProviderCard = ({ provider }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const navigate = useNavigate()
+  // list.push(provider);
+  const handleBookNow = (e) => {
+    // console.log(e.target.value)
+    // list.filter(l => (
+    //   e.target.value === l.email ? 
+    // ))
+    navigate("/book-slot", {
+      state: { provider }
+    })
+  }
 
   return (
     <div className="provider-card">
+
+      {/* Header */}
       <div className="provider-header">
         <div className="provider-avatar">
           <span className="avatar-icon">🔧</span>
@@ -14,32 +28,29 @@ const ServiceProviderCard = ({ provider }) => {
 
         <div className="provider-info">
           <h3 className="provider-name">{provider.name}</h3>
-          <p className="provider-service">{provider.profession}</p>
-
-          <div className="provider-rating">
-            <span className="rating-stars">⭐ 4.7</span>
-            <span className="rating-reviews">(423 reviews)</span>
-          </div>
+          <p className="provider-profession">{provider.profession}</p>
         </div>
       </div>
 
+      {/* Details */}
       <div className="provider-details">
-        <div className="detail-item">
-          <span className="detail-label">Experience:</span>
-          <span className="detail-value">{provider.years} years</span>
+        <div className="detail-row">
+          <span>Experience</span>
+          <strong>{provider.years} years</strong>
         </div>
 
-        <div className="detail-item">
-          <span className="detail-label">Location:</span>
-          <span className="detail-value">{provider.city}</span>
+        <div className="detail-row">
+          <span>Location</span>
+          <strong>{provider.city}</strong>
         </div>
 
-        <div className="detail-item">
-          <span className="detail-label">Price:</span>
-          <span className="detail-value price">₹500/service</span>
+        <div className="detail-row">
+          <span>Price</span>
+          <strong className="price">₹{provider.price}/service</strong>
         </div>
       </div>
 
+      {/* Services */}
       <div className="provider-specialties">
         {provider.servicelist?.map((service, index) => (
           <span key={index} className="specialty-tag">
@@ -48,18 +59,11 @@ const ServiceProviderCard = ({ provider }) => {
         ))}
       </div>
 
-      <button
-        className="book-btn"
-        onClick={() => setIsModalOpen(true)}
-      >
+      {/* Action */}
+      <button value={provider.email} className="book-btn" onClick={handleBookNow}>
         Book Now
       </button>
 
-      <BookingModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        provider={provider}
-      />
     </div>
   )
 }

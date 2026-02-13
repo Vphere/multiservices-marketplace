@@ -25,6 +25,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
     private final RoleRepository roleRepository;
+    private final jwtService service;
 
     public User signup(RegisterUserDto input){
         User user = new User(input.getUsername(),input.getEmail(),passwordEncoder.encode(input.getPassword()));
@@ -49,7 +50,6 @@ public class AuthenticationService {
         if(!user.isEnabled()){
             throw new RuntimeException("Account not verified! , Please verify your account");
         }
-
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(),input.getPassword()));
         return user;
     }
@@ -119,5 +119,65 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
     }
+
+    public void sendBookingCancellationEmail(
+            User user,
+            LocalDateTime bookedTime,
+            String reason
+    ) {
+        String subject = "Your Booking Has Been Cancelled";
+
+        String formattedDateTime = bookedTime.toLocalDate().toString()
+                + " at "
+                + bookedTime.toLocalTime().toString();
+
+        String htmlMessage =
+                "<html>" +
+                        "<body style=\"font-family: Arial, sans-serif; background-color:#f4f6f8; padding:20px;\">" +
+
+                        "<div style=\"max-width:600px; margin:auto; background:#ffffff; padding:24px; border-radius:8px; " +
+                        "box-shadow:0 4px 12px rgba(0,0,0,0.1);\">" +
+
+                        "<h2 style=\"color:#b91c1c; text-align:center;\">Booking Cancelled</h2>" +
+
+                        "<p style=\"font-size:15px; color:#333;\">Dear <b>" + user.getUsername() + "</b>,</p>" +
+
+                        "<p style=\"font-size:15px; color:#333;\">" +
+                        "We regret to inform you that your booking scheduled for the following time has been cancelled by the service provider:" +
+                        "</p>" +
+
+                        "<div style=\"background:#f1f5f9; padding:14px; border-radius:6px; margin:16px 0;\">" +
+                        "<p style=\"margin:0;\"><b>📅 Date & Time:</b> " + formattedDateTime + "</p>" +
+                        "</div>" +
+
+                        "<div style=\"background:#fff1f2; padding:14px; border-left:4px solid #dc2626; border-radius:6px;\">" +
+                        "<p style=\"margin:0; color:#7f1d1d;\"><b>Reason for Cancellation:</b></p>" +
+                        "<p style=\"margin-top:6px; color:#991b1b; font-style:italic;\">" + reason + "</p>" +
+                        "</div>" +
+
+                        "<p style=\"margin-top:18px; font-size:14px; color:#444;\">" +
+                        "We sincerely apologize for the inconvenience caused. You may book another slot at your convenience." +
+                        "</p>" +
+
+                        "<p style=\"margin-top:20px; font-size:14px; color:#333;\">" +
+                        "Thank you for your understanding.<br/>" +
+                        "<b>Support Team</b>" +
+                        "</p>" +
+
+                        "</div>" +
+                        "</body>" +
+                        "</html>";
+
+        try {
+            emailService.sendVerificationEmail(
+                    user.getEmail(),
+                    subject,
+                    htmlMessage
+            );
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send cancellation email", e);
+        }
+    }
+
 
 }

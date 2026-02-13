@@ -2,8 +2,19 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./BookService.css";
-import { getTimeslots, setTimeslot } from "../utils/apiFunction";
+import {
+  getTimeslotsForService,
+  setTimeslot
+} from "../utils/apiFunction";
 import { useNavigate } from "react-router-dom";
+
+/* 🔐 LOCAL DATE FORMATTER (NO UTC SHIFT) */
+const formatDateLocal = (date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+};
 
 const BookService = () => {
   const navigate = useNavigate();
@@ -22,22 +33,22 @@ const BookService = () => {
     "17:00","18:00","19:00","20:00"
   ];
 
-  // 📅 MULTI-DATE TOGGLE
+  /* 📅 MULTI-DATE TOGGLE (LOCAL DATE SAFE) */
   const handleDateSelect = (date) => {
-    const selected = date.toISOString().split("T")[0];
+    const selected = formatDateLocal(date);
 
     setSelectedDates((prev) => {
       const exists = prev.some(
-        d => d.toISOString().split("T")[0] === selected
+        d => formatDateLocal(d) === selected
       );
 
       return exists
-        ? prev.filter(d => d.toISOString().split("T")[0] !== selected)
+        ? prev.filter(d => formatDateLocal(d) !== selected)
         : [...prev, new Date(date)];
     });
   };
 
-  // ⏰ TIME TOGGLE
+  /* ⏰ TIME TOGGLE */
   const toggleTime = (time) => {
     setSelectedTimes((prev) =>
       prev.includes(time)
@@ -46,21 +57,21 @@ const BookService = () => {
     );
   };
 
-  // 🔥 CREATE SLOT DTOs
+  /* 🔥 CREATE SLOT DTOs (LOCAL DATE SAFE) */
   const generateSlotDtos = () => {
     const slots = [];
 
     selectedDates.forEach(date => {
-      const dateStr = date.toISOString().split("T")[0];
+      const dateStr = formatDateLocal(date);
       selectedTimes.forEach(time => {
-        slots.push({ start: `${dateStr}T${time}` });
+        slots.push({ start: `${dateStr}T${time}:00` });
       });
     });
 
     return slots;
   };
 
-  // ✅ SUBMIT
+  /* ✅ SUBMIT */
   const handleSubmit = async () => {
     setLoading(true);
     const slotDtos = generateSlotDtos();
@@ -68,10 +79,8 @@ const BookService = () => {
     try {
       await setTimeslot(slotDtos);
 
-      // ✅ show dialog
       setShowDialog(true);
 
-      // ⏳ hide dialog + redirect after 3 sec
       setTimeout(() => {
         setShowDialog(false);
         navigate("/services/editService");
@@ -84,20 +93,17 @@ const BookService = () => {
     }
   };
 
-  // 🚀 LOAD BLOCKED DATES + AUTH CHECK
+  /* 🚀 LOAD BLOCKED DATES + AUTH CHECK */
   useEffect(() => {
-    const userRole = localStorage.getItem("userRole");    
-    if(!(userRole && userRole.includes("ROLE_SERVICE"))){
-        if(!userRole){
-          navigate("/loginerror");
-        }
-        else{
-          navigate("/serviceerror");
-        }
+    const userRole = sessionStorage.getItem("userRole");
+    if (!(userRole && userRole.includes("ROLE_SERVICE"))) {
+      navigate(userRole ? "/serviceerror" : "/loginerror");
+      return;
     }
+
     async function loadSlots() {
-      const data = await getTimeslots();
-      if (!data) return;
+      const data = await getTimeslotsForService();
+      if (!Array.isArray(data)) return;
 
       const datesInUse = data.map(slot =>
         (slot.start || slot).split("T")[0]
@@ -126,7 +132,7 @@ const BookService = () => {
 
           <h2>Add Service Slots</h2>
 
-          {/* DATE PICKER */}
+          {/* 📅 DATE PICKER */}
           <div className="section">
             <h4>📅 Select Dates</h4>
 
@@ -137,14 +143,12 @@ const BookService = () => {
               onChange={handleDateSelect}
               highlightDates={selectedDates}
               filterDate={(date) =>
-                !blockedDates.includes(
-                  date.toISOString().split("T")[0]
-                )
+                !blockedDates.includes(formatDateLocal(date))
               }
             />
           </div>
 
-          {/* TIME SLOTS */}
+          {/* ⏰ TIME SLOTS */}
           <div className="section">
             <h4>⏰ Select Time Slots</h4>
 

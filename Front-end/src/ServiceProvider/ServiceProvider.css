@@ -43,3 +43,7 @@
   background: #0b5ed7;
   transform: translateY(-2px);
 }
+
+.sp-secondary-btn {
+  margin-top: 12px;
+}

@@ -1,7 +1,6 @@
 package com.login.signup.login.signup.controller;
 
-import com.login.signup.login.signup.dto.ProviderSlotDto;
-import com.login.signup.login.signup.dto.ServiceProviderDto;
+import com.login.signup.login.signup.dto.*;
 import com.login.signup.login.signup.model.ServiceProvider;
 import com.login.signup.login.signup.service.ServiceProviderServices;
 import lombok.RequiredArgsConstructor;
@@ -108,6 +107,35 @@ public class ServiceProviderController {
         }
     }
 
+    @GetMapping("/getFitness")
+    public ResponseEntity<List<ServiceProviderDto>> getFitness(){
+        try{
+            List<ServiceProvider> serviceProvider = serviceProviderServices.getFitness();
+            List<ServiceProviderDto> serviceProviderDtos = new ArrayList<>();
+            for(ServiceProvider services : serviceProvider){
+                ServiceProviderDto serviceProviderDto = convertor(services);
+                serviceProviderDtos.add(serviceProviderDto);
+            }
+            return ResponseEntity.ok(serviceProviderDtos);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("/getArtsAndRecreation")
+    public ResponseEntity<List<ServiceProviderDto>> getArtsAndRecreation(){
+        try{
+            List<ServiceProvider> serviceProvider = serviceProviderServices.getArtsAndRecreation();
+            List<ServiceProviderDto> serviceProviderDtos = new ArrayList<>();
+            for(ServiceProvider services : serviceProvider){
+                ServiceProviderDto serviceProviderDto = convertor(services);
+                serviceProviderDtos.add(serviceProviderDto);
+            }
+            return ResponseEntity.ok(serviceProviderDtos);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public ServiceProviderDto convertor(ServiceProvider serviceProvider){
         ServiceProviderDto serviceProviderDto = new ServiceProviderDto();
         serviceProviderDto.setEmail(serviceProvider.getEmail());
@@ -123,7 +151,7 @@ public class ServiceProviderController {
         serviceProviderDto.setProfession(serviceProvider.getProfession());
         serviceProviderDto.setCompanyName(serviceProvider.getCompanyName());
         serviceProviderDto.setReachWorkplace(serviceProvider.isReachWorkplace());
-
+        serviceProviderDto.setPrice(serviceProvider.getPrice());
         return serviceProviderDto;
     }
 
@@ -159,5 +187,46 @@ public class ServiceProviderController {
         if(serviceProvider==null)throw new RuntimeException("please fill the form!!");
         else if(!serviceProvider.isEnabled())return ResponseEntity.ok(false);
         return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/getBooking")
+    public ResponseEntity<List<UserBookingDto>> getBooking(Authentication authentication){
+        try{
+            String email = authentication.getName();
+            System.out.println(email);
+            return ResponseEntity.ok(serviceProviderServices.getBooking(email));
+        } catch (Exception e) {
+            throw new RuntimeException("something went wrong!!!");
+        }
+    }
+
+    @DeleteMapping("/deleteBooking")
+    public ResponseEntity<String> deleteBooking(Authentication authentication,@RequestBody List<ProviderSlotDto> providerSlotDtos){
+        try{
+            String email = authentication.getName();
+            return ResponseEntity.ok(serviceProviderServices.deleteBooking(email,providerSlotDtos));
+        } catch (Exception e) {
+            throw new RuntimeException("something went wrong!!!");
+        }
+    }
+
+    @PostMapping("/sendEmailForCancelletion")
+    public ResponseEntity<String> sendEmailForCancelletion(@RequestBody EmailForCancelletionDto dto, @RequestParam String email,Authentication authentication){
+        try{
+            String provideremail = authentication.getName();
+            return ResponseEntity.ok(serviceProviderServices.sendEmailForCancelletion(dto.getReason(), dto.getBookedTime(),email,provideremail));
+        } catch (Exception e) {
+            throw new RuntimeException("email not sent!!!");
+        }
+    }
+
+    @PostMapping("/setOrderCompleted")
+    public ResponseEntity<String> setOrderCompleted(@RequestBody OrderCompleteDto bookedTime, Authentication authentication){
+        try{
+            String email = authentication.getName();
+            return ResponseEntity.ok(serviceProviderServices.setOrderCompleted(bookedTime.getBookedTime(),email));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

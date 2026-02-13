@@ -1,0 +1,77 @@
+.booking-modal {
+  background: rgba(0,0,0,0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-card {
+  background: #fff;
+  width: 420px;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.provider-name {
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.section {
+  margin-top: 15px;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.time-btn {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.time-btn.active {
+  background: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.confirm-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.confirm-btn:disabled {
+  background: #aaa;
+}
+
+.time-btn.disabled {
+  background: #f2f2f2;
+  color: #aaa;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+
+.booked-time {
+  background-color: #ff4d4f !important;
+  color: #fff !important;
+  cursor: not-allowed;
+}
+
+.notice-text {
+  font-size: 13px;
+  color: #ff4d4f;
+  margin-bottom: 8px;
+}

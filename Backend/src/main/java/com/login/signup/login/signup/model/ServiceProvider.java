@@ -65,4 +65,7 @@ public class ServiceProvider {
     public ServiceProvider(boolean enabled) {
         this.enabled = false;
     }
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<UserBooking> userBookings;
 }

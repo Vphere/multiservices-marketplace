@@ -8,24 +8,24 @@ const ServiceProvider = () => {
 
   useEffect(() => {
     async function getenabled() {
-        try{
-            const data = await getEnabled();
-            return data;
-        }catch(e){
-            navigate("/serviceProviderForm")
-        }
-    }
-    const userRole = localStorage.getItem("userRole");
-    if(!(userRole && userRole.includes("ROLE_SERVICE"))){
-        if(!userRole){
-          navigate("/loginerror");
-        }
+      try {
+        const data = await getEnabled();
+        return data;
+      } catch (e) {
+        navigate("/serviceProviderForm");
+      }
     }
 
-    getenabled().then(result => {
-        if(!result)navigate("/PendingRequest")
+    const userRole = sessionStorage.getItem("userRole");
+    if (!(userRole && userRole.includes("ROLE_SERVICE"))) {
+      if (!userRole) {
+        navigate("/loginerror");
+      }
+    }
+
+    getenabled().then((result) => {
+      if (!result) navigate("/PendingRequest");
     });
-
   });
 
   return (
@@ -33,14 +33,30 @@ const ServiceProvider = () => {
       <div className="sp-card">
         <h2 className="sp-title">Manage Your Services</h2>
         <p className="sp-desc">
-          Add or update your available service dates and time slots.
+          Add, view, or update your service slots and bookings.
         </p>
 
+        {/* ➕ ADD TIME SLOTS */}
         <button
           className="sp-btn"
           onClick={() => navigate("/services/bookService")}
         >
           ➕ Add Time Slots
+        </button>
+
+        <button
+          className="sp-btn sp-secondary-btn"
+          onClick={() => navigate("/services/removebooking")}
+        >
+          ❌ Remove Booking
+        </button>
+
+        {/* ✏️ VIEW / EDIT BOOKINGS */}
+        <button
+          className="sp-btn sp-secondary-btn"
+          onClick={() => navigate("/services/editbooking")}
+        >
+          📋 View / Edit Bookings
         </button>
       </div>
     </div>

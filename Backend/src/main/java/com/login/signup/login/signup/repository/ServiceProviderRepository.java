@@ -15,15 +15,35 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
     List<ServiceProvider> findByEnabled(boolean i);
 
-    @Query(
-            value = "SELECT * FROM service_provider WHERE enabled = 1 AND categories = 'Home Services'",
-            nativeQuery = true
-    )
+    @Query("""
+    SELECT s FROM ServiceProvider s
+    WHERE s.enabled = true
+    AND s.categories = 'Home Services'
+    AND s.providerSlot IS NOT EMPTY
+    """)
     List<ServiceProvider> findHomeService();
 
-    @Query(
-            value = "SELECT * FROM service_provider WHERE enabled = 1 AND categories = 'Beauty'",
-            nativeQuery = true
-    )
+    @Query("""
+        SELECT s FROM ServiceProvider s
+        WHERE s.enabled = true
+        AND s.categories = 'Beauty'
+        AND s.providerSlot IS NOT EMPTY
+    """)
     List<ServiceProvider> findBeauty();
+
+    @Query("""
+        SELECT s FROM ServiceProvider s
+        WHERE s.enabled = true
+        AND s.categories = 'Fitness'
+        AND s.providerSlot IS NOT EMPTY
+    """)
+    List<ServiceProvider> findFitness();
+
+    @Query("""
+        SELECT s FROM ServiceProvider s
+        WHERE s.enabled = true
+        AND s.categories = 'Arts & Recreation'
+        AND s.providerSlot IS NOT EMPTY
+    """)
+    List<ServiceProvider> findArtsAndRecreation();
 }
