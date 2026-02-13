@@ -1,29 +1,22 @@
 import "./ServiceCategory.css";
 
 const categories = [
+  // 🔥 MOST BOOKED – Utility / Essential Services
   {
     id: 1,
-    title: "Salon for Women",
-    image:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=400&q=80",
+    title: "AC Repair & Service",
+    image: "https://www.airconditioning-cleaning.com/wp-content/uploads/2022/05/iStock-1351102754-scaled.jpg",
   },
   {
     id: 2,
-    title: "Salon for Men",
+    title: "Electrician",
     image:
-      "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80",
+      "https://tse4.mm.bing.net/th/id/OIP.m5keiSbkHU176I74w32CNgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
   },
   {
     id: 3,
-    title: "Spa & Massage",
-    image:
-      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 11,
-    title: "Yoga & Fitness",
-    image:
-      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=400&q=80",
+    title: "Plumber",
+    image: "https://jollyplumbing.com/wp-content/uploads/2022/03/choose-a-residential-plumber.jpeg",
   },
   {
     id: 4,
@@ -31,47 +24,51 @@ const categories = [
     image:
       "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=400&q=80",
   },
-
-  /* ✅ FIXED – REAL AC TECHNICIAN IMAGE */
   {
     id: 5,
-    title: "AC Repair & Service",
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=400&q=80",
-  },
-
-  {
-    id: 9,
     title: "Appliance Repair",
     image:
       "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80",
   },
-
-  /* ✅ FIXED – WORKING ELECTRICIAN IMAGE */
   {
     id: 6,
-    title: "Electrician",
-    image:
-      "https://images.unsplash.com/photo-1629904869392-ae2a682d4d01?auto=format&fit=crop&w=400&q=80",
-  },
-
-  {
-    id: 7,
-    title: "Plumber",
-    image:
-      "https://images.unsplash.com/photo-1621905252472-943afaa20e20?auto=format&fit=crop&w=400&q=80",
-  },
-  {
-    id: 8,
     title: "Carpenter",
     image:
       "https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?auto=format&fit=crop&w=400&q=80",
   },
   {
-    id: 10,
+    id: 7,
     title: "Home Painting",
     image:
-      "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=400&q=80",
+      "https://www.familyhandyman.com/wp-content/uploads/2019/08/FH07FEB_475_52_101-interior-painting-tips-featured.jpg",
+  },
+
+  // 💄 BEAUTY SERVICES (High Demand but after utilities)
+  {
+    id: 8,
+    title: "Salon for Women",
+    image:
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=400&q=80",
+  },
+  {
+    id: 9,
+    title: "Salon for Men",
+    image:
+      "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80",
+  },
+  {
+    id: 10,
+    title: "Spa & Massage",
+    image:
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=400&q=80",
+  },
+
+  // 🎨 ARTS & RECREATION (Least booked – placed last)
+  {
+    id: 11,
+    title: "Yoga & Fitness",
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=400&q=80",
   },
   {
     id: 12,
@@ -80,6 +77,7 @@ const categories = [
       "https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=400&q=80",
   },
 ];
+
 
 const ServiceCategory = () => {
   return (

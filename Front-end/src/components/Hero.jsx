@@ -22,12 +22,14 @@ const Hero = () => {
       <div className={styles.heroImage}>
         <div className={styles.orbitWrapper}>
           <div className={styles.orbit}>
-            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9" />
-            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952" />
-            <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" />
-            <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874" />
-            <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" />
-            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773" />
+            <div className={styles.orbitTrack}>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9" /></div>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952" /></div>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" /></div>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874" /></div>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d" /></div>
+              <div className={styles.item}><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773" /></div>
+            </div>
           </div>
         </div>
       </div>
