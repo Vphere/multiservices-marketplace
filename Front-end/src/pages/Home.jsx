@@ -11,14 +11,14 @@ const mostBookedServices = [
   {
     id: 1,
     title: "AC Repair & Service",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop&auto=format",
+    image: "https://www.airconditioning-cleaning.com/wp-content/uploads/2022/05/iStock-1351102754-scaled.jpg",
     rating: 4.8,
     price: "₹499",
   },
   {
     id: 2,
     title: "Bathroom Deep Cleaning",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&h=300&fit=crop&auto=format",
+    image: "https://thebluebucketcleaning.com/wp-content/uploads/2022/07/Deep-Cleaning-Bathroom.jpg",
     rating: 4.7,
     price: "₹799",
   },
@@ -32,35 +32,38 @@ const mostBookedServices = [
   {
     id: 4,
     title: "Electrician",
-    image: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=400&h=300&fit=crop&auto=format",
+    image: "https://tse4.mm.bing.net/th/id/OIP.m5keiSbkHU176I74w32CNgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
     rating: 4.6,
     price: "₹299",
   },
   {
     id: 5,
     title: "Plumbing Service",
-    image: "https://images.unsplash.com/photo-1580924929049-5d7572b40b69?w=400&h=300&fit=crop&auto=format",
+    image: "https://img.freepik.com/premium-photo/hands-plumber-work-bathroom-plumbing-repair-service-leak-water-repair-plumbing_106035-63.jpg?w=2000",
     rating: 4.7,
     price: "₹399",
   },
   {
     id: 6,
     title: "Home Painting",
-    image: "https://images.unsplash.com/photo-1589883244688-3d4c7d764eb7?w=400&h=300&fit=crop&auto=format",
+    image:
+      "https://images.pexels.com/photos/7218525/pexels-photo-7218525.jpeg?auto=compress&cs=tinysrgb&w=800",
     rating: 4.8,
     price: "₹2499",
   },
-  {
+   {
     id: 7,
     title: "Carpet Cleaning",
-    image: "https://images.unsplash.com/photo-1593696140826-c58b021acf8b?w=400&h=300&fit=crop&auto=format",
+    image:
+      "https://images.pexels.com/photos/4108715/pexels-photo-4108715.jpeg?auto=compress&cs=tinysrgb&w=800",
     rating: 4.6,
     price: "₹599",
   },
-  {
+    {
     id: 8,
     title: "Pest Control",
-    image: "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?w=400&h=300&fit=crop&auto=format",
+    image:
+      "https://images.pexels.com/photos/4099464/pexels-photo-4099464.jpeg?auto=compress&cs=tinysrgb&w=800",
     rating: 4.7,
     price: "₹899",
   },
@@ -68,38 +71,39 @@ const mostBookedServices = [
 
 /* ---------------- NEW & NOTEWORTHY ---------------- */
 const newAndNoteworthyServices = [
-  {
+   {
     id: 1,
     title: "Spa & Massage",
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop&auto=format",
+    image:
+      "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=800",
     rating: 4.8,
     price: "₹1499",
   },
   {
     id: 2,
     title: "Home Painting",
-    image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400&h=300&fit=crop&auto=format",
+    image:"https://www.familyhandyman.com/wp-content/uploads/2019/08/FH07FEB_475_52_101-interior-painting-tips-featured.jpg",
     rating: 4.7,
     price: "₹2499",
   },
   {
     id: 3,
     title: "RO Water Purifier Service",
-    image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?w=400&h=300&fit=crop&auto=format",
+    image: "https://standardaquaservices.com/wp-content/uploads/2024/11/Read-2-1024x1024.png",
     rating: 4.6,
     price: "₹399",
   },
   {
     id: 4,
     title: "Kitchen Deep Cleaning",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&auto=format",
+    image: "https://tse4.mm.bing.net/th/id/OIP.JXNdrLDBs0H3zxkuLQgFfgHaE8?rs=1&pid=ImgDetMain&o=7&rm=3",
     rating: 4.8,
     price: "₹1299",
   },
   {
     id: 5,
     title: "Sofa Cleaning",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+    image: "https://hometriangle.com/blogs/content/images/2023/12/Sofa-Cleaning---hometriangle-blog.jpg",
     rating: 4.7,
     price: "₹899",
   },
@@ -117,7 +121,7 @@ const artsAndRecreationServices = [
   {
     id: 1,
     title: "Yoga Instructor",
-    image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&h=300&fit=crop&auto=format",
+    image: "https://www.doyou.com/wp-content/uploads/2021/07/57620818_151724482540178_1486999243370991842_n.jpeg",
     rating: 4.8,
     price: "₹499 / session",
   },
@@ -252,43 +256,57 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Contact Us */}
-      <section className="home-section light-bg">
-        <div className="section-header">
-          <h2 className="section-title">Contact Us</h2>
-        </div>
-        <div className="contact-content">
-          <div className="contact-info">
-            <h3>Get in Touch</h3>
-            <p>We're here to help you with any questions or concerns.</p>
-            <div className="contact-item">
-              <span className="contact-icon">📧</span>
-              <span>support@urbannexus.com</span>
-            </div>
-            <div className="contact-item">
-              <span className="contact-icon">📞</span>
-              <span>+91 1234567890</span>
-            </div>
-            <div className="contact-item">
-              <span className="contact-icon">📍</span>
-              <span> college road, nadiad, 387001</span>
-            </div>
-            <div className="contact-item">
-              <span className="contact-icon">🕐</span>
-              <span>Mon-Sat: 9AM-8PM, Sun: 10AM-6PM</span>
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-section">
+            <div className="footer-logo">
+              <img src="/Gemini_Generated_Image_nnva12nnva12nnva.png" alt="Urban Nexus Services" className="footer-logo-img" />
+              <h3>Urban Nexus Services</h3>
+              <p>Your trusted partner for professional home, lifestyle, and recreation services.</p>
             </div>
           </div>
-          <div className="contact-form">
-            <h3>Send us a Message</h3>
-            <form>
-              <input type="text" placeholder="Your Name" className="contact-input" />
-              <input type="email" placeholder="Your Email" className="contact-input" />
-              <textarea placeholder="Your Message" className="contact-textarea" rows="4"></textarea>
-              <button type="submit" className="contact-submit-btn">Send Message</button>
-            </form>
+
+          <div className="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#professionals">Professionals</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4>Popular Services</h4>
+            <ul>
+              <li><a href="#ac-repair">AC Repair</a></li>
+              <li><a href="#cleaning">Deep Cleaning</a></li>
+              <li><a href="#salon">Salon Services</a></li>
+              <li><a href="#plumbing">Plumbing</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4>Contact Info</h4>
+            <div className="footer-contact">
+              <p>📧 support@urbannexus.com</p>
+              <p>📞 +91 1234567890</p>
+              <p>📍 college road, nadiad, 387001</p>
+              <p>🕐 Mon-Sat: 9AM-8PM, <br/>   Sun: 10AM-6PM</p>
+            </div>
           </div>
         </div>
-      </section>
+
+        <div className="footer-bottom">
+          <p>&copy; 2024 Urban Nexus Services. All rights reserved.</p>
+          <div className="footer-bottom-links">
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Service</a>
+            <a href="#cookies">Cookie Policy</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
