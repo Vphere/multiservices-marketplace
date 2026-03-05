@@ -1,41 +1,95 @@
 import React, { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
 import ServiceProviderCard from "../components/ServiceProviderCard"
 import { getHomeService } from "../utils/apiFunction"
 import "./ServiceListing.css"
 
+const professionList = [
+  "Electrician",
+  "Plumber",
+  "Carpenter",
+  "AC Repair & Service Technician",
+  "Refrigerator Repair Technician",
+  "Washing Machine Repair Technician",
+  "Microwave / Appliance Repair Technician",
+  "RO Water Purifier Technician",
+  "Geyser Repair Technician",
+  "CCTV Installation Technician",
+  "Inverter & UPS Technician",
+  "Home Deep Cleaning Specialist",
+  "Bathroom Cleaning Specialist",
+  "Kitchen Deep Cleaning Specialist",
+  "Water Tank Cleaning Specialist"
+]
+
 const ServiceListingHomeService = () => {
   const [providers, setProviders] = useState([])
+
   const [searchCity, setSearchCity] = useState("")
+  const [searchProfessionText, setSearchProfessionText] = useState("")
+  const [searchType, setSearchType] = useState("") // ✅ Quick Filter
+  const [suggestions, setSuggestions] = useState([])
 
-  /* ✅ ADDED */
-  const [searchProfession, setSearchProfession] = useState("")
+  const location = useLocation()
 
+  // Insert selected service
+  useEffect(() => {
+    if (location.state?.selectedService) {
+      setSearchProfessionText(location.state.selectedService)
+    }
+  }, [location.state])
+
+  // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
       const data = await getHomeService()
-      console.log("API DATA:", data)
-
       if (data) {
         setProviders(Array.isArray(data) ? data : [data])
       }
     }
-
     fetchData()
   }, [])
 
-  /* ✅ EXTENDED FILTER (CITY + PROFESSION) */
-  const filteredProviders = providers.filter((provider) => {
-    const cityMatch = provider.city
-      ?.toLowerCase()
-      .includes(searchCity.toLowerCase())
+  // Handle typing (HALF MATCH)
+  const handleProfessionChange = (value) => {
+    setSearchProfessionText(value)
 
-    const professionMatch = searchProfession
-      ? provider.profession
-          ?.toLowerCase()
-          .includes(searchProfession.toLowerCase())
+    if (value.trim() === "") {
+      setSuggestions([])
+      return
+    }
+
+    const filtered = professionList.filter((item) =>
+      item.toLowerCase().includes(value.toLowerCase())
+    )
+
+    setSuggestions(filtered)
+  }
+
+  const selectSuggestion = (item) => {
+    setSearchProfessionText(item)
+    setSuggestions([])
+  }
+
+  // ✅ Combined Filter Logic
+  const filteredProviders = providers.filter((provider) => {
+    const cityMatch = searchCity
+      ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
       : true
 
-    return cityMatch && professionMatch
+    const professionMatch = searchProfessionText
+      ? provider.profession
+          ?.toLowerCase()
+          .includes(searchProfessionText.toLowerCase())
+      : true
+
+    const quickFilterMatch = searchType
+      ? provider.profession
+          ?.toLowerCase()
+          .includes(searchType.toLowerCase())
+      : true
+
+    return cityMatch && professionMatch && quickFilterMatch
   })
 
   return (
@@ -46,33 +100,82 @@ const ServiceListingHomeService = () => {
         <div className="listing-header">
           <h1 className="listing-title">Home Services</h1>
           <p className="listing-subtitle">
-            Choose from {filteredProviders.length} verified professionals
+            Showing {filteredProviders.length} professionals
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by city (e.g. Ahmedabad, Mehsana)"
-            value={searchCity}
-            onChange={(e) => setSearchCity(e.target.value)}
-          />
+        {/* SEARCH SECTION */}
+        <div className="search-wrapper">
+
+          {/* City Search */}
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search by City"
+              value={searchCity}
+              onChange={(e) => setSearchCity(e.target.value)}
+            />
+            {searchCity && (
+              <span
+                className="clear-btn"
+                onClick={() => setSearchCity("")}
+              >
+                ✖
+              </span>
+            )}
+          </div>
+
+          {/* Profession Search */}
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search by Profession"
+              value={searchProfessionText}
+              onChange={(e) =>
+                handleProfessionChange(e.target.value)
+              }
+            />
+            {searchProfessionText && (
+              <span
+                className="clear-btn"
+                onClick={() => {
+                  setSearchProfessionText("")
+                  setSuggestions([])
+                }}
+              >
+                ✖
+              </span>
+            )}
+
+            {/* Suggestions */}
+            {suggestions.length > 0 && (
+              <div className="suggestion-box">
+                {suggestions.map((item, index) => (
+                  <div
+                    key={index}
+                    className="suggestion-item"
+                    onClick={() => selectSuggestion(item)}
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
 
-        {/* ✅ PROFESSION QUICK FILTERS */}
+        {/* ✅ 5 Quick Filters Added */}
         <div className="profession-filters">
-          {["Electrician", "Plumber", "Carpenter", "Technician", "Specialist"].map(
+          {["Plumber", "Carpenter", "Electrician", "Technician", "Specialist"].map(
             (item) => (
               <button
                 key={item}
                 className={`profession-chip ${
-                  searchProfession === item ? "active" : ""
+                  searchType === item ? "active" : ""
                 }`}
                 onClick={() =>
-                  setSearchProfession(
-                    searchProfession === item ? "" : item
-                  )
+                  setSearchType(searchType === item ? "" : item)
                 }
               >
                 {item}
@@ -100,4 +203,4 @@ const ServiceListingHomeService = () => {
   )
 }
 
-export default ServiceListingHomeService
+export default ServiceListingHomeService;

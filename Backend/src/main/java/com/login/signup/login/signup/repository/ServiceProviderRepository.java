@@ -46,4 +46,6 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
         AND s.providerSlot IS NOT EMPTY
     """)
     List<ServiceProvider> findArtsAndRecreation();
+
+    void deleteByServiceId(Long serviceId);
 }

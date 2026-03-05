@@ -63,11 +63,10 @@ public class UserBookingServiceImpl implements UserBookingService{
         List<UserBooking> userBookinglist = userBookingRepository.findByUserId(user.get().getId());
         List<ServiceProviderForUser> serviceProviderForUsers = new ArrayList<>();
         for(UserBooking userBooking : userBookinglist){
-            if(userBooking.isEnabled()) {
-                ServiceProvider serviceProvider = userBooking.getServiceProvider();
-                ServiceProviderForUser serviceProviderForUser = convertService(serviceProvider, userBooking.getBookedTime());
-                serviceProviderForUsers.add(serviceProviderForUser);
-            }
+            ServiceProvider serviceProvider = userBooking.getServiceProvider();
+            ServiceProviderForUser serviceProviderForUser = convertService(serviceProvider, userBooking.getBookedTime(),userBooking.isEnabled(),userBooking.isCompleted(),userBooking.getAddress());
+            serviceProviderForUsers.add(serviceProviderForUser);
+
         }
         return serviceProviderForUsers;
     }
@@ -110,7 +109,7 @@ public class UserBookingServiceImpl implements UserBookingService{
         return userBooking;
     }
 
-    private ServiceProviderForUser convertService(ServiceProvider serviceProvider,LocalDateTime slottime){
+    private ServiceProviderForUser convertService(ServiceProvider serviceProvider,LocalDateTime slottime,boolean enabled,boolean completed,String address){
         ServiceProviderForUser serviceProviderForUser = new ServiceProviderForUser();
         serviceProviderForUser.setName(serviceProvider.getName());
         serviceProviderForUser.setEmail(serviceProvider.getEmail());
@@ -120,6 +119,10 @@ public class UserBookingServiceImpl implements UserBookingService{
         serviceProviderForUser.setCompanyName(serviceProvider.getCompanyName());
         serviceProviderForUser.setSlottime(slottime);
         serviceProviderForUser.setAddress(serviceProvider.getAddress());
+        serviceProviderForUser.setEnabled(enabled);
+        serviceProviderForUser.setCompleted(completed);
+        serviceProviderForUser.setCategories(serviceProvider.getCategories());
+        serviceProviderForUser.setUserAddress(address);
         return serviceProviderForUser;
     }
 }

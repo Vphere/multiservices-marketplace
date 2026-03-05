@@ -95,6 +95,22 @@ export async function loginUser(login) {
 	}
 }
 
+export async function getUsername() {
+	try {
+		const response = await api.get("/users/getusername",{
+			headers : getHeader()
+		} )
+		if (response.status >= 200 && response.status < 300) {
+			return response.data
+		} else {
+			return null
+		}
+	} catch (error) {
+		console.error(error)
+		return null
+	}
+}
+
 export async function serviceProviderform(data,homeService,reachWorkplace,companyName,profession,price) {
 	try {
         const token = sessionStorage.getItem("token")
@@ -521,6 +537,26 @@ export async function SetOrderCompleted(bookedTime) {
 	try {
         const token = sessionStorage.getItem("token")
 		const response = await api.post("/serviceProvider/setOrderCompleted",{bookedTime:bookedTime},{
+            headers : {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+		if (response.status >= 200 && response.status < 300) {
+            console.log(response.data)
+			return response.data
+		} else {
+			return null
+		}
+	} catch (error) {
+		console.error(error)
+		return null
+	}
+}
+
+export async function rejectServiceProvider(data) {
+	try {
+        const token = sessionStorage.getItem("token")
+		const response = await api.post("/admin/rejectServiceProvider",data,{
             headers : {
                 Authorization: `Bearer ${token}`,
             }

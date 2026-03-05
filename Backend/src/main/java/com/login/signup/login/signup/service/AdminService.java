@@ -1,6 +1,7 @@
 package com.login.signup.login.signup.service;
 
 import com.login.signup.login.signup.model.ServiceProvider;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface AdminService {
     List<ServiceProvider> getPendingUser();
 
     String setEnabled(String email,boolean enabled);
+
+    String rejectServiceProvider(String email,String reason);
 }

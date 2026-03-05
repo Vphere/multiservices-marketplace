@@ -8,7 +8,6 @@ import {
 } from "../utils/apiFunction";
 import { useNavigate } from "react-router-dom";
 
-/* 🔐 LOCAL DATE FORMATTER (NO UTC SHIFT) */
 const formatDateLocal = (date) => {
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -24,7 +23,6 @@ const BookService = () => {
   const [blockedDates, setBlockedDates] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔔 dialog state
   const [showDialog, setShowDialog] = useState(false);
 
   const timeSlots = [
@@ -33,7 +31,6 @@ const BookService = () => {
     "17:00","18:00","19:00","20:00"
   ];
 
-  /* 📅 MULTI-DATE TOGGLE (LOCAL DATE SAFE) */
   const handleDateSelect = (date) => {
     const selected = formatDateLocal(date);
 
@@ -48,7 +45,6 @@ const BookService = () => {
     });
   };
 
-  /* ⏰ TIME TOGGLE */
   const toggleTime = (time) => {
     setSelectedTimes((prev) =>
       prev.includes(time)
@@ -57,7 +53,6 @@ const BookService = () => {
     );
   };
 
-  /* 🔥 CREATE SLOT DTOs (LOCAL DATE SAFE) */
   const generateSlotDtos = () => {
     const slots = [];
 
@@ -71,7 +66,6 @@ const BookService = () => {
     return slots;
   };
 
-  /* ✅ SUBMIT */
   const handleSubmit = async () => {
     setLoading(true);
     const slotDtos = generateSlotDtos();
@@ -93,7 +87,6 @@ const BookService = () => {
     }
   };
 
-  /* 🚀 LOAD BLOCKED DATES + AUTH CHECK */
   useEffect(() => {
     const userRole = sessionStorage.getItem("userRole");
     if (!(userRole && userRole.includes("ROLE_SERVICE"))) {
@@ -117,7 +110,6 @@ const BookService = () => {
 
   return (
     <>
-      {/* ✅ SUCCESS DIALOG */}
       {showDialog && (
         <div className="dialog-overlay">
           <div className="dialog-box">
@@ -132,7 +124,6 @@ const BookService = () => {
 
           <h2>Add Service Slots</h2>
 
-          {/* 📅 DATE PICKER */}
           <div className="section">
             <h4>📅 Select Dates</h4>
 
@@ -148,7 +139,6 @@ const BookService = () => {
             />
           </div>
 
-          {/* ⏰ TIME SLOTS */}
           <div className="section">
             <h4>⏰ Select Time Slots</h4>
 

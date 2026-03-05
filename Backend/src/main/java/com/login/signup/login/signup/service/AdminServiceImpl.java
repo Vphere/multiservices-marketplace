@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService{
     private final ServiceProviderRepository serviceProviderRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public List<ServiceProvider> getPendingUser() {
@@ -28,5 +29,16 @@ public class AdminServiceImpl implements AdminService{
         } catch (Exception e) {
             throw new RuntimeException("something went wrong");
         }
+    }
+
+    @Override
+    public String rejectServiceProvider(String email,String reason) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(email);
+        if(serviceProvider!=null) {
+            serviceProviderRepository.deleteByServiceId(serviceProvider.getServiceId());
+            authenticationService.sendServiceProviderRejectionEmail(email,reason);
+            return "ServiceProvider Rejected";
+        }
+        throw new RuntimeException("service provider not found");
     }
 }

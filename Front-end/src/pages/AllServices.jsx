@@ -1,79 +1,146 @@
 import "./AllServices.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const utilityServices = [
-  "AC Repair & Service",
+const homeServices = [
   "Electrician",
   "Plumber",
-  "Cleaning & Pest Control",
-  "Appliance Repair",
   "Carpenter",
-  "Home Painting",
-  "RO Water Purifier Service",
-  "Refrigerator Repair",
-  "Washing Machine Repair",
-  "Geyser Repair",
+  "AC Repair & Service Technician",
+  "Refrigerator Repair Technician",
+  "Washing Machine Repair Technician",
+  "Microwave / Appliance Repair Technician",
+  "RO Water Purifier Technician",
+  "Geyser Repair Technician",
+  "CCTV Installation Technician",
+  "Inverter & UPS Technician",
+  "Home Deep Cleaning Specialist",
+  "Bathroom Cleaning Specialist",
+  "Kitchen Deep Cleaning Specialist",
+  "Water Tank Cleaning Specialist"
 ];
 
-const groomingServices = [
-  "Salon for Women",
-  "Salon for Men",
-  "Spa & Massage",
-  "Bridal Makeup",
+const beautyServices = [
+  "Women Salon Professional",
+  "Men Salon Professional",
+  "Hair Style Artist",
+  "Makeup Artist",
+  "Bridal Makeup Artist",
+  "Facial & Skincare Specialist",
+  "Waxing Specialist",
+  "Nail Artist"
+];
+
+const fitnessServices = [
+  "Yoga Instructor",
+  "Personal Fitness Trainer",
+  "Gym Trainer",
+  "Zumba Instructor",
+  "Pilates Instructor",
+  "Meditation Coach",
+  "Weight Loss Coach"
 ];
 
 const artsServices = [
-  "Personal Gym Trainer",
-  "Yoga Instructor",
-  "Zumba Trainer",
-  "Pilates Instructor",
-  "Meditation Coach",
-  "Weight Loss Coach",
-  "Dance Classes",
-  "Music Lessons",
-  "Acting & Drama Classes",
-  "Art Classes",
-  "Drawing & Sketching Classes",
-  "Photography Classes",
+  "Music Teacher",
+  "Dance Instructor",
+  "Art & Painting Teacher",
+  "Drawing / Sketching Instructor",
+  "Acting / Drama Coach",
+  "Photography Instructor"
 ];
 
 const AllServices = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleNavigate = (path, service) => {
+    navigate(path, {
+      state: { selectedService: service }
+    });
+  };
 
   return (
     <div className="all-services-page">
 
       <h1 className="all-services-title">Explore All Services</h1>
 
-      {/* Utility */}
+      {/* Home Services */}
       <section>
-        <h2>Utility Services</h2>
+        <h2>Home Services</h2>
         <div className="all-services-grid">
-          {utilityServices.map((service, index) => (
-            <div key={index} className="service-box">{service}</div>
+          {homeServices.map((service, index) => (
+            <div
+              key={index}
+              className="service-box"
+              onClick={() =>
+                handleNavigate("/services/home-services", service)
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {service}
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Grooming */}
+      {/* Beauty */}
       <section>
-        <h2>Grooming & Personal Care</h2>
+        <h2>Beauty</h2>
         <div className="all-services-grid">
-          {groomingServices.map((service, index) => (
-            <div key={index} className="service-box">{service}</div>
+          {beautyServices.map((service, index) => (
+            <div
+              key={index}
+              className="service-box"
+              onClick={() =>
+                handleNavigate("/services/beauty", service)
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {service}
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Arts */}
+      {/* Fitness */}
+      <section>
+        <h2>Fitness</h2>
+        <div className="all-services-grid">
+          {fitnessServices.map((service, index) => (
+            <div
+              key={index}
+              className="service-box"
+              onClick={() =>
+                handleNavigate("/services/fitness", service)
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {service}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Arts & Recreation */}
       <section>
         <h2>Arts & Recreation</h2>
         <div className="all-services-grid">
           {artsServices.map((service, index) => (
-            <div key={index} className="service-box">{service}</div>
+            <div
+              key={index}
+              className="service-box"
+              onClick={() =>
+                handleNavigate("/services/arts-recreation", service)
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {service}
+            </div>
           ))}
         </div>
       </section>

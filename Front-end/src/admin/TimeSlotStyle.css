@@ -1,0 +1,147 @@
+/* ============================= */
+/* ADMIN REQUEST PAGE STYLING */
+/* ============================= */
+
+body {
+  background: #f4f6f9;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Heading */
+.container h3 {
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+/* ============================= */
+/* ALERTS */
+/* ============================= */
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #e6f9ed;
+  color: #1e7e34;
+}
+
+.alert-danger {
+  background-color: #fdecea;
+  color: #b02a37;
+}
+
+.alert-warning {
+  background-color: #fff4e5;
+  color: #cc8400;
+}
+
+.alert-info {
+  background-color: #e7f3ff;
+  color: #0056b3;
+}
+
+/* ============================= */
+/* TABLE */
+/* ============================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+thead {
+  background: linear-gradient(135deg, #343a40, #212529);
+  color: white;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #f1f1f1;
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* ============================= */
+/* BUTTONS */
+/* ============================= */
+
+button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+}
+
+/* DETAILS BUTTON */
+.btn-info {
+  background: linear-gradient(135deg, #17a2b8, #117a8b);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.btn-info:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(23, 162, 184, 0.5);
+}
+
+/* ACCEPT BUTTON */
+.btn-success {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.btn-success:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(40, 167, 69, 0.5);
+}
+
+/* REJECT BUTTON */
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545, #b02a37);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-danger:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(220, 53, 69, 0.5);
+}
+
+/* Click animation */
+button:active {
+  transform: scale(0.95);
+}

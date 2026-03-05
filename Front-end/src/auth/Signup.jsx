@@ -40,6 +40,7 @@ const Signup = () => {
     }
 
     try {
+      registration.roles.includes("ROLE_USER")
       await registerUser(registration);
 
       navigate("/verify", {
@@ -125,9 +126,9 @@ const Signup = () => {
 
             {/* Roles */}
             <div className="mb-3">
-              <label className="form-label fw-bold">Select Role(s)</label>
+              <label className="form-label fw-bold">Do You Want to Provide Service?</label>
 
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -136,7 +137,7 @@ const Signup = () => {
                   onChange={handleRoleChange}
                 />
                 <label className="form-check-label">User</label>
-              </div>
+              </div> */}
 
               <div className="form-check">
                 <input

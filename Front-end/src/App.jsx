@@ -24,6 +24,7 @@ import EditBooking from "./ServiceProvider/EditBooking";
 import RemoveBooking from "./ServiceProvider/RemoveBooking";
 import Order from "./order/order";
 import AllServices from "./pages/AllServices";
+import UserBillPage from "./components/UserBillPage";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
               <Route path="/services/removebooking" element={<RemoveBooking/>} />
               <Route path="/user/order" element={<Order/>} />
               <Route path="/all-services" element={<AllServices/>} />
+              <Route path="/user/bill" element={<UserBillPage />} />
             </Routes>
           </main>
         </div>

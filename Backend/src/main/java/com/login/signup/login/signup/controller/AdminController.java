@@ -1,5 +1,6 @@
 package com.login.signup.login.signup.controller;
 
+import com.login.signup.login.signup.dto.RejectServiceProviderDto;
 import com.login.signup.login.signup.model.ServiceProvider;
 import com.login.signup.login.signup.responses.ServiceResponse;
 import com.login.signup.login.signup.service.AdminService;
@@ -73,6 +74,15 @@ public class AdminController {
             return ResponseEntity.ok(s);
         } catch (Exception e) {
             throw new RuntimeException("something went wrong");
+        }
+    }
+
+    @PostMapping("/rejectServiceProvider")
+    public ResponseEntity<String> rejectServiceProvider(@RequestBody RejectServiceProviderDto rejectServiceProviderDto){
+        try{
+            return ResponseEntity.ok(adminService.rejectServiceProvider(rejectServiceProviderDto.getEmail(),rejectServiceProviderDto.getReason()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,40 +1,20 @@
 import React from "react";
-import { cancelOrder } from "../utils/apiFunction";
 
-const ActiveOrders = ({ orders }) => {
-
-  const handleCancel = async (order) => {
-    const reason = window.prompt("Enter cancellation reason:");
-    if (!reason) return;
-
-    const data = {
-      reason: reason,
-      bookedTime: order.slottime
-    };
-
-    const res = await cancelOrder(order.email, data);
-
-    if (res) {
-      alert("Order cancelled successfully");
-      window.location.reload();
-    } else {
-      alert("Failed to cancel order");
-    }
-  };
+const CompletedOrders = ({ orders }) => {
 
   if (orders.length === 0) {
-    return <p className="no-orders">No active orders</p>;
+    return <p className="no-orders">No completed orders</p>;
   }
 
   return (
     <div className="order-list">
       {orders.map((o, i) => (
-        <div key={i} className="order-card improved-card">
+        <div key={i} className="order-card improved-card history-card">
 
           {/* HEADER */}
-          <div className="order-header">
+          <div className="order-header history-header">
             <h3>{o.profession}</h3>
-            <span className="price">₹{o.price}</span>
+            <span className="price muted">₹{o.price}</span>
           </div>
 
           {/* PROVIDER INFO */}
@@ -60,9 +40,9 @@ const ActiveOrders = ({ orders }) => {
           </div>
 
           {/* SLOT INFO */}
-          <div className="order-section slot-section">
-            <h4>⏰ Your Slot</h4>
-            <div className="slot-box">
+          <div className="order-section slot-section history-slot">
+            <h4>✅ Completed Slot</h4>
+            <div className="slot-box history-box">
               <div>
                 <span className="label">Date</span>
                 <span className="value">
@@ -81,15 +61,10 @@ const ActiveOrders = ({ orders }) => {
             </div>
           </div>
 
-          {/* CANCEL BUTTON */}
-          {o.enabled === true && o.completed === false && (
-            <button
-              className="cancel-btn"
-              onClick={() => handleCancel(o)}
-            >
-              ❌ Cancel Order
-            </button>
-          )}
+          {/* STATUS BADGE */}
+          <div style={{ marginTop: "15px" }}>
+            <span className="completed-text">✅ Completed</span>
+          </div>
 
         </div>
       ))}
@@ -97,4 +72,4 @@ const ActiveOrders = ({ orders }) => {
   );
 };
 
-export default ActiveOrders;
+export default CompletedOrders;

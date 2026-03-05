@@ -179,5 +179,64 @@ public class AuthenticationService {
         }
     }
 
+    public void sendServiceProviderRejectionEmail(String email , String reason) {
+
+        String subject = "Service Provider Application Update - Urban Nexus";
+
+        String htmlMessage = "<html>"
+                + "<body style=\"font-family: Arial, sans-serif; background-color:#f4f6f9; padding:20px;\">"
+
+                + "<div style=\"max-width:600px; margin:auto; background:#ffffff; padding:30px; "
+                + "border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.08);\">"
+
+                + "<h2 style=\"color:#1e293b; text-align:center;\">Urban Nexus Services</h2>"
+
+                + "<hr style=\"border:none; border-top:1px solid #e2e8f0; margin:20px 0;\"/>"
+
+                + "<h3 style=\"color:#dc2626;\">Application Rejected</h3>"
+
+                + "<p style=\"font-size:15px; color:#334155;\">"
+                + "Dear <strong>" + email + "</strong>,"
+                + "</p>"
+
+                + "<p style=\"font-size:15px; color:#334155;\">"
+                + "Thank you for applying to become a Service Provider on Urban Nexus."
+                + "</p>"
+
+                + "<p style=\"font-size:15px; color:#334155;\">"
+                + "After reviewing your request, we regret to inform you that your application "
+                + "has been rejected for the following reason:"
+                + "</p>"
+
+                + "<div style=\"background:#fef2f2; padding:15px; border-left:4px solid #dc2626; "
+                + "border-radius:6px; margin:20px 0;\">"
+                + "<p style=\"margin:0; color:#7f1d1d; font-size:14px;\">"
+                + reason
+                + "</p>"
+                + "</div>"
+
+                + "<p style=\"font-size:15px; color:#334155;\">"
+                + "You may update your information and reapply again in the future."
+                + "</p>"
+
+                + "<br/>"
+
+                + "<p style=\"font-size:14px; color:#64748b;\">"
+                + "Best Regards,<br/>"
+                + "<strong>Urban Nexus Team</strong><br/>"
+                + "📧 support@urbannexus.com"
+                + "</p>"
+
+                + "</div>"
+                + "</body>"
+                + "</html>";
+
+        try {
+            emailService.sendVerificationEmail(email, subject, htmlMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

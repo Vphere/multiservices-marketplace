@@ -1,22 +1,14 @@
 import React from "react";
 
 const OrderHistory = ({ orders }) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
 
-  const historyOrders = orders.filter((o) => {
-    const d = new Date(o.slottime);
-    d.setHours(0, 0, 0, 0);
-    return d < today;
-  });
-
-  if (historyOrders.length === 0) {
-    return <p className="no-orders">No order history</p>;
+  if (orders.length === 0) {
+    return <p className="no-orders">No cancelled orders</p>;
   }
 
   return (
     <div className="order-list">
-      {historyOrders.map((o, i) => (
+      {orders.map((o, i) => (
         <div key={i} className="order-card improved-card history-card">
 
           {/* HEADER */}
@@ -33,13 +25,23 @@ const OrderHistory = ({ orders }) => {
               <p><b>Name:</b> {o.name}</p>
               <p><b>Email:</b> {o.email}</p>
               <p><b>Phone:</b> {o.phonenumber}</p>
-              <p><b>Address:</b> {o.address}</p>
+
+              {/* ✅ Category Based Address Logic */}
+              {o.categories === "Home Services" ? (
+                <p>
+                  <b>Your Address:</b> {o.userAddress}
+                </p>
+              ) : (
+                <p>
+                  <b>Service Address:</b> {o.address}
+                </p>
+              )}
             </div>
           </div>
 
           {/* SLOT INFO */}
           <div className="order-section slot-section history-slot">
-            <h4>📅 Completed Slot</h4>
+            <h4>📅 Cancelled Slot</h4>
             <div className="slot-box history-box">
               <div>
                 <span className="label">Date</span>
@@ -57,6 +59,11 @@ const OrderHistory = ({ orders }) => {
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* STATUS BADGE */}
+          <div style={{ marginTop: "15px" }}>
+            <span className="cancelled-text">❌ Cancelled</span>
           </div>
 
         </div>

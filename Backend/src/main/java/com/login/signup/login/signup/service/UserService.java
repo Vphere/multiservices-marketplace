@@ -45,4 +45,9 @@ public class UserService {
         userRepository.save(user.get());
         return "address added successfully";
     }
+
+    public String getUsername(String email) {
+        if(email==null)throw new RuntimeException("email not found");
+        return userRepository.findByEmail(email).get().getUsername();
+    }
 }

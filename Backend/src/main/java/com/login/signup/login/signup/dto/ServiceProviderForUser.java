@@ -13,4 +13,8 @@ public class ServiceProviderForUser {
     private Integer price;
     private LocalDateTime slottime;
     private String address;
+    private boolean enabled;
+    private boolean completed;
+    private String categories;
+    private String userAddress;
 }

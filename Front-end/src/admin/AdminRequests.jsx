@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pendingRequest, setEnabled } from "../utils/apiFunction";
+import "./TimeSlotStyle.css";
 
 const AdminRequests = () => {
   const navigate = useNavigate();
@@ -68,30 +69,45 @@ const AdminRequests = () => {
   };
 
   const handleReject = async (id) => {
-    const req = requests.find((r) => r.serviceId === id);
-    if (!req) return;
+  const req = requests.find((r) => r.serviceId === id);
+  if (!req) return;
 
-    const confirm = window.confirm(
-      "Are you sure you want to REJECT this service provider?"
-    );
-    if (!confirm) return;
+  const confirm = window.confirm(
+    "Are you sure you want to REJECT this service provider?"
+  );
+  if (!confirm) return;
 
-    const res = await setEnabled(req.email, false);
-    if (!res) {
-      setNotification({
-        type: "danger",
-        message: "Failed to reject service provider"
-      });
-      return;
-    }
+  // Ask admin for reason
+  const reason = window.prompt("Please enter reason for rejection:");
 
+  if (!reason || reason.trim() === "") {
+    alert("Rejection reason is required.");
+    return;
+  }
+
+  // 🔥 Call your reject API
+  const res = await rejectServiceProvider({
+    email: req.email,
+    reason: reason
+  });
+
+  if (!res) {
     setNotification({
-      type: "warning",
-      message: "Service provider rejected ❌"
+      type: "danger",
+      message: "Failed to reject service provider"
     });
+    return;
+  }
 
-    setRequests((prev) => prev.filter((r) => r.serviceId !== id));
-  };
+  setNotification({
+    type: "warning",
+    message: "Service provider rejected successfully ❌"
+  });
+
+  // Remove from list
+  setRequests((prev) => prev.filter((r) => r.serviceId !== id));
+};
+
 
   return (
     <div className="container mt-4">

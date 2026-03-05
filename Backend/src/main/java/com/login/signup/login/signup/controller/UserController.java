@@ -38,6 +38,16 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/getusername")
+    public ResponseEntity<String> getUsername(Authentication authentication){
+        try{
+            String email = authentication.getName();
+            return ResponseEntity.ok(userService.getUsername(email));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @GetMapping("/getdetails")
     public ResponseEntity<UserDetailsDto> getAddressDetails(Authentication authentication){
         try{
