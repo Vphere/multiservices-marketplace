@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import ServiceProviderCard from "../components/ServiceProviderCard"
-import { getHomeService } from "../utils/apiFunction"
+import { getArtsRecreationService } from "../utils/apiFunction"
 import "./ServiceListing.css"
 
 const professionList = [
-  "Electrician",
-  "Plumber",
-  "Carpenter",
-  "AC Repair & Service Technician",
-  "Refrigerator Repair Technician",
-  "Washing Machine Repair Technician",
-  "Microwave / Appliance Repair Technician",
-  "RO Water Purifier Technician",
-  "Geyser Repair Technician",
-  "CCTV Installation Technician",
-  "Inverter & UPS Technician",
-  "Home Deep Cleaning Specialist",
-  "Bathroom Cleaning Specialist",
-  "Kitchen Deep Cleaning Specialist",
-  "Water Tank Cleaning Specialist"
+  "Dance Instructor",
+  "Music Teacher",
+  "Acting Coach",
+  "Art Teacher",
+  "Drawing Instructor",
+  "Photography Teacher",
+  "Singing Coach",
+  "Instrument Teacher",
+  "Painting Instructor",
+  "Craft Teacher"
 ]
 
-const ServiceListingHomeService = () => {
+const ServiceListingArtsRecreationService = () => {
   const [providers, setProviders] = useState([])
 
   const [searchCity, setSearchCity] = useState("")
   const [searchProfessionText, setSearchProfessionText] = useState("")
-  const [searchType, setSearchType] = useState("") // 
+  const [searchType, setSearchType] = useState("")
   const [suggestions, setSuggestions] = useState([])
 
   const location = useLocation()
@@ -40,16 +35,16 @@ const ServiceListingHomeService = () => {
     if (location.state?.profession) {
       // Auto-activate the corresponding chip filter based on profession
       const profession = location.state.profession.toLowerCase()
-      if (profession.includes("plumber")) {
-        setSearchType("Plumber")
-      } else if (profession.includes("carpenter")) {
-        setSearchType("Carpenter")
-      } else if (profession.includes("electrician")) {
-        setSearchType("Electrician")
-      } else if (profession.includes("technician") || profession.includes("repair") || profession.includes("ac")) {
-        setSearchType("Technician")
-      } else if (profession.includes("cleaning") || profession.includes("specialist")) {
-        setSearchType("Specialist")
+      if (profession.includes("instructor") || profession.includes("teacher")) {
+        setSearchType("Instructor")
+      } else if (profession.includes("dance")) {
+        setSearchType("Dance")
+      } else if (profession.includes("music")) {
+        setSearchType("Music")
+      } else if (profession.includes("art") || profession.includes("drawing") || profession.includes("painting")) {
+        setSearchType("Art")
+      } else if (profession.includes("photography")) {
+        setSearchType("Photography")
       }
     }
   }, [location.state])
@@ -57,7 +52,7 @@ const ServiceListingHomeService = () => {
   // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getHomeService()
+      const data = await getArtsRecreationService()
       if (data) {
         setProviders(Array.isArray(data) ? data : [data])
       }
@@ -86,7 +81,7 @@ const ServiceListingHomeService = () => {
     setSuggestions([])
   }
 
-  // ✅ Combined Filter Logic
+  // Combined Filter Logic
   const filteredProviders = providers.filter((provider) => {
     const cityMatch = searchCity
       ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
@@ -113,7 +108,7 @@ const ServiceListingHomeService = () => {
 
         {/* Header */}
         <div className="listing-header">
-          <h1 className="listing-title">Home Services</h1>
+          <h1 className="listing-title">Arts & Recreation</h1>
           <p className="listing-subtitle">
             Showing {filteredProviders.length} professionals
           </p>
@@ -180,9 +175,9 @@ const ServiceListingHomeService = () => {
 
         </div>
 
-        {/* ✅ 5 Quick Filters Added */}
+        {/* Quick Filters */}
         <div className="profession-filters">
-          {["Plumber", "Carpenter", "Electrician", "Technician", "Specialist"].map(
+          {["Instructor", "Dance", "Music", "Art", "Photography"].map(
             (item) => (
               <button
                 key={item}
@@ -218,4 +213,4 @@ const ServiceListingHomeService = () => {
   )
 }
 
-export default ServiceListingHomeService;
+export default ServiceListingArtsRecreationService;

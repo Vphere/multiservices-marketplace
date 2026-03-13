@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import ServiceProviderCard from "../components/ServiceProviderCard"
-import { getHomeService } from "../utils/apiFunction"
+import { getFitnessService } from "../utils/apiFunction"
 import "./ServiceListing.css"
 
 const professionList = [
-  "Electrician",
-  "Plumber",
-  "Carpenter",
-  "AC Repair & Service Technician",
-  "Refrigerator Repair Technician",
-  "Washing Machine Repair Technician",
-  "Microwave / Appliance Repair Technician",
-  "RO Water Purifier Technician",
-  "Geyser Repair Technician",
-  "CCTV Installation Technician",
-  "Inverter & UPS Technician",
-  "Home Deep Cleaning Specialist",
-  "Bathroom Cleaning Specialist",
-  "Kitchen Deep Cleaning Specialist",
-  "Water Tank Cleaning Specialist"
+  "Personal Gym Trainer",
+  "Yoga Instructor",
+  "Zumba Trainer",
+  "Pilates Instructor",
+  "Meditation Coach",
+  "Weight Loss Coach",
+  "CrossFit Trainer",
+  "Aerobics Instructor",
+  "Martial Arts Trainer",
+  "Dance Fitness Instructor"
 ]
 
-const ServiceListingHomeService = () => {
+const ServiceListingFitnessService = () => {
   const [providers, setProviders] = useState([])
 
   const [searchCity, setSearchCity] = useState("")
   const [searchProfessionText, setSearchProfessionText] = useState("")
-  const [searchType, setSearchType] = useState("") // 
+  const [searchType, setSearchType] = useState("")
   const [suggestions, setSuggestions] = useState([])
 
   const location = useLocation()
@@ -40,16 +35,16 @@ const ServiceListingHomeService = () => {
     if (location.state?.profession) {
       // Auto-activate the corresponding chip filter based on profession
       const profession = location.state.profession.toLowerCase()
-      if (profession.includes("plumber")) {
-        setSearchType("Plumber")
-      } else if (profession.includes("carpenter")) {
-        setSearchType("Carpenter")
-      } else if (profession.includes("electrician")) {
-        setSearchType("Electrician")
-      } else if (profession.includes("technician") || profession.includes("repair") || profession.includes("ac")) {
-        setSearchType("Technician")
-      } else if (profession.includes("cleaning") || profession.includes("specialist")) {
-        setSearchType("Specialist")
+      if (profession.includes("fitness") || profession.includes("gym")) {
+        setSearchType("Gym")
+      } else if (profession.includes("yoga")) {
+        setSearchType("Yoga")
+      } else if (profession.includes("trainer")) {
+        setSearchType("Trainer")
+      } else if (profession.includes("zumba") || profession.includes("dance")) {
+        setSearchType("Dance")
+      } else if (profession.includes("meditation") || profession.includes("pilates")) {
+        setSearchType("Wellness")
       }
     }
   }, [location.state])
@@ -57,7 +52,7 @@ const ServiceListingHomeService = () => {
   // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getHomeService()
+      const data = await getFitnessService()
       if (data) {
         setProviders(Array.isArray(data) ? data : [data])
       }
@@ -86,7 +81,7 @@ const ServiceListingHomeService = () => {
     setSuggestions([])
   }
 
-  // ✅ Combined Filter Logic
+  // Combined Filter Logic
   const filteredProviders = providers.filter((provider) => {
     const cityMatch = searchCity
       ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
@@ -113,7 +108,7 @@ const ServiceListingHomeService = () => {
 
         {/* Header */}
         <div className="listing-header">
-          <h1 className="listing-title">Home Services</h1>
+          <h1 className="listing-title">Fitness Services</h1>
           <p className="listing-subtitle">
             Showing {filteredProviders.length} professionals
           </p>
@@ -180,9 +175,9 @@ const ServiceListingHomeService = () => {
 
         </div>
 
-        {/* ✅ 5 Quick Filters Added */}
+        {/* Quick Filters */}
         <div className="profession-filters">
-          {["Plumber", "Carpenter", "Electrician", "Technician", "Specialist"].map(
+          {["Gym", "Yoga", "Trainer", "Dance", "Wellness"].map(
             (item) => (
               <button
                 key={item}
@@ -200,7 +195,7 @@ const ServiceListingHomeService = () => {
         </div>
 
         {/* Providers */}
-        <div className="providers-grid fitness-scroll">
+        <div className="providers-grid">
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider, index) => (
               <ServiceProviderCard
@@ -218,4 +213,4 @@ const ServiceListingHomeService = () => {
   )
 }
 
-export default ServiceListingHomeService;
+export default ServiceListingFitnessService;

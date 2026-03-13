@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Login from './auth/Login'
@@ -25,8 +26,25 @@ import RemoveBooking from "./ServiceProvider/RemoveBooking";
 import Order from "./order/order";
 import AllServices from "./pages/AllServices";
 import UserBillPage from "./components/UserBillPage";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 2500); 
+
+  return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen/>;   
+  }
+
+
   return (
       <Router>
         <div className="min-h-screen bg-slate-50">
