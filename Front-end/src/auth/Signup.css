@@ -1,119 +1,112 @@
-.signup-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem 1rem;
+.signup-container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  font-family:"Segoe UI",sans-serif;
 }
 
-.signup-overlay {
-  width: 100%;
-  max-width: 450px;
+.signup-card{
+  width:400px;
+  padding:40px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(15px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+  color:white;
 }
 
-.signup-card {
-  background: white;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+.signup-title{
+  text-align:center;
+  margin-bottom:5px;
 }
 
-.signup-card:hover {
-  transform: translateY(-5px);
+.signup-subtitle{
+  text-align:center;
+  margin-bottom:25px;
+  opacity:0.8;
 }
 
-.signup-card h2 {
-  color: #1f2937;
-  font-weight: 700;
-  margin-bottom: 2rem;
+.input-group{
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,0.2);
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:15px;
 }
 
-.signup-card .form-label {
-  color: #374151;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.input-group span{
+  margin-right:10px;
 }
 
-.signup-card .form-control {
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 0.875rem 1rem;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+.input-group input{
+  border:none;
+  outline:none;
+  background:transparent;
+  width:100%;
+  color:white;
 }
 
-.signup-card .form-control:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+.input-group input::placeholder{
+  color:rgba(255,255,255,0.7);
 }
 
-.signup-card .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 12px;
-  padding: 0.875rem;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+.role-box{
+  margin-top:10px;
+  margin-bottom:20px;
 }
 
-.signup-card .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+.role-title{
+  font-size:14px;
+  margin-bottom:8px;
 }
 
-.signup-card .form-check {
-  margin-bottom: 0.75rem;
+.role-option{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
 }
 
-.signup-card .form-check-input {
-  border: 2px solid #e5e7eb;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+.signup-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:white;
+  color:#764ba2;
+  font-weight:bold;
+  transition:0.3s;
 }
 
-.signup-card .form-check-input:checked {
-  background-color: #667eea;
-  border-color: #667eea;
+.signup-btn:hover{
+  background:#f2f2f2;
 }
 
-.signup-card .form-check-label {
-  color: #374151;
-  font-weight: 500;
-  margin-left: 0.5rem;
+.login-text{
+  text-align:center;
+  margin-top:15px;
 }
 
-.signup-card .alert {
-  border-radius: 12px;
-  border: none;
-  margin-bottom: 1.5rem;
+.login-text a{
+  color:white;
+  font-weight:bold;
 }
 
-.signup-card p a {
-  color: #667eea;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.3s ease;
+.error-box{
+  background:rgba(255,0,0,0.3);
+  padding:10px;
+  border-radius:6px;
+  text-align:center;
+  margin-bottom:15px;
 }
 
-.signup-card p a:hover {
-  color: #764ba2;
-  text-decoration: underline;
-}
-
-@media (max-width: 576px) {
-  .signup-page {
-    padding: 1rem;
-  }
-  
-  .signup-overlay {
-    max-width: 100%;
-  }
-  
-  .signup-card {
-    margin: 0;
-  }
+.success-box{
+  background:rgba(0,255,100,0.3);
+  padding:10px;
+  border-radius:6px;
+  text-align:center;
+  margin-bottom:15px;
 }

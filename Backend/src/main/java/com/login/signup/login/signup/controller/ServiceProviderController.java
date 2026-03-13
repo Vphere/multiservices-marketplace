@@ -21,7 +21,7 @@ import java.util.List;
 public class ServiceProviderController {
 
     private final ServiceProviderServices serviceProviderServices;
-    @PostMapping("/fetch")
+    @PostMapping("/service/fetch")
     public ResponseEntity<String> fetchDetails(@RequestParam String name,
                                                @RequestParam String email,
                                                @RequestParam String address,
@@ -70,12 +70,12 @@ public class ServiceProviderController {
         return ResponseEntity.ok("sueccesfully");
     }
 
-    @PostMapping("/emailcheck")
-    public ResponseEntity<Boolean> existByemail(@RequestParam String email){
-        Boolean isavailable = serviceProviderServices.existByEmail(email);
-        System.out.println(email);
-        return ResponseEntity.ok(isavailable);
-    }
+//    @PostMapping("/emailcheck")
+//    public ResponseEntity<Boolean> existByemail(@RequestParam String email){
+//        Boolean isavailable = serviceProviderServices.existByEmail(email);
+//        System.out.println(email);
+//        return ResponseEntity.ok(isavailable);
+//    }
 
     @GetMapping("/getHomeService")
     public ResponseEntity<List<ServiceProviderDto>> getHomeService(){
@@ -155,7 +155,7 @@ public class ServiceProviderController {
         return serviceProviderDto;
     }
 
-    @PostMapping("/setService")
+    @PostMapping("/service/setService")
     public ResponseEntity<String> fetchDetailsAfterAccept(@RequestBody List<ProviderSlotDto> wrapperDto, Authentication authentication){
         String email = authentication.getName();
         System.out.println(wrapperDto);
@@ -180,7 +180,7 @@ public class ServiceProviderController {
         }
     }
 
-    @GetMapping("/getEnabled")
+    @GetMapping("/service/getEnabled")
     public ResponseEntity<Boolean> getEnabled(Authentication authentication){
         String email = authentication.getName();
         ServiceProvider serviceProvider = findByEmail(email);
@@ -200,7 +200,7 @@ public class ServiceProviderController {
         }
     }
 
-    @DeleteMapping("/deleteBooking")
+    @DeleteMapping("/service/deleteBooking")
     public ResponseEntity<String> deleteBooking(Authentication authentication,@RequestBody List<ProviderSlotDto> providerSlotDtos){
         try{
             String email = authentication.getName();
@@ -210,7 +210,7 @@ public class ServiceProviderController {
         }
     }
 
-    @PostMapping("/sendEmailForCancelletion")
+    @PostMapping("/service/sendEmailForCancelletion")
     public ResponseEntity<String> sendEmailForCancelletion(@RequestBody EmailForCancelletionDto dto, @RequestParam String email,Authentication authentication){
         try{
             String provideremail = authentication.getName();
@@ -220,7 +220,7 @@ public class ServiceProviderController {
         }
     }
 
-    @PostMapping("/setOrderCompleted")
+    @PostMapping("/service/setOrderCompleted")
     public ResponseEntity<String> setOrderCompleted(@RequestBody OrderCompleteDto bookedTime, Authentication authentication){
         try{
             String email = authentication.getName();

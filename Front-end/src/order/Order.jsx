@@ -13,16 +13,22 @@ const OrdersPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const data = await getBookingServices();
-      console.log(data);
       if (Array.isArray(data)) {
         setOrders(data);
       }
       setLoading(false);
     };
+
     fetchOrders();
   }, []);
 
-  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   const activeOrders = orders.filter(
     (order) => order.enabled === true && order.completed === false
@@ -38,42 +44,37 @@ const OrdersPage = () => {
 
   return (
     <div className="order-container">
-      <h2 className="order-title">📦 My Orders</h2>
+
+      <h1 className="order-title">📦 My Orders</h1>
 
       <div className="tab-bar">
         <button
-          className={activeTab === "active" ? "tab active" : "tab"}
+          className={`tab ${activeTab === "active" ? "active" : ""}`}
           onClick={() => setActiveTab("active")}
         >
-          Active Orders
+          Active
         </button>
 
         <button
-          className={activeTab === "history" ? "tab active" : "tab"}
+          className={`tab ${activeTab === "history" ? "active" : ""}`}
           onClick={() => setActiveTab("history")}
         >
-          Cancelled Orders
+          Cancelled
         </button>
 
         <button
-          className={activeTab === "completed" ? "tab active" : "tab"}
+          className={`tab ${activeTab === "completed" ? "active" : ""}`}
           onClick={() => setActiveTab("completed")}
         >
-          Completed Orders
+          Completed
         </button>
       </div>
 
-      {activeTab === "active" && (
-        <ActiveOrders orders={activeOrders} />
-      )}
-
-      {activeTab === "history" && (
-        <OrderHistory orders={cancelledOrders} />
-      )}
-
-      {activeTab === "completed" && (
-        <CompletedOrders orders={completedOrders} />
-      )}
+      <div className="order-content">
+        {activeTab === "active" && <ActiveOrders orders={activeOrders} />}
+        {activeTab === "history" && <OrderHistory orders={cancelledOrders} />}
+        {activeTab === "completed" && <CompletedOrders orders={completedOrders} />}
+      </div>
     </div>
   );
 };

@@ -116,7 +116,7 @@ export async function serviceProviderform(data,homeService,reachWorkplace,compan
         const token = sessionStorage.getItem("token")
         const email = sessionStorage.getItem("userId")
 		console.log((data))
-		const response = await api.post(`/serviceProvider/fetch?email=${email}&homeService=${homeService}&reachWorkplace=${reachWorkplace}&companyName=${companyName}&profession=${profession}&price=${price}&state=${data.state}`,data,{
+		const response = await api.post(`/serviceProvider/service/fetch?email=${email}&homeService=${homeService}&reachWorkplace=${reachWorkplace}&companyName=${companyName}&profession=${profession}&price=${price}&state=${data.state}`,data,{
             headers :  {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "multipart/form-data",        
@@ -139,7 +139,7 @@ export async function userCheck() {
         const token = sessionStorage.getItem("token")
         const email = sessionStorage.getItem("userId")
         console.log(email)
-		const response = await api.post(`/serviceProvider/emailcheck?email=${email}`,{
+		const response = await api.post(`/auth/emailcheck?email=${email}`,{
             // headers :  {
             //     Authorization: `Bearer ${token}`,
             // }
@@ -197,7 +197,7 @@ export async function setEnabled(email,enabled) {
 
 export async function setTimeslot(wrapperDto) {
 	try {
-		const response = await api.post("/serviceProvider/setService",wrapperDto,{
+		const response = await api.post("/serviceProvider/service/setService",wrapperDto,{
             headers : getHeader()
         })
 		if (response.status >= 200 && response.status < 300) {
@@ -334,7 +334,7 @@ export async function getTimeslotsForService() {
 export async function getEnabled() {
 	try {
         const token = sessionStorage.getItem("token")
-		const response = await api.get("/serviceProvider/getEnabled",{
+		const response = await api.get("/serviceProvider/service/getEnabled",{
             headers : {
                 Authorization: `Bearer ${token}`,
             }
@@ -416,9 +416,9 @@ export async function deleteBooking(data) {
 
     // 🔴 data MUST be an ARRAY
     const response = await api.delete(
-      "/serviceProvider/deleteBooking",
+      "/serviceProvider/service/deleteBooking",
       {
-        data: data, // ✅ ARRAY GOES DIRECTLY
+        data: data,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -516,7 +516,7 @@ export async function cancelOrder(email,data) {
 export async function sendEmailForCancellaion(email,data) {
 	try {
         const token = sessionStorage.getItem("token")
-		const response = await api.post(`/serviceProvider/sendEmailForCancelletion?email=${email}`,data,{
+		const response = await api.post(`/serviceProvider/service/sendEmailForCancelletion?email=${email}`,data,{
             headers : {
                 Authorization: `Bearer ${token}`,
             }
@@ -536,7 +536,7 @@ export async function sendEmailForCancellaion(email,data) {
 export async function SetOrderCompleted(bookedTime) {
 	try {
         const token = sessionStorage.getItem("token")
-		const response = await api.post("/serviceProvider/setOrderCompleted",{bookedTime:bookedTime},{
+		const response = await api.post("/serviceProvider/service/setOrderCompleted",{bookedTime:bookedTime},{
             headers : {
                 Authorization: `Bearer ${token}`,
             }

@@ -101,3 +101,10 @@
     transform: translateY(0);
   }
 }
+
+.confirmed-text{
+  color: green;
+  text-align:center;
+  margin: 15px 0;
+  font-weight: bold;
+}

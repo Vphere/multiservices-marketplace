@@ -7,6 +7,7 @@ import com.login.signup.login.signup.model.User;
 import com.login.signup.login.signup.repository.UserRepository;
 import com.login.signup.login.signup.responses.LoginResponse;
 import com.login.signup.login.signup.service.AuthenticationService;
+import com.login.signup.login.signup.service.ServiceProviderServices;
 import com.login.signup.login.signup.service.jwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class AuthenticationController {
     private final jwtService service;
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
+    private final ServiceProviderServices serviceProviderServices;
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto){
@@ -55,5 +57,12 @@ public class AuthenticationController {
         }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("/emailcheck")
+    public ResponseEntity<Boolean> existByemail(@RequestParam String email){
+        Boolean isavailable = serviceProviderServices.existByEmail(email);
+        System.out.println(email);
+        return ResponseEntity.ok(isavailable);
     }
 }

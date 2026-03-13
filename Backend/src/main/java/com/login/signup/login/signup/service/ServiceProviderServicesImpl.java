@@ -124,8 +124,8 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
     @Override
     public String fetchDetailsAfterAccept(String email, List<ProviderSlotDto> providerSlotDtos) {
         ServiceProvider serviceProvider = findByEmail(email);
-        List<ProviderSlot> providerSlots = new ArrayList<>();
-        System.out.println(providerSlotDtos);
+        List<ProviderSlot> providerSlots = serviceProvider.getProviderSlot();
+//        System.out.println(providerSlotDtos);
         for(ProviderSlotDto p : providerSlotDtos){
             ProviderSlot providerSlot = new ProviderSlot();
             providerSlot.setSlotStart(p.getStart());
@@ -134,6 +134,9 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
             providerSlots.add(providerSlot);
         }
         serviceProvider.setProviderSlot(providerSlots);
+//        for(ProviderSlot providerSlot : providerSlots){
+//            System.out.println(providerSlot.getSlotStart());
+//        }
         serviceProviderRepository.save(serviceProvider);
         return "Successfully added";
     }

@@ -1,28 +1,18 @@
-/* ============================= */
-/* ADMIN REQUEST PAGE STYLING */
-/* ============================= */
-
 body {
   background: #f4f6f9;
   font-family: "Segoe UI", sans-serif;
 }
 
-/* Container */
 .container {
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
 }
 
-/* Heading */
 .container h3 {
   font-weight: 600;
   margin-bottom: 25px;
 }
-
-/* ============================= */
-/* ALERTS */
-/* ============================= */
 
 .alert {
   padding: 12px 16px;
@@ -50,10 +40,6 @@ body {
   background-color: #e7f3ff;
   color: #0056b3;
 }
-
-/* ============================= */
-/* TABLE */
-/* ============================= */
 
 table {
   width: 100%;
@@ -88,10 +74,6 @@ tbody tr {
 tbody tr:hover {
   background-color: #f8f9fa;
 }
-
-/* ============================= */
-/* BUTTONS */
-/* ============================= */
 
 button {
   padding: 8px 16px;

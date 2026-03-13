@@ -1,110 +1,101 @@
-.login-page {
-  min-height: 100vh;
+.login-container {
+  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem 1rem;
-}
-
-.login-overlay {
-  width: 100%;
-  max-width: 450px;
+  align-items: center;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  font-family: "Segoe UI", sans-serif;
 }
 
 .login-card {
-  background: white;
-  border-radius: 20px;
+  width: 380px;
+  padding: 40px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  color: white;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  text-align: center;
+  margin-bottom: 25px;
+  opacity: 0.8;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.2);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.input-group span {
+  margin-right: 10px;
+}
+
+.input-group input {
   border: none;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease;
+  background: transparent;
+  outline: none;
+  color: white;
+  width: 100%;
 }
 
-.login-card:hover {
-  transform: translateY(-5px);
+.input-group input::placeholder {
+  color: rgba(255,255,255,0.7);
 }
 
-.login-card h2 {
-  color: #1f2937;
-  font-weight: 700;
-  margin-bottom: 2rem;
+.forgot {
+  text-align: right;
+  margin-bottom: 15px;
 }
 
-.login-card .form-label {
-  color: #374151;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.login-card .form-control {
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 0.875rem 1rem;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.login-card .form-control:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.login-card .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 12px;
-  padding: 0.875rem;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.login-card .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-}
-
-.forgot-password-link {
-  color: #667eea;
+.forgot span {
   cursor: pointer;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  font-size: 14px;
 }
 
-.forgot-password-link:hover {
-  color: #764ba2;
+.forgot span:hover {
   text-decoration: underline;
 }
 
-.login-card .alert {
-  border-radius: 12px;
+.login-btn {
+  width: 100%;
+  padding: 12px;
   border: none;
-  margin-bottom: 1.5rem;
-}
-
-.login-card p a {
-  color: #667eea;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.login-card p a:hover {
+  background: #ffffff;
   color: #764ba2;
-  text-decoration: underline;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: 0.3s;
 }
 
-@media (max-width: 576px) {
-  .login-page {
-    padding: 1rem;
-  }
-  
-  .login-overlay {
-    max-width: 100%;
-  }
-  
-  .login-card {
-    margin: 0;
-  }
+.login-btn:hover {
+  background: #f2f2f2;
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.signup-text a {
+  color: white;
+  font-weight: bold;
+}
+
+.error-box {
+  background: rgba(255,0,0,0.3);
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 15px;
 }

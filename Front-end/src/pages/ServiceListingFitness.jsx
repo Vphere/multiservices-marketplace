@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import ServiceProviderCard from "../components/ServiceProviderCard"
@@ -15,23 +16,25 @@ const fitnessProfessionList = [
 ]
 
 const ServiceListingFitness = () => {
-  const [providers, setProviders] = useState([])
 
+  const [providers, setProviders] = useState([])
   const [searchCity, setSearchCity] = useState("")
   const [searchProfessionText, setSearchProfessionText] = useState("")
-  const [searchType, setSearchType] = useState("") // ✅ Quick Filter
+
+  const [category, setCategory] = useState("")
+  const [selectedService, setSelectedService] = useState("")
+  const [categoryList, setCategoryList] = useState([])
+
   const [suggestions, setSuggestions] = useState([])
 
   const location = useLocation()
 
-  // Insert selected service
   useEffect(() => {
     if (location.state?.selectedService) {
       setSearchProfessionText(location.state.selectedService)
     }
   }, [location.state])
 
-  // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
       const data = await getFitness()
@@ -42,7 +45,6 @@ const ServiceListingFitness = () => {
     fetchData()
   }, [])
 
-  // Handle typing (HALF MATCH)
   const handleProfessionChange = (value) => {
     setSearchProfessionText(value)
 
@@ -63,25 +65,55 @@ const ServiceListingFitness = () => {
     setSuggestions([])
   }
 
-  // ✅ Combined Filter Logic
+  // CATEGORY CLICK
+  const handleCategoryClick = (type) => {
+
+    setCategory(type)
+    setSelectedService("")
+
+    const list = fitnessProfessionList.filter((item) =>
+      item.toLowerCase().includes(type.toLowerCase())
+    )
+
+    setCategoryList(list)
+  }
+
+  // SUB SERVICE CLICK
+  const handleServiceClick = (service) => {
+    setSelectedService(service)
+  }
+
+  // FILTER LOGIC
   const filteredProviders = providers.filter((provider) => {
+
     const cityMatch = searchCity
       ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
       : true
 
-    const professionMatch = searchProfessionText
-      ? provider.profession
+    if (selectedService) {
+      return (
+        cityMatch &&
+        provider.profession?.toLowerCase() === selectedService.toLowerCase()
+      )
+    }
+
+    if (category) {
+      return (
+        cityMatch &&
+        provider.profession?.toLowerCase().includes(category.toLowerCase())
+      )
+    }
+
+    if (searchProfessionText) {
+      return (
+        cityMatch &&
+        provider.profession
           ?.toLowerCase()
           .includes(searchProfessionText.toLowerCase())
-      : true
+      )
+    }
 
-    const quickFilterMatch = searchType
-      ? provider.profession
-          ?.toLowerCase()
-          .includes(searchType.toLowerCase())
-      : true
-
-    return cityMatch && professionMatch && quickFilterMatch
+    return cityMatch
   })
 
   return (
@@ -96,10 +128,9 @@ const ServiceListingFitness = () => {
           </p>
         </div>
 
-        {/* SEARCH SECTION */}
+        {/* Search */}
         <div className="search-wrapper">
 
-          {/* City Search */}
           <div className="search-box">
             <input
               type="text"
@@ -107,39 +138,16 @@ const ServiceListingFitness = () => {
               value={searchCity}
               onChange={(e) => setSearchCity(e.target.value)}
             />
-            {searchCity && (
-              <span
-                className="clear-btn"
-                onClick={() => setSearchCity("")}
-              >
-                ✖
-              </span>
-            )}
           </div>
 
-          {/* Profession Search */}
           <div className="search-box">
             <input
               type="text"
               placeholder="Search by Profession"
               value={searchProfessionText}
-              onChange={(e) =>
-                handleProfessionChange(e.target.value)
-              }
+              onChange={(e) => handleProfessionChange(e.target.value)}
             />
-            {searchProfessionText && (
-              <span
-                className="clear-btn"
-                onClick={() => {
-                  setSearchProfessionText("")
-                  setSuggestions([])
-                }}
-              >
-                ✖
-              </span>
-            )}
 
-            {/* Suggestions */}
             {suggestions.length > 0 && (
               <div className="suggestion-box">
                 {suggestions.map((item, index) => (
@@ -153,29 +161,58 @@ const ServiceListingFitness = () => {
                 ))}
               </div>
             )}
+
           </div>
 
         </div>
 
-        {/* ✅ Quick Filters Restored */}
+        {/* CATEGORY FILTERS */}
         <div className="profession-filters">
-          {["Instructor", "Coach", "Trainer"].map((item) => (
+
+          {["Instructor", "Trainer", "Coach"].map((item) => (
             <button
               key={item}
               className={`profession-chip ${
-                searchType === item ? "active" : ""
+                category === item ? "active" : ""
               }`}
-              onClick={() =>
-                setSearchType(searchType === item ? "" : item)
-              }
+              onClick={() => handleCategoryClick(item)}
             >
               {item}
             </button>
           ))}
+
         </div>
 
-        {/* Providers */}
+        {/* SUB SERVICE LIST */}
+        {categoryList.length > 0 && (
+          <div className="sub-service-container">
+
+            <h3 className="sub-service-title">
+              Available {category} Services
+            </h3>
+
+            <div className="sub-service-list">
+
+              {categoryList.map((service, index) => (
+                <button
+                  key={index}
+                  className={`sub-service-chip ${
+                    selectedService === service ? "active" : ""
+                  }`}
+                  onClick={() => handleServiceClick(service)}
+                >
+                  {service}
+                </button>
+              ))}
+
+            </div>
+
+          </div>
+        )}
+
+        {/* PROVIDERS */}
         <div className="providers-grid">
+
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider, index) => (
               <ServiceProviderCard
@@ -186,6 +223,7 @@ const ServiceListingFitness = () => {
           ) : (
             <p className="no-results">No providers found</p>
           )}
+
         </div>
 
       </div>
@@ -194,3 +232,4 @@ const ServiceListingFitness = () => {
 }
 
 export default ServiceListingFitness
+
