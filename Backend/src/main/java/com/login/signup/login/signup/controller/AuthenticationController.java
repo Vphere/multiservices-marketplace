@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(value = "http://localhost:3000",allowCredentials = "true")
+@CrossOrigin(value = "${FRONTEND_URL}",allowCredentials = "true")
 public class AuthenticationController {
     private final jwtService service;
     private final AuthenticationService authenticationService;
