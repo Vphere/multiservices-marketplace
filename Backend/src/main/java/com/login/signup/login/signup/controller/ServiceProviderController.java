@@ -4,10 +4,12 @@ import com.login.signup.login.signup.dto.*;
 import com.login.signup.login.signup.model.ServiceProvider;
 import com.login.signup.login.signup.service.ServiceProviderServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -184,8 +186,14 @@ public class ServiceProviderController {
     public ResponseEntity<Boolean> getEnabled(Authentication authentication){
         String email = authentication.getName();
         ServiceProvider serviceProvider = findByEmail(email);
-        if(serviceProvider==null)throw new RuntimeException("please fill the form!!");
-        else if(!serviceProvider.isEnabled())return ResponseEntity.ok(false);
+        if (serviceProvider == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Please fill the form first!"
+            );
+        }
+        else if(!serviceProvider.isEnabled()){
+            return ResponseEntity.ok(false);}
         return ResponseEntity.ok(true);
     }
 

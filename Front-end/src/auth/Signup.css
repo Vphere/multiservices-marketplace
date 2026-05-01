@@ -1,112 +1,120 @@
-.signup-container{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#667eea,#764ba2);
-  font-family:"Segoe UI",sans-serif;
+.signup-page {
+  height: 100vh;
+  background: linear-gradient(135deg, #6366f1, #9333ea);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.signup-card{
-  width:400px;
-  padding:40px;
-  border-radius:15px;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(15px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.2);
-  color:white;
+.signup-card {
+  width: 400px;
+  background: white;
+  padding: 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.15);
 }
 
-.signup-title{
-  text-align:center;
-  margin-bottom:5px;
+.signup-title {
+  text-align: center;
+  margin-bottom: 6px;
 }
 
-.signup-subtitle{
-  text-align:center;
-  margin-bottom:25px;
-  opacity:0.8;
+.signup-subtitle {
+  text-align: center;
+  color: gray;
+  margin-bottom: 25px;
 }
 
-.input-group{
-  display:flex;
-  align-items:center;
-  background:rgba(255,255,255,0.2);
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:15px;
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.input-group span{
-  margin-right:10px;
+.input-group {
+  display: flex;
+  flex-direction: column;
 }
 
-.input-group input{
-  border:none;
-  outline:none;
-  background:transparent;
-  width:100%;
-  color:white;
+.input-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
 }
 
-.input-group input::placeholder{
-  color:rgba(255,255,255,0.7);
+.input-group input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: 0.2s;
 }
 
-.role-box{
-  margin-top:10px;
-  margin-bottom:20px;
+.input-group input:focus {
+  outline: none;
+  border-color: #6366f1;
 }
 
-.role-title{
-  font-size:14px;
-  margin-bottom:8px;
+.role-box {
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
 }
 
-.role-option{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  cursor:pointer;
+.role-title {
+  font-size: 14px;
+  margin-bottom: 8px;
 }
 
-.signup-btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:white;
-  color:#764ba2;
-  font-weight:bold;
-  transition:0.3s;
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.signup-btn:hover{
-  background:#f2f2f2;
+.signup-btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.login-text{
-  text-align:center;
-  margin-top:15px;
+.signup-btn:hover {
+  background: #4f46e5;
 }
 
-.login-text a{
-  color:white;
-  font-weight:bold;
+.signup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.error-box{
-  background:rgba(255,0,0,0.3);
-  padding:10px;
-  border-radius:6px;
-  text-align:center;
-  margin-bottom:15px;
+.login-text {
+  text-align: center;
+  font-size: 14px;
 }
 
-.success-box{
-  background:rgba(0,255,100,0.3);
-  padding:10px;
-  border-radius:6px;
-  text-align:center;
-  margin-bottom:15px;
+.login-text a {
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.error-box {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.success-box {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
 }

@@ -1,78 +1,64 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import ServiceProviderCard from "../components/ServiceProviderCard"
-import { getHomeService } from "../utils/apiFunction"
+import { getBeautyService } from "../utils/apiFunction"
 import "./ServiceListing.css"
 
 const professionList = [
-  "Electrician",
-  "Plumber",
-  "Carpenter",
-  "AC Repair & Service Technician",
-  "Refrigerator Repair Technician",
-  "Washing Machine Repair Technician",
-  "Microwave / Appliance Repair Technician",
-  "RO Water Purifier Technician",
-  "Geyser Repair Technician",
-  "CCTV Installation Technician",
-  "Inverter & UPS Technician",
-  "Home Deep Cleaning Specialist",
-  "Bathroom Cleaning Specialist",
-  "Kitchen Deep Cleaning Specialist",
-  "Water Tank Cleaning Specialist"
+  "Salon for Women",
+  "Salon for Men", 
+  "Bridal Makeup Artist",
+  "Hair Stylist",
+  "Facial Specialist",
+  "Nail Artist",
+  "Spa Therapist",
+  "Massage Therapist",
+  "Beauty Consultant",
+  "Waxing Specialist"
 ]
 
-const ServiceListingHomeService = () => {
-
+const ServiceListingBeautyService = () => {
   const [providers, setProviders] = useState([])
+
   const [searchCity, setSearchCity] = useState("")
   const [searchProfessionText, setSearchProfessionText] = useState("")
-  const [category, setCategory] = useState("")
-  const [selectedService, setSelectedService] = useState("")
-  const [categoryList, setCategoryList] = useState([])
+  const [searchType, setSearchType] = useState("")
   const [suggestions, setSuggestions] = useState([])
 
   const location = useLocation()
 
+  // Insert selected service and profession
   useEffect(() => {
     if (location.state?.selectedService) {
       setSearchProfessionText(location.state.selectedService)
     }
-
     if (location.state?.profession) {
-
+      // Auto-activate the corresponding chip filter based on profession
       const profession = location.state.profession.toLowerCase()
-
-      if (profession.includes("plumber")) {
-        setCategory("Plumber")
-      } 
-      else if (profession.includes("carpenter")) {
-        setCategory("Carpenter")
-      } 
-      else if (profession.includes("electrician")) {
-        setCategory("Electrician")
-      } 
-      else if (
-        profession.includes("technician") ||
-        profession.includes("repair") ||
-        profession.includes("ac")
-      ) {
-        setCategory("Technician")
-      } 
-      else if (
-        profession.includes("cleaning") ||
-        profession.includes("specialist")
-      ) {
-        setCategory("Specialist")
+      if (profession.includes("salon")) {
+        if (profession.includes("women")) {
+          setSearchType("Salon Women")
+        } else if (profession.includes("men")) {
+          setSearchType("Salon Men")
+        } else {
+          setSearchType("Salon")
+        }
+      } else if (profession.includes("spa") || profession.includes("massage")) {
+        setSearchType("Spa")
+      } else if (profession.includes("makeup") || profession.includes("artist")) {
+        setSearchType("Makeup")
+      } else if (profession.includes("hair")) {
+        setSearchType("Hair")
+      } else if (profession.includes("nail")) {
+        setSearchType("Nail")
       }
-
     }
-
   }, [location.state])
 
+  // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getHomeService()
+      const data = await getBeautyService()
       if (data) {
         setProviders(Array.isArray(data) ? data : [data])
       }
@@ -80,8 +66,8 @@ const ServiceListingHomeService = () => {
     fetchData()
   }, [])
 
+  // Handle typing (HALF MATCH)
   const handleProfessionChange = (value) => {
-
     setSearchProfessionText(value)
 
     if (value.trim() === "") {
@@ -101,67 +87,43 @@ const ServiceListingHomeService = () => {
     setSuggestions([])
   }
 
-  const handleCategoryClick = (type) => {
-
-    setCategory(type)
-    setSelectedService("")
-
-    const list = professionList.filter((item) =>
-      item.toLowerCase().includes(type.toLowerCase())
-    )
-
-    setCategoryList(list)
-  }
-
-  const handleServiceClick = (service) => {
-    setSelectedService(service)
-  }
-
+  // Combined Filter Logic
   const filteredProviders = providers.filter((provider) => {
-
     const cityMatch = searchCity
       ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
       : true
 
-    if (selectedService) {
-      return (
-        cityMatch &&
-        provider.profession?.toLowerCase() === selectedService.toLowerCase()
-      )
-    }
-
-    if (category) {
-      return (
-        cityMatch &&
-        provider.profession?.toLowerCase().includes(category.toLowerCase())
-      )
-    }
-
-    if (searchProfessionText) {
-      return (
-        cityMatch &&
-        provider.profession
+    const professionMatch = searchProfessionText
+      ? provider.profession
           ?.toLowerCase()
           .includes(searchProfessionText.toLowerCase())
-      )
-    }
+      : true
 
-    return cityMatch
+    const quickFilterMatch = searchType
+      ? provider.profession
+          ?.toLowerCase()
+          .includes(searchType.toLowerCase())
+      : true
+
+    return cityMatch && professionMatch && quickFilterMatch
   })
 
   return (
     <div className="service-listing">
       <div className="container">
 
+        {/* Header */}
         <div className="listing-header">
-          <h1 className="listing-title">Home Services</h1>
+          <h1 className="listing-title">Beauty Services</h1>
           <p className="listing-subtitle">
             Showing {filteredProviders.length} professionals
           </p>
         </div>
 
+        {/* SEARCH SECTION */}
         <div className="search-wrapper">
 
+          {/* City Search */}
           <div className="search-box">
             <input
               type="text"
@@ -169,16 +131,39 @@ const ServiceListingHomeService = () => {
               value={searchCity}
               onChange={(e) => setSearchCity(e.target.value)}
             />
+            {searchCity && (
+              <span
+                className="clear-btn"
+                onClick={() => setSearchCity("")}
+              >
+                ✖
+              </span>
+            )}
           </div>
 
+          {/* Profession Search */}
           <div className="search-box">
             <input
               type="text"
               placeholder="Search by Profession"
               value={searchProfessionText}
-              onChange={(e) => handleProfessionChange(e.target.value)}
+              onChange={(e) =>
+                handleProfessionChange(e.target.value)
+              }
             />
+            {searchProfessionText && (
+              <span
+                className="clear-btn"
+                onClick={() => {
+                  setSearchProfessionText("")
+                  setSuggestions([])
+                }}
+              >
+                ✖
+              </span>
+            )}
 
+            {/* Suggestions */}
             {suggestions.length > 0 && (
               <div className="suggestion-box">
                 {suggestions.map((item, index) => (
@@ -192,57 +177,31 @@ const ServiceListingHomeService = () => {
                 ))}
               </div>
             )}
-
           </div>
 
         </div>
 
+        {/* Quick Filters */}
         <div className="profession-filters">
-
-          {["Technician", "Specialist", "Plumber", "Electrician", "Carpenter"].map(
+          {["Salon Women", "Salon Men", "Spa", "Makeup", "Hair"].map(
             (item) => (
               <button
                 key={item}
                 className={`profession-chip ${
-                  category === item ? "active" : ""
+                  searchType === item ? "active" : ""
                 }`}
-                onClick={() => handleCategoryClick(item)}
+                onClick={() =>
+                  setSearchType(searchType === item ? "" : item)
+                }
               >
                 {item}
               </button>
             )
           )}
-
         </div>
 
-        {categoryList.length > 0 && (
-          <div className="sub-service-container">
-
-            <h3 className="sub-service-title">
-              Available {category} Services
-            </h3>
-
-            <div className="sub-service-list">
-
-              {categoryList.map((service, index) => (
-                <button
-                  key={index}
-                  className={`sub-service-chip ${
-                    selectedService === service ? "active" : ""
-                  }`}
-                  onClick={() => handleServiceClick(service)}
-                >
-                  {service}
-                </button>
-              ))}
-
-            </div>
-
-          </div>
-        )}
-
-        <div className="providers-grid">
-
+        {/* Providers */}
+        <div className="providers-grid fitness-scroll">
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider, index) => (
               <ServiceProviderCard
@@ -253,7 +212,6 @@ const ServiceListingHomeService = () => {
           ) : (
             <p className="no-results">No providers found</p>
           )}
-
         </div>
 
       </div>
@@ -261,4 +219,4 @@ const ServiceListingHomeService = () => {
   )
 }
 
-export default ServiceListingHomeService
+export default ServiceListingBeautyService;

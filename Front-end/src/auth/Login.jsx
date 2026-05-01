@@ -7,6 +7,8 @@ import "./Login.css";
 const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [login, setLogin] = useState({
     email: "",
     password: ""
@@ -23,12 +25,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
+
       const success = await loginUser(login);
 
       if (!success) {
         setErrorMessage("Invalid email or password");
+        setLoading(false);
         return;
       }
 
@@ -60,29 +65,30 @@ const Login = () => {
       setErrorMessage("Login failed. Try again.");
     }
 
+    setLoading(false);
     setTimeout(() => setErrorMessage(""), 4000);
   };
 
   return (
-    <div className="login-container">
+    <div className="login-page">
 
       <div className="login-card">
 
-        <h1 className="login-title">Welcome Back 👋</h1>
-        <p className="login-subtitle">Login to continue</p>
+        <h2 className="login-title">Welcome Back</h2>
+        <p className="login-subtitle">Login to your account</p>
 
         {errorMessage && (
           <div className="error-box">{errorMessage}</div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
 
           <div className="input-group">
-            <span>📧</span>
+            <label>Email</label>
             <input
               name="email"
               type="email"
-              placeholder="Enter Email"
+              placeholder="Enter your email"
               value={login.email}
               onChange={handleInputChange}
               required
@@ -90,11 +96,11 @@ const Login = () => {
           </div>
 
           <div className="input-group">
-            <span>🔒</span>
+            <label>Password</label>
             <input
               name="password"
               type="password"
-              placeholder="Enter Password"
+              placeholder="Enter your password"
               value={login.password}
               onChange={handleInputChange}
               required
@@ -102,23 +108,27 @@ const Login = () => {
           </div>
 
           <div className="forgot">
-            <span onClick={() => navigate("/EmailToResetPassword")}>
-              Forgot password?
+            <span onClick={() => navigate("/forgot-password")}>
+              Forgot Password?
             </span>
           </div>
 
-          <button className="login-btn">
-            Login
+          <button
+            className="login-btn"
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <p className="signup-text">
             Don't have an account?
-            <Link to="/signup"> Register</Link>
+            <Link to="/signup"> Create Account</Link>
           </p>
 
         </form>
 
       </div>
+
     </div>
   );
 };

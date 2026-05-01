@@ -56,7 +56,8 @@ public class AdminController {
                 serviceProvider.isReachWorkplace(),
                 serviceProvider.getCompanyName(),
                 serviceProvider.getProfession(),
-                serviceProvider.getPrice());
+                serviceProvider.getPrice(),
+                serviceProvider.getTime());
     }
 
     @PostMapping("/enabled")

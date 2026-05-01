@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables for consistent theming */
+:root {
+  --bg-white: #ffffff;
+  --bg-light: #f8fafc;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+  --primary-color: #4a9eff;
+  --primary-light: #dbeafe;
+  --gradient-primary: linear-gradient(135deg, #667eea, #764ba2);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;

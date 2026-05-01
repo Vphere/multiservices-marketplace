@@ -11,6 +11,7 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,24 @@ public class AuthenticationService {
         return user;
     }
 
+    public static String encodePassword(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
+
+    public String changePassword(String email,String password){
+        if(email==null)throw new RuntimeException("email not found");
+        if(userRepository.findByEmail(email).isPresent()){
+            User user = userRepository.findByEmail(email).get();
+            user.setPassword(encodePassword(password));
+            userRepository.save(user);
+            return "password changed successfully";
+        }
+        else{
+            throw new RuntimeException("user not found!!!");
+        }
+    }
+
     public void verifyUser(VerifyUserDto input){
         Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());
         if(optionalUser.isPresent()){
@@ -82,6 +101,20 @@ public class AuthenticationService {
             if(user.isEnabled()){
                 throw new RuntimeException("account is already verified");
             }
+            user.setVerificationCode(generateVerificationCode());
+            user.setVerificationCodeExpiredAt(LocalDateTime.now().plusHours(1));
+            sendVerificationEmail(user);
+            userRepository.save(user);
+        }else{
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    public void sendVerificationCodeforPasswrod(String email){
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            System.out.println(optionalUser);
             user.setVerificationCode(generateVerificationCode());
             user.setVerificationCodeExpiredAt(LocalDateTime.now().plusHours(1));
             sendVerificationEmail(user);

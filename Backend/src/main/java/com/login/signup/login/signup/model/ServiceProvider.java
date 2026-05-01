@@ -68,4 +68,6 @@ public class ServiceProvider {
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<UserBooking> userBookings;
+
+    private LocalDateTime time = LocalDateTime.now();
 }

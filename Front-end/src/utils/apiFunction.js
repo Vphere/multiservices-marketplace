@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const url = import.meta.env.VITE_BACKEND_URL
+// console.log(url)
+// const url = "http://localhost:8080";
+
 export const api = axios.create({
-    baseURL : "http://localhost:8080"
+    baseURL : url
 });
 
 export const getHeader = () => {
@@ -26,13 +30,32 @@ export async function VerifyUser(email,otp) {
     }catch(e){
         throw new Error(e.message);
     }
-
 }
 
 export async function resendOtp(email) {
     console.log(email);
     try{
         const response = await api.post(`/auth/resend?email=${email}`);
+        return response.data;
+    }catch(e){
+        throw new Error(e.message);
+    }
+}
+
+export async function sendOtpforPassword(email) {
+    console.log(email);
+    try{
+        const response = await api.post(`/auth/sendOtp-Newpass?email=${email}`);
+        return response.data;
+    }catch(e){
+        throw new Error(e.message);
+    }
+}
+
+export async function changePassword(email,password) {
+    console.log(email);
+    try{
+        const response = await api.post(`/auth/changePassword?email=${email}&password=${password}`);
         return response.data;
     }catch(e){
         throw new Error(e.message);

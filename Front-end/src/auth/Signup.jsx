@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = () => {
+
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const [registration, setRegistration] = useState({
     username: "",
@@ -17,10 +20,14 @@ const Signup = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
-    setRegistration({ ...registration, [e.target.name]: e.target.value });
+    setRegistration({
+      ...registration,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleRoleChange = (e) => {
+
     const { value, checked } = e.target;
 
     setRegistration((prev) => ({
@@ -29,25 +36,24 @@ const Signup = () => {
         ? [...prev.roles, value]
         : prev.roles.filter((r) => r !== value)
     }));
+
   };
 
   const handleRegistration = async (e) => {
+
     e.preventDefault();
 
-    if (registration.roles.length === 0) {
-      setErrorMessage("Please select at least one role");
-      return;
-    }
+    setLoading(true);
 
     try {
+
       await registerUser(registration);
+
+      setSuccessMessage("Registration successful!");
 
       navigate("/verify", {
         state: { email: registration.email }
       });
-
-      setSuccessMessage("Registration successful!");
-      setErrorMessage("");
 
       setRegistration({
         username: "",
@@ -56,24 +62,33 @@ const Signup = () => {
         roles: []
       });
 
+      setErrorMessage("");
+
     } catch (error) {
+
       setSuccessMessage("");
       setErrorMessage(`Registration error: ${error.message}`);
+
     }
+
+    setLoading(false);
 
     setTimeout(() => {
       setErrorMessage("");
       setSuccessMessage("");
-    }, 5000);
+    }, 4000);
+
   };
 
   return (
-    <div className="signup-container">
+    <div className="signup-page">
 
       <div className="signup-card">
 
-        <h1 className="signup-title">Create Account 🚀</h1>
-        <p className="signup-subtitle">Join and start booking services</p>
+        <h2 className="signup-title">Create Account</h2>
+        <p className="signup-subtitle">
+          Join and start booking services
+        </p>
 
         {errorMessage && (
           <div className="error-box">{errorMessage}</div>
@@ -83,14 +98,14 @@ const Signup = () => {
           <div className="success-box">{successMessage}</div>
         )}
 
-        <form onSubmit={handleRegistration}>
+        <form onSubmit={handleRegistration} className="signup-form">
 
           <div className="input-group">
-            <span>👤</span>
+            <label>Username</label>
             <input
               name="username"
               type="text"
-              placeholder="Username"
+              placeholder="Enter username"
               value={registration.username}
               onChange={handleInputChange}
               required
@@ -98,11 +113,11 @@ const Signup = () => {
           </div>
 
           <div className="input-group">
-            <span>📧</span>
+            <label>Email</label>
             <input
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter email"
               value={registration.email}
               onChange={handleInputChange}
               required
@@ -110,11 +125,11 @@ const Signup = () => {
           </div>
 
           <div className="input-group">
-            <span>🔒</span>
+            <label>Password</label>
             <input
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Create password"
               value={registration.password}
               onChange={handleInputChange}
               required
@@ -122,22 +137,31 @@ const Signup = () => {
           </div>
 
           <div className="role-box">
-            <p className="role-title">Do you want to provide services?</p>
+
+            <p className="role-title">
+              Do you want to provide services?
+            </p>
 
             <label className="role-option">
+
               <input
                 type="checkbox"
                 value="ROLE_SERVICE"
                 checked={registration.roles.includes("ROLE_SERVICE")}
                 onChange={handleRoleChange}
               />
-              <span>👨‍🔧 Service Provider</span>
+
+              <span>Service Provider</span>
+
             </label>
 
           </div>
 
-          <button className="signup-btn">
-            Register
+          <button
+            className="signup-btn"
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
           </button>
 
           <p className="login-text">
@@ -151,6 +175,7 @@ const Signup = () => {
 
     </div>
   );
+
 };
 
 export default Signup;

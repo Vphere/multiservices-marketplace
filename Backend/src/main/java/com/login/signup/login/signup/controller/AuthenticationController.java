@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(value = "http://localhost:3000",allowCredentials = "true")
+//@CrossOrigin(value = "http://localhost:3000",allowCredentials = "true")
 public class AuthenticationController {
     private final jwtService service;
     private final AuthenticationService authenticationService;
@@ -52,8 +52,29 @@ public class AuthenticationController {
     @PostMapping("/resend")
     public ResponseEntity<?> resendVerificationCode(@RequestParam String email){
         try{
+            System.out.println(email);
             authenticationService.resendVerificationCode(email);
             return ResponseEntity.ok("Verification code sent");
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/sendOtp-Newpass")
+    public ResponseEntity<?> sendVerificationCodeforPassword(@RequestParam String email){
+        try{
+            System.out.println(email);
+            authenticationService.sendVerificationCodeforPasswrod(email);
+            return ResponseEntity.ok("Verification code sent");
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> verifyExistingUser(@RequestParam String email,@RequestParam String password){
+        try{
+            return ResponseEntity.ok(authenticationService.changePassword(email,password));
         }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
