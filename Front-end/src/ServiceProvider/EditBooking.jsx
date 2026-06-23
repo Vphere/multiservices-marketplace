@@ -6,9 +6,7 @@ import {
 } from "../utils/apiFunction";
 import "./EditBooking.css";
 
-/* =======================
-   RUNNING BOOKINGS TABLE
-======================= */
+
 const RunningBookings = ({ bookings, onCancel, onComplete }) => {
   console.log(bookings)
   if (bookings.length === 0) {
@@ -170,9 +168,6 @@ const CompletedBookings = ({ bookings }) => {
   );
 };
 
-/* =======================
-   MAIN COMPONENT
-======================= */
 const EditBooking = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -184,6 +179,7 @@ const EditBooking = () => {
   const loadBookings = async () => {
     try {
       const data = await getBooking();
+      console.log(data);
       if (Array.isArray(data)) {
         setBookings(data);
       }
@@ -194,7 +190,6 @@ const EditBooking = () => {
     }
   };
 
-  /* ❌ CANCEL */
   const handleCancel = async (booking) => {
     const reason = window.prompt(
       "Enter reason for cancellation:"

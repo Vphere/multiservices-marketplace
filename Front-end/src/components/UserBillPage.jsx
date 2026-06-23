@@ -131,12 +131,12 @@ const generateInvoice = () => {
           <p><strong>Booked Time:</strong> {bookedTime}</p>
         </div>
 
-        <div className="section-box">
+        {/* <div className="section-box">
           <h4>Customer Details</h4>
           <p>{customerDetails.address}</p>
           <p>{customerDetails.city}, {customerDetails.state}</p>
           <p>📞 {customerDetails.mobileNo}</p>
-        </div>
+        </div> */}
 
         <div className="section-box">
           <h4>Payment Summary</h4>

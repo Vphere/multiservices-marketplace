@@ -45,7 +45,7 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
         }
 
         ServiceProvider serviceProvider = new ServiceProvider();
-//
+
 //        List<ProviderSlotDto> list = serviceProviderDto.getTimes();
 //        List<ProviderSlot> providerSlots = new ArrayList<>();
 //        for(ProviderSlotDto p : list){
@@ -206,7 +206,9 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
             authenticationService.sendBookingCancellationEmail(user.get(),time,reason);
             for(UserBooking userBooking : userBookings){
                 if(userBooking.getBookedTime().equals(time)){
-                    userBookings.remove(userBooking);
+                    userBooking.setEnabled(false);
+//                    userBookings.remove(userBooking);
+                    userBooking.setCompleted(false);
                     break;
                 }
             }

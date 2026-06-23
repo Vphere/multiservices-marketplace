@@ -27,31 +27,41 @@ public class AuthenticationService {
     private final EmailService emailService;
     private final RoleRepository roleRepository;
     private final jwtService service;
+    private final RedisService redisService;
 
     public User signup(RegisterUserDto input){
         User user = new User(input.getUsername(),input.getEmail(),passwordEncoder.encode(input.getPassword()));
         Collection<Role> roles = new HashSet<>();
         for(String name: input.getRoles()){
             Role role = roleRepository.findByName(name);
-            System.out.println(name);
             roles.add(role);
         }
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiredAt(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
         sendVerificationEmail(user);
-        System.out.println(user);
         user.setRoles(roles);
-        return userRepository.save(user);
+        User user1 = redisService.get(user.getEmail(),User.class);
+        if(user1!=null){
+            throw new RuntimeException("User Already exist");
+        }
+        User response = userRepository.save(user);
+        redisService.set(user.getEmail(), response, 1000l);
+
+        return response;
     }
 
     public User authenticate(LoginUserDto input){
+        User Cacheuser = redisService.get(input.getEmail(),User.class);
+        if(Cacheuser!=null){
+            return Cacheuser;
+        }
         User user = userRepository.findByEmail(input.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println(user);
         if(!user.isEnabled()){
             throw new RuntimeException("Account not verified! , Please verify your account");
         }
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(),input.getPassword()));
+        redisService.set(user.getEmail(),user,10000l);
         return user;
     }
 
@@ -97,7 +107,6 @@ public class AuthenticationService {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
-            System.out.println(optionalUser);
             if(user.isEnabled()){
                 throw new RuntimeException("account is already verified");
             }
@@ -114,7 +123,6 @@ public class AuthenticationService {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
-            System.out.println(optionalUser);
             user.setVerificationCode(generateVerificationCode());
             user.setVerificationCodeExpiredAt(LocalDateTime.now().plusHours(1));
             sendVerificationEmail(user);

@@ -69,7 +69,6 @@ const Navbar = () => {
           ) : (
             <div style={{ position: "relative" }}>
 
-              {/* 👤 Profile Emoji */}
               <span
                 style={{ fontSize: "22px", cursor: "pointer" }}
                 onClick={() => setShowProfile(!showProfile)}
@@ -77,7 +76,6 @@ const Navbar = () => {
                 👤
               </span>
 
-              {/* ✅ Dropdown */}
               {showProfile && (
                 <div style={{
                   position: "absolute",

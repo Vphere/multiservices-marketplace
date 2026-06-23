@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const url = import.meta.env.VITE_BACKEND_URL
+// const url = import.meta.env.VITE_BACKEND_URL
 // console.log(url)
 // const url = "http://localhost:8080";
 
 export const api = axios.create({
-    baseURL : url
+    baseURL : "http://34.234.249.87:8080"
 });
 
 export const getHeader = () => {

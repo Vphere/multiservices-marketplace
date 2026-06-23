@@ -3,6 +3,7 @@ package com.login.signup.login.signup.controller;
 import com.login.signup.login.signup.dto.LoginUserDto;
 import com.login.signup.login.signup.dto.RegisterUserDto;
 import com.login.signup.login.signup.dto.VerifyUserDto;
+import com.login.signup.login.signup.messaging.MailProducer;
 import com.login.signup.login.signup.model.User;
 import com.login.signup.login.signup.repository.UserRepository;
 import com.login.signup.login.signup.responses.LoginResponse;
@@ -24,6 +25,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final ServiceProviderServices serviceProviderServices;
+    private final MailProducer mailProducer;
 
     @PostMapping("/signup")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto){
@@ -63,8 +65,8 @@ public class AuthenticationController {
     @PostMapping("/sendOtp-Newpass")
     public ResponseEntity<?> sendVerificationCodeforPassword(@RequestParam String email){
         try{
-            System.out.println(email);
-            authenticationService.sendVerificationCodeforPasswrod(email);
+                mailProducer.sendMessage(email);
+//            authenticationService.sendVerificationCodeforPasswrod(email);
             return ResponseEntity.ok("Verification code sent");
         }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());

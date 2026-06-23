@@ -103,6 +103,15 @@ const ServiceProviderForm = () => {
       );
       setFormData((prev) => ({ ...prev, profession: "" }));
     }
+    const fetchUsername = async () => {
+      if (sessionStorage.getItem("token")) {
+        const name = sessionStorage.getItem("userId");
+        if (name) {
+          setUsername(name);
+        }
+      }
+    };
+    fetchUsername();
   }, [formData.categories]);
 
   const handleProfilePicChange = (e) => {
