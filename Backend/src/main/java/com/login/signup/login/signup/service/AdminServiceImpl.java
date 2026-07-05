@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService{
     public String rejectServiceProvider(String email,String reason) {
         ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(email);
         if(serviceProvider!=null) {
-            serviceProviderRepository.deleteByServiceId(serviceProvider.getServiceId());
+            serviceProviderRepository.deleteById(serviceProvider.getServiceId());
             authenticationService.sendServiceProviderRejectionEmail(email,reason);
             return "ServiceProvider Rejected";
         }

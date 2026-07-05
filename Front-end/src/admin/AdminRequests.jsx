@@ -1,41 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { pendingRequest, setEnabled } from "../utils/apiFunction";
-import "./TimeSlotStyle.css";
+import { pendingRequest, setEnabled, rejectServiceProvider } from "../utils/apiFunction";
+import "./AdminRequests.css";
 
 const AdminRequests = () => {
+
   const navigate = useNavigate();
 
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notification, setNotification] = useState(null);
-  const [message,setMessage] = useState("");
-  
+  const [message, setMessage] = useState("");
+
   const loadPendingRequests = async () => {
+
     setLoading(true);
     setError("");
 
     try {
+
       const data = await pendingRequest();
-      console.log(data);
+
       if (data) {
-        setRequests(Array.isArray(data) ? data : [data]);
+
+        const list = Array.isArray(data) ? data : [data];
+
+        list.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+        setRequests(list);
+
       } else {
-        setMessage("no Pending-Request available");
+
+        setMessage("No pending requests available");
+
       }
+
     } catch {
+
       setError("Error loading pending requests");
+
     } finally {
+
       setLoading(false);
+
     }
+
   };
 
   useEffect(() => {
     loadPendingRequests();
   }, []);
 
-  // ================= ACTIONS =================
   const handleDetails = (request) => {
     navigate("/admin/request-details", {
       state: { request }
@@ -43,18 +59,21 @@ const AdminRequests = () => {
   };
 
   const handleAccept = async (id) => {
+
     const req = requests.find((r) => r.serviceId === id);
     if (!req) return;
 
     const confirm = window.confirm(
       "Are you sure you want to ACCEPT this service provider?"
     );
+
     if (!confirm) return;
 
     const res = await setEnabled(req.email, true);
+
     if (!res) {
       setNotification({
-        type: "danger",
+        type: "error",
         message: "Failed to approve service provider"
       });
       return;
@@ -62,119 +81,192 @@ const AdminRequests = () => {
 
     setNotification({
       type: "success",
-      message: "Service provider approved successfully ✅"
+      message: "Service provider approved successfully"
     });
 
     setRequests((prev) => prev.filter((r) => r.serviceId !== id));
+
   };
 
   const handleReject = async (id) => {
-  const req = requests.find((r) => r.serviceId === id);
-  if (!req) return;
 
-  const confirm = window.confirm(
-    "Are you sure you want to REJECT this service provider?"
-  );
-  if (!confirm) return;
+    const req = requests.find((r) => r.serviceId === id);
+    if (!req) return;
 
-  // Ask admin for reason
-  const reason = window.prompt("Please enter reason for rejection:");
+    const confirm = window.confirm(
+      "Are you sure you want to REJECT this service provider?"
+    );
 
-  if (!reason || reason.trim() === "") {
-    alert("Rejection reason is required.");
-    return;
-  }
+    if (!confirm) return;
 
-  // 🔥 Call your reject API
-  const res = await rejectServiceProvider({
-    email: req.email,
-    reason: reason
-  });
+    const reason = window.prompt("Enter rejection reason:");
 
-  if (!res) {
-    setNotification({
-      type: "danger",
-      message: "Failed to reject service provider"
+    if (!reason || reason.trim() === "") {
+      alert("Rejection reason is required");
+      return;
+    }
+
+    const res = await rejectServiceProvider({
+      email: req.email,
+      reason: reason
     });
-    return;
-  }
 
-  setNotification({
-    type: "warning",
-    message: "Service provider rejected successfully ❌"
-  });
+    if (!res) {
+      setNotification({
+        type: "error",
+        message: "Failed to reject service provider"
+      });
+      return;
+    }
 
-  // Remove from list
-  setRequests((prev) => prev.filter((r) => r.serviceId !== id));
-};
+    setNotification({
+      type: "warning",
+      message: "Service provider rejected"
+    });
 
+    setRequests((prev) => prev.filter((r) => r.serviceId !== id));
+
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/login");
+  };
 
   return (
-    <div className="container mt-4">
-      <h3 className="mb-3">Pending Service Provider Requests</h3>
 
-      {notification && (
-        <div className={`alert alert-${notification.type}`}>
-          {notification.message}
+    <div className="admin-dashboard">
+
+      {/* Top Navbar */}
+      <div className="admin-navbar">
+
+        <div className="admin-logo">
+          Urban Service Admin
         </div>
-      )}
 
-      {loading && <div className="alert alert-info">Loading...</div>}
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+      </div>
 
-      {message && <div className="alert alert-success mt-3">{message}</div>}
-      
-      {!loading && !error && requests.length === 0 && (
-        <div className="alert alert-warning">
-          No pending requests found
+      <div className="admin-page">
+
+        <div className="admin-card">
+
+          <div className="admin-header">
+
+            <h2>Pending Service Provider Requests</h2>
+
+            <span className="count-badge">
+              {requests.length}
+            </span>
+
+          </div>
+
+          {notification && (
+            <div className={`alert ${notification.type}`}>
+              {notification.message}
+            </div>
+          )}
+
+          {loading && (
+            <div className="loading-box">
+              Loading requests...
+            </div>
+          )}
+
+          {error && (
+            <div className="alert error">
+              {error}
+            </div>
+          )}
+
+          {message && (
+            <div className="alert info">
+              {message}
+            </div>
+          )}
+
+          {!loading && !error && requests.length === 0 && (
+            <div className="empty-box">
+              No pending requests found
+            </div>
+          )}
+
+          {!loading && !error && requests.length > 0 && (
+
+            <table className="request-table">
+
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Date & Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {requests.map((r) => (
+
+                  <tr key={r.serviceId}>
+
+                    <td>{r.name}</td>
+
+                    <td>{r.email}</td>
+
+                    <td>
+                      {new Date(r.time).toLocaleString("en-IN")}
+                    </td>
+
+                    <td className="action-buttons">
+
+                      <button
+                        className="btn info"
+                        onClick={() => handleDetails(r)}
+                      >
+                        Details
+                      </button>
+
+                      <button
+                        className="btn success"
+                        onClick={() => handleAccept(r.serviceId)}
+                      >
+                        Accept
+                      </button>
+
+                      <button
+                        className="btn danger"
+                        onClick={() => handleReject(r.serviceId)}
+                      >
+                        Reject
+                      </button>
+
+                    </td>
+
+                  </tr>
+
+                ))}
+
+              </tbody>
+
+            </table>
+
+          )}
+
         </div>
-      )}
 
-      {!loading && !error && requests.length > 0 && (
-        <table className="table table-bordered table-hover">
-          <thead className="table-dark">
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th style={{ width: "260px" }}>Actions</th>
-            </tr>
-          </thead>
+      </div>
 
-          <tbody>
-            {requests.map((r) => (
-              <tr key={r.serviceId}>
-                <td>{r.name}</td>
-                <td>{r.email}</td>
-                <td>
-                  <button
-                    className="btn btn-info btn-sm me-2"
-                    onClick={() => handleDetails(r)}
-                  >
-                    Details
-                  </button>
-
-                  <button
-                    className="btn btn-success btn-sm me-2"
-                    onClick={() => handleAccept(r.serviceId)}
-                  >
-                    Accept
-                  </button>
-
-                  <button
-                    className="btn btn-danger btn-sm"
-                    onClick={() => handleReject(r.serviceId)}
-                  >
-                    Reject
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
     </div>
+
   );
+
 };
 
 export default AdminRequests;

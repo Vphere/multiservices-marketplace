@@ -45,7 +45,7 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
         }
 
         ServiceProvider serviceProvider = new ServiceProvider();
-//
+
 //        List<ProviderSlotDto> list = serviceProviderDto.getTimes();
 //        List<ProviderSlot> providerSlots = new ArrayList<>();
 //        for(ProviderSlotDto p : list){
@@ -124,8 +124,8 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
     @Override
     public String fetchDetailsAfterAccept(String email, List<ProviderSlotDto> providerSlotDtos) {
         ServiceProvider serviceProvider = findByEmail(email);
-        List<ProviderSlot> providerSlots = new ArrayList<>();
-        System.out.println(providerSlotDtos);
+        List<ProviderSlot> providerSlots = serviceProvider.getProviderSlot();
+//        System.out.println(providerSlotDtos);
         for(ProviderSlotDto p : providerSlotDtos){
             ProviderSlot providerSlot = new ProviderSlot();
             providerSlot.setSlotStart(p.getStart());
@@ -134,6 +134,9 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
             providerSlots.add(providerSlot);
         }
         serviceProvider.setProviderSlot(providerSlots);
+//        for(ProviderSlot providerSlot : providerSlots){
+//            System.out.println(providerSlot.getSlotStart());
+//        }
         serviceProviderRepository.save(serviceProvider);
         return "Successfully added";
     }
@@ -203,7 +206,9 @@ public class ServiceProviderServicesImpl implements ServiceProviderServices{
             authenticationService.sendBookingCancellationEmail(user.get(),time,reason);
             for(UserBooking userBooking : userBookings){
                 if(userBooking.getBookedTime().equals(time)){
-                    userBookings.remove(userBooking);
+                    userBooking.setEnabled(false);
+//                    userBookings.remove(userBooking);
+                    userBooking.setCompleted(false);
                     break;
                 }
             }

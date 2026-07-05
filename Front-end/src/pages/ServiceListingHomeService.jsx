@@ -23,38 +23,53 @@ const professionList = [
 ]
 
 const ServiceListingHomeService = () => {
-  const [providers, setProviders] = useState([])
 
+  const [providers, setProviders] = useState([])
   const [searchCity, setSearchCity] = useState("")
   const [searchProfessionText, setSearchProfessionText] = useState("")
-  const [searchType, setSearchType] = useState("") // 
+  const [category, setCategory] = useState("")
+  const [selectedService, setSelectedService] = useState("")
+  const [categoryList, setCategoryList] = useState([])
   const [suggestions, setSuggestions] = useState([])
 
   const location = useLocation()
 
-  // Insert selected service and profession
   useEffect(() => {
     if (location.state?.selectedService) {
       setSearchProfessionText(location.state.selectedService)
     }
+
     if (location.state?.profession) {
-      // Auto-activate the corresponding chip filter based on profession
+
       const profession = location.state.profession.toLowerCase()
+
       if (profession.includes("plumber")) {
-        setSearchType("Plumber")
-      } else if (profession.includes("carpenter")) {
-        setSearchType("Carpenter")
-      } else if (profession.includes("electrician")) {
-        setSearchType("Electrician")
-      } else if (profession.includes("technician") || profession.includes("repair") || profession.includes("ac")) {
-        setSearchType("Technician")
-      } else if (profession.includes("cleaning") || profession.includes("specialist")) {
-        setSearchType("Specialist")
+        setCategory("Plumber")
+      } 
+      else if (profession.includes("carpenter")) {
+        setCategory("Carpenter")
+      } 
+      else if (profession.includes("electrician")) {
+        setCategory("Electrician")
+      } 
+      else if (
+        profession.includes("technician") ||
+        profession.includes("repair") ||
+        profession.includes("ac")
+      ) {
+        setCategory("Technician")
+      } 
+      else if (
+        profession.includes("cleaning") ||
+        profession.includes("specialist")
+      ) {
+        setCategory("Specialist")
       }
+
     }
+
   }, [location.state])
 
-  // Fetch providers
   useEffect(() => {
     const fetchData = async () => {
       const data = await getHomeService()
@@ -65,8 +80,8 @@ const ServiceListingHomeService = () => {
     fetchData()
   }, [])
 
-  // Handle typing (HALF MATCH)
   const handleProfessionChange = (value) => {
+
     setSearchProfessionText(value)
 
     if (value.trim() === "") {
@@ -86,32 +101,58 @@ const ServiceListingHomeService = () => {
     setSuggestions([])
   }
 
-  // ✅ Combined Filter Logic
+  const handleCategoryClick = (type) => {
+
+    setCategory(type)
+    setSelectedService("")
+
+    const list = professionList.filter((item) =>
+      item.toLowerCase().includes(type.toLowerCase())
+    )
+
+    setCategoryList(list)
+  }
+
+  const handleServiceClick = (service) => {
+    setSelectedService(service)
+  }
+
   const filteredProviders = providers.filter((provider) => {
+
     const cityMatch = searchCity
       ? provider.city?.toLowerCase().includes(searchCity.toLowerCase())
       : true
 
-    const professionMatch = searchProfessionText
-      ? provider.profession
+    if (selectedService) {
+      return (
+        cityMatch &&
+        provider.profession?.toLowerCase() === selectedService.toLowerCase()
+      )
+    }
+
+    if (category) {
+      return (
+        cityMatch &&
+        provider.profession?.toLowerCase().includes(category.toLowerCase())
+      )
+    }
+
+    if (searchProfessionText) {
+      return (
+        cityMatch &&
+        provider.profession
           ?.toLowerCase()
           .includes(searchProfessionText.toLowerCase())
-      : true
+      )
+    }
 
-    const quickFilterMatch = searchType
-      ? provider.profession
-          ?.toLowerCase()
-          .includes(searchType.toLowerCase())
-      : true
-
-    return cityMatch && professionMatch && quickFilterMatch
+    return cityMatch
   })
 
   return (
     <div className="service-listing">
       <div className="container">
 
-        {/* Header */}
         <div className="listing-header">
           <h1 className="listing-title">Home Services</h1>
           <p className="listing-subtitle">
@@ -119,10 +160,8 @@ const ServiceListingHomeService = () => {
           </p>
         </div>
 
-        {/* SEARCH SECTION */}
         <div className="search-wrapper">
 
-          {/* City Search */}
           <div className="search-box">
             <input
               type="text"
@@ -130,39 +169,16 @@ const ServiceListingHomeService = () => {
               value={searchCity}
               onChange={(e) => setSearchCity(e.target.value)}
             />
-            {searchCity && (
-              <span
-                className="clear-btn"
-                onClick={() => setSearchCity("")}
-              >
-                ✖
-              </span>
-            )}
           </div>
 
-          {/* Profession Search */}
           <div className="search-box">
             <input
               type="text"
               placeholder="Search by Profession"
               value={searchProfessionText}
-              onChange={(e) =>
-                handleProfessionChange(e.target.value)
-              }
+              onChange={(e) => handleProfessionChange(e.target.value)}
             />
-            {searchProfessionText && (
-              <span
-                className="clear-btn"
-                onClick={() => {
-                  setSearchProfessionText("")
-                  setSuggestions([])
-                }}
-              >
-                ✖
-              </span>
-            )}
 
-            {/* Suggestions */}
             {suggestions.length > 0 && (
               <div className="suggestion-box">
                 {suggestions.map((item, index) => (
@@ -176,31 +192,57 @@ const ServiceListingHomeService = () => {
                 ))}
               </div>
             )}
+
           </div>
 
         </div>
 
-        {/* ✅ 5 Quick Filters Added */}
         <div className="profession-filters">
-          {["Plumber", "Carpenter", "Electrician", "Technician", "Specialist"].map(
+
+          {["Technician", "Specialist", "Plumber", "Electrician", "Carpenter"].map(
             (item) => (
               <button
                 key={item}
                 className={`profession-chip ${
-                  searchType === item ? "active" : ""
+                  category === item ? "active" : ""
                 }`}
-                onClick={() =>
-                  setSearchType(searchType === item ? "" : item)
-                }
+                onClick={() => handleCategoryClick(item)}
               >
                 {item}
               </button>
             )
           )}
+
         </div>
 
-        {/* Providers */}
-        <div className="providers-grid fitness-scroll">
+        {categoryList.length > 0 && (
+          <div className="sub-service-container">
+
+            <h3 className="sub-service-title">
+              Available {category} Services
+            </h3>
+
+            <div className="sub-service-list">
+
+              {categoryList.map((service, index) => (
+                <button
+                  key={index}
+                  className={`sub-service-chip ${
+                    selectedService === service ? "active" : ""
+                  }`}
+                  onClick={() => handleServiceClick(service)}
+                >
+                  {service}
+                </button>
+              ))}
+
+            </div>
+
+          </div>
+        )}
+
+        <div className="providers-grid">
+
           {filteredProviders.length > 0 ? (
             filteredProviders.map((provider, index) => (
               <ServiceProviderCard
@@ -211,6 +253,7 @@ const ServiceListingHomeService = () => {
           ) : (
             <p className="no-results">No providers found</p>
           )}
+
         </div>
 
       </div>
@@ -218,4 +261,4 @@ const ServiceListingHomeService = () => {
   )
 }
 
-export default ServiceListingHomeService;
+export default ServiceListingHomeService

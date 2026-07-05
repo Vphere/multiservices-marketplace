@@ -103,6 +103,15 @@ const ServiceProviderForm = () => {
       );
       setFormData((prev) => ({ ...prev, profession: "" }));
     }
+    const fetchUsername = async () => {
+      if (sessionStorage.getItem("token")) {
+        const name = sessionStorage.getItem("userId");
+        if (name) {
+          setUsername(name);
+        }
+      }
+    };
+    fetchUsername();
   }, [formData.categories]);
 
   const handleProfilePicChange = (e) => {
@@ -235,7 +244,8 @@ const ServiceProviderForm = () => {
                   </div>
 
                   <div className="col">
-                    <label>Document</label>
+                    <label>  Upload Documents (Certificate / ID Proof)
+</label>
                     <input type="file" className="form-control" onChange={handleDocumentPicChange} />
                     {documentPreview && <img src={documentPreview} className="img-thumbnail mt-2" alt="doc" />}
                   </div>

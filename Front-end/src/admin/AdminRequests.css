@@ -1,0 +1,98 @@
+.admin-dashboard {
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+.admin-navbar {
+  background: #1f2937;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-logo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: #ef4444;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.admin-page {
+  padding: 40px;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.count-badge {
+  background: #6366f1;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.request-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.request-table th {
+  background: #111827;
+  color: white;
+  padding: 12px;
+}
+
+.request-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.request-table tr:hover {
+  background: #f9fafb;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.info {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn.success {
+  background: #22c55e;
+  color: white;
+}
+
+.btn.danger {
+  background: #ef4444;
+  color: white;
+}

@@ -26,7 +26,7 @@ const beautyServices = [
   "Hair Style Artist",
   "Makeup Artist",
   "Bridal Makeup Artist",
-  "Facial & Skincare Specialist",
+  "Facial",
   "Waxing Specialist",
   "Nail Artist"
 ];

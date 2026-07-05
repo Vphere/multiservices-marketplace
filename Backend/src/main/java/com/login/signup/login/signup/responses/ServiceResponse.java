@@ -3,6 +3,7 @@ package com.login.signup.login.signup.responses;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collection;
 
@@ -25,8 +26,9 @@ public class ServiceResponse {
     private String companyName;
     private String profession;
     private Integer price;
+    private LocalDateTime time;
 
-    public ServiceResponse(Long serviceId, byte[] profilePic, byte[] documentPic, String name, String phonenumber, String address, String categories, Collection<String> servicelist, int years, String email, String city, String state, boolean homeService, boolean reachWorkplace,String companyName,String profession,Integer price) {
+    public ServiceResponse(Long serviceId, byte[] profilePic, byte[] documentPic, String name, String phonenumber, String address, String categories, Collection<String> servicelist, int years, String email, String city, String state, boolean homeService, boolean reachWorkplace,String companyName,String profession,Integer price,LocalDateTime time) {
         this.serviceId = serviceId;
         this.profilePic = profilePic != null ? Base64.getEncoder().encodeToString(profilePic) : null;
         this.documentPic = documentPic != null ? Base64.getEncoder().encodeToString(documentPic) : null;
@@ -44,5 +46,6 @@ public class ServiceResponse {
         this.companyName = companyName;
         this.profession = profession;
         this.price = price;
+        this.time = time;
     }
 }

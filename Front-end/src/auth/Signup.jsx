@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = () => {
+
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const [registration, setRegistration] = useState({
     username: "",
@@ -17,10 +20,14 @@ const Signup = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleInputChange = (e) => {
-    setRegistration({ ...registration, [e.target.name]: e.target.value });
+    setRegistration({
+      ...registration,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleRoleChange = (e) => {
+
     const { value, checked } = e.target;
 
     setRegistration((prev) => ({
@@ -29,143 +36,146 @@ const Signup = () => {
         ? [...prev.roles, value]
         : prev.roles.filter((r) => r !== value)
     }));
+
   };
 
   const handleRegistration = async (e) => {
+
     e.preventDefault();
 
-    if (registration.roles.length === 0) {
-      setErrorMessage("Please select at least one role");
-      return;
-    }
+    setLoading(true);
 
     try {
-      registration.roles.includes("ROLE_USER")
+
       await registerUser(registration);
+
+      setSuccessMessage("Registration successful!");
 
       navigate("/verify", {
         state: { email: registration.email }
       });
 
-      setSuccessMessage("Registration successful!");
-      setErrorMessage("");
       setRegistration({
         username: "",
         email: "",
         password: "",
         roles: []
       });
+
+      setErrorMessage("");
+
     } catch (error) {
+
       setSuccessMessage("");
       setErrorMessage(`Registration error: ${error.message}`);
+
     }
+
+    setLoading(false);
 
     setTimeout(() => {
       setErrorMessage("");
       setSuccessMessage("");
-    }, 5000);
+    }, 4000);
+
   };
 
   return (
     <div className="signup-page">
-      <div className="signup-overlay d-flex justify-content-center align-items-center">
-        <div className="card shadow-lg p-4 signup-card">
-          <h2 className="text-center mb-4 fw-bold">Create Account</h2>
 
-          {errorMessage && (
-            <div className="alert alert-danger text-center">
-              {errorMessage}
-            </div>
-          )}
+      <div className="signup-card">
 
-          {successMessage && (
-            <div className="alert alert-success text-center">
-              {successMessage}
-            </div>
-          )}
+        <h2 className="signup-title">Create Account</h2>
+        <p className="signup-subtitle">
+          Join and start booking services
+        </p>
 
-          <form onSubmit={handleRegistration}>
-            {/* Username */}
-            <div className="mb-3">
-              <label className="form-label">Username</label>
-              <input
-                name="username"
-                type="text"
-                className="form-control"
-                value={registration.username}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+        {errorMessage && (
+          <div className="error-box">{errorMessage}</div>
+        )}
 
-            {/* Email */}
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input
-                name="email"
-                type="email"
-                className="form-control"
-                value={registration.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+        {successMessage && (
+          <div className="success-box">{successMessage}</div>
+        )}
 
-            {/* Password */}
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input
-                name="password"
-                type="password"
-                className="form-control"
-                value={registration.password}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+        <form onSubmit={handleRegistration} className="signup-form">
 
-            {/* Roles */}
-            <div className="mb-3">
-              <label className="form-label fw-bold">Do You Want to Provide Service?</label>
+          <div className="input-group">
+            <label>Username</label>
+            <input
+              name="username"
+              type="text"
+              placeholder="Enter username"
+              value={registration.username}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-              {/* <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="ROLE_USER"
-                  checked={registration.roles.includes("ROLE_USER")}
-                  onChange={handleRoleChange}
-                />
-                <label className="form-check-label">User</label>
-              </div> */}
+          <div className="input-group">
+            <label>Email</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="Enter email"
+              value={registration.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="ROLE_SERVICE"
-                  checked={registration.roles.includes("ROLE_SERVICE")}
-                  onChange={handleRoleChange}
-                />
-                <label className="form-check-label">Service Provider</label>
-              </div>
-            </div>
+          <div className="input-group">
+            <label>Password</label>
+            <input
+              name="password"
+              type="password"
+              placeholder="Create password"
+              value={registration.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-            <button type="submit" className="btn btn-primary w-100 mb-3">
-              Register
-            </button>
+          <div className="role-box">
 
-            <p className="text-center mb-0">
-              Already have an account?
-              <Link to="/login" className="ms-1">
-                Login
-              </Link>
+            <p className="role-title">
+              Do you want to provide services?
             </p>
-          </form>
-        </div>
+
+            <label className="role-option">
+
+              <input
+                type="checkbox"
+                value="ROLE_SERVICE"
+                checked={registration.roles.includes("ROLE_SERVICE")}
+                onChange={handleRoleChange}
+              />
+
+              <span>Service Provider</span>
+
+            </label>
+
+          </div>
+
+          <button
+            className="signup-btn"
+            disabled={loading}
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
+
+          <p className="login-text">
+            Already have an account?
+            <Link to="/login"> Login</Link>
+          </p>
+
+        </form>
+
       </div>
+
     </div>
   );
+
 };
 
 export default Signup;

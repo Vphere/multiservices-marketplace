@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:3000",allowCredentials = "true")
+@CrossOrigin(origins = "${FRONTEND_URL}",allowCredentials = "true")
 public class AdminController {
     private final AdminService adminService;
 
@@ -56,7 +56,8 @@ public class AdminController {
                 serviceProvider.isReachWorkplace(),
                 serviceProvider.getCompanyName(),
                 serviceProvider.getProfession(),
-                serviceProvider.getPrice());
+                serviceProvider.getPrice(),
+                serviceProvider.getTime());
     }
 
     @PostMapping("/enabled")

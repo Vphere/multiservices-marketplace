@@ -7,7 +7,7 @@ import { getUsername } from '../utils/apiFunction'
 
 const Navbar = () => {
   const role = sessionStorage.getItem("userRole");
-  const email = sessionStorage.getItem("email"); // assuming email stored
+  const email = sessionStorage.getItem("email");
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -15,11 +15,10 @@ const Navbar = () => {
   const [username, setUsername] = useState("")
   const [showProfile, setShowProfile] = useState(false)
 
-  // ✅ Fetch Username
   useEffect(() => {
     const fetchUsername = async () => {
       if (sessionStorage.getItem("token")) {
-        const name = await getUsername();
+        const name = sessionStorage.getItem("userId");
         if (name) {
           setUsername(name);
         }
@@ -70,7 +69,6 @@ const Navbar = () => {
           ) : (
             <div style={{ position: "relative" }}>
 
-              {/* 👤 Profile Emoji */}
               <span
                 style={{ fontSize: "22px", cursor: "pointer" }}
                 onClick={() => setShowProfile(!showProfile)}
@@ -78,7 +76,6 @@ const Navbar = () => {
                 👤
               </span>
 
-              {/* ✅ Dropdown */}
               {showProfile && (
                 <div style={{
                   position: "absolute",

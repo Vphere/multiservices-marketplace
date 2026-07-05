@@ -27,6 +27,9 @@ import Order from "./order/order";
 import AllServices from "./pages/AllServices";
 import UserBillPage from "./components/UserBillPage";
 import LoadingScreen from "./components/LoadingScreen";
+import GenerateNewPassword from "./auth/GenerateNewPassword";
+import VerifyResetOtp from "./auth/VerifyResetOtp";
+import SetNewPassword from "./auth/SetNewPassword";
 
 function App() {
 
@@ -75,6 +78,9 @@ function App() {
               <Route path="/user/order" element={<Order/>} />
               <Route path="/all-services" element={<AllServices/>} />
               <Route path="/user/bill" element={<UserBillPage />} />
+              <Route path="/forgot-password" element={<GenerateNewPassword />} />
+              <Route path="/verify-reset" element={<VerifyResetOtp />} />
+              <Route path="/set-password" element={<SetNewPassword />} />
             </Routes>
           </main>
         </div>

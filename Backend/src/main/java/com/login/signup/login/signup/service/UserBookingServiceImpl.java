@@ -75,17 +75,20 @@ public class UserBookingServiceImpl implements UserBookingService{
     public String cancelOrder(String email, CancelBookingDto cancelBookingDto, String providerEmail) {
         ServiceProvider serviceProvider = serviceProviderRepository.findByEmail(providerEmail);
         List<UserBooking> userBookingList = serviceProvider.getUserBookings();
-        System.out.println(serviceProvider.getServiceId());
-        System.out.println(cancelBookingDto.getBookedTime());
+//        System.out.println(serviceProvider.getServiceId());
+//        System.out.println(cancelBookingDto.getBookedTime());
+        Optional<User> user = userRepository.findByEmail(email);
         for (UserBooking u : userBookingList){
-            if(u.getBookedTime().equals(cancelBookingDto.getBookedTime()) && u.isEnabled()==true){
+
+            if(user.get().getId().equals(u.getUser().getId()) && u.getBookedTime().equals(cancelBookingDto.getBookedTime()) && u.isEnabled()){
 //                u.setEnabled(false);
 //                u.setReason(cancelBookingDto.getReason());
-                Optional<UserBooking> userBooking = userBookingRepository.findById(u.getId());
-                System.out.println(userBooking.get().getId());
-                userBooking.get().setEnabled(false);
-                userBooking.get().setReason(cancelBookingDto.getReason());
-                userBookingRepository.save(userBooking.get());
+//                Optional<UserBooking> userBooking = userBookingRepository.findById(u.getId());
+                System.out.println(u.getId());
+                u.setEnabled(false);
+                u.setCompleted(false);
+                u.setReason(cancelBookingDto.getReason());
+                userBookingRepository.save(u);
                 return "Booking canceled successfully";
             }
         }

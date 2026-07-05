@@ -23,8 +23,18 @@ const ServiceProvider = () => {
       }
     }
 
-    getenabled().then((result) => {
-      if (!result) navigate("/PendingRequest");
+    getenabled()
+    .then((result) => {
+      if (!result) {
+        navigate("/PendingRequest");
+        // navigate("/serviceProviderForm");
+      }
+    })
+    .catch((err) => {
+      // backend exception comes here
+      console.log(err);
+
+      navigate("/serviceProviderForm"); // redirect on error
     });
   });
 
