@@ -1,7 +1,5 @@
 import Hero from "../components/Hero.jsx";
 import ServiceCategory from "../components/ServiceCategory.jsx";
-import PopularServiceCard from "../components/PopularServiceCard.jsx";
-import FeaturedProviderCard from "../components/FeaturedProviderCard.jsx";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
@@ -443,7 +441,7 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="about-stats">
+          {/* <div className="about-stats">
             <div className="stat-item">
               <div className="stat-number">500+</div>
               <div className="stat-label">Verified Professionals</div>
@@ -460,7 +458,7 @@ const Home = () => {
               <div className="stat-number">4.8★</div>
               <div className="stat-label">Average Rating</div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -513,7 +511,6 @@ const Home = () => {
             <h4>Contact Info</h4>
             <div className="footer-contact">
               <p>📧 support@urbannexus.com</p>
-              <p>📞 +91 1234567890</p>
               <p>📍 college road, nadiad, 387001</p>
               <p>🕐 Mon-Sat: 9AM-8PM</p>
             </div>
